@@ -1,0 +1,198 @@
+#############
+##Getting from raw data to output that can be inputted to xltabr
+##Allows for differences in all sheets, tries to make it not very painful!
+
+#devtools::load_all()
+#devtools::document()
+#############
+
+
+####Get data####
+#' Downloads data from road traffic API and formats correctly into data frame
+#'
+#' @param url the API url. Preset to one that works but can be overwritten (for example, seasonal data)
+#' @examples
+#' raw <- api_new_data()
+#' @export
+api_get_data <- function(
+  url="https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly"){
+  ##Gets the data from Luke V's API webiste and changes it from messy list
+  ##to nice data frame
+
+  raw_list <- rjson::fromJSON(file = url)
+  raw_list <- raw_list$data
+  raw <- raw_list %>%
+    purrr::map(
+      function(x) {
+      x[names(x) %in%
+          c("year", "quarter", "road_type", "vehicle_type", "estimate")]
+      }
+      ) %>%
+    purrr::map(dplyr::as_data_frame) %>%
+    dplyr::bind_rows()
+  return(raw)
+}
+####quarterly or rolling annual####
+rolling_annual <- function(raw, x){
+  #given the API output changes the estimate column into rolling annual, if
+  #given a positive input. If not given "TRUE" or "FALSE" returns error.
+  #Note: FALSE changes nothing - the data is already in quarterly values!
+
+  if (!is.logical(x)) {
+    stop("second input must be TRUE or FALSE - indicating whether you want
+         rolling annual figures or not")
+  }
+  if (!is.data.frame(raw)) {
+    stop("first input must be a data frame from the API output")
+  }
+  if (!identical(names(raw),
+                 c("year", "quarter", "road_type", "vehicle_type", "estimate"))){
+    stop("first input isn't raw API output as has wrong headings")
+  }
+
+  if (x){
+    raw$estimate <- stats::ave(raw$estimate, #the colum we're 'ave'raging
+                        raw$vehicle_type, raw$road_type, #grouping over these
+                        FUN = function(x) { #rolling annual function
+                          zoo::rollsumr(x, k=4, fill=NA)})
+    raw <- raw[!is.na(raw$estimate),] #removes the NA values at beginning as
+    #otherwise they cause trouble later on
+  }
+  return(raw)
+}
+
+
+####vehicle type or road type####
+vehicle_road <- function(raw, type){
+  #Do you want the columns to be vehicle type or road type. Pivots the data to be that way
+  if (!(type=="road" | type=="vehicle")){
+    stop("type must be vehicle or road - select the one you want as cols")
+  }
+  if (type == "road"){
+    #sum over vehicle_type as not needed
+    new_data <- raw %>%
+      dplyr::group_by(year, quarter, road_type) %>%
+      dplyr::summarise(estimate = sum(estimate))
+    #Pivots road_type from being a row to being 4 cols (as is categorical)
+    new_data <- reshape2::dcast(new_data,
+                                year + quarter ~ road_type,
+                                value.var = "estimate",
+                                fun.aggregate = sum)
+    # Add  in a column for AMV
+    AMV <- rowSums(new_data[, which(names(new_data) %in% unique(raw$road_type))])
+    #^^^dirty code - but just selects ones we've pivoted up
+  }
+  if (type == "vehicle"){
+    #sum over road_type as not needed
+    new_data <- raw %>%
+      dplyr::group_by(year, quarter, vehicle_type) %>%
+      dplyr::summarise(estimate = sum(estimate))
+    #Pivots vehicle_type from being a row to being 5 cols (as is categorical)
+    new_data <- reshape2::dcast(new_data,
+                                year + quarter ~ vehicle_type,
+                                value.var = "estimate",
+                                fun.aggregate = sum)
+    # Add  in a column for AMV
+    AMV <- rowSums(new_data[, which(names(new_data) %in% unique(raw$vehicle_type))])
+    #^^dirty code - but just selects ones we've pivoted up
+  }
+  new_data <-  cbind(new_data, AMV)
+  colnames(new_data)[length(new_data)] <- "AMV"
+  return(new_data)
+}
+
+####Traffic, index numbers, or % change####
+chosen_units <- function(new_data, units, index_from=NA){
+  #Changes the "estimates" column from the initial data to be either percentage change on
+  #previous year, indexed from chosen point, or the same values themselves
+
+  if (!(units %in% c("traffic", "percentage", "index"))){
+    stop("units input must be one of: traffic, percentage, or index")
+  }
+
+  if (units == "percentage"){
+
+    #percentage change - always 4 quarters apart regardless of whether the data is rolling annual or quarterly :)
+    warning("LS fix - bad practice probably in this bit of code below")
+    n <- dim(new_data)[2] #width of the data frame
+    for (i in 3:n){
+      new_data[,i] <- ave(new_data[,i], #the colum we're 'ave'raging
+                          FUN = function(x) {100 * ( x / dplyr::lag(x,4) - 1 )}) #the -1 is to get perc CHANGE
+    }
+  }
+  if (units == "index"){
+    if(is.na(index_from)){index_from <- list(year=new_data$year[1], quarter=new_data$quarter[1])}
+
+    warning("index_from is not yet sorted properly (LS needs to fix)")
+    #next 5 lines is probably bad practice - using loops in R!
+    n <- dim(new_data)[2] #width of the data frame
+    m <- dim(new_data)[1] #length of the data frame
+    index_vals <- new_data[1,3:n]
+    index_vals <- as.numeric(index_vals) #otherwise in loop we get one number (due to fact is data frame)
+    for (i in 3:n){
+      new_data[,i] <- 100 * new_data[,i] / index_vals[i-2]
+    }
+  }
+  #NOTE - when units="traffic" we don't change anything. Important to make user define that that is the value they want
+  return(new_data)
+}
+
+####Wrapper function####
+#' given the API output from \code{\link{api_get_data}}, formats into a data frame
+#' with values defined by the user.
+#'
+#' @param raw data frame outputted from \code{\link{api_get_data}()}
+#' @param roll logical. TRUE if rolling annual values desired, FALSE if not
+#' @param type character string. Either "road" or "vehicle" dependant on which wanted for column headers
+#' @param units character string. Either
+#'  \itemize{
+#'   \item "traffic" - traffic values (vehicle Kms)
+#'   \item "percentage" - percentage change from previous year same quarter
+#'   \item "index" - indexed values from first quarter in data (LS - CHANGE), with that quarter being 100
+#' }
+#' @param km_or_miles "km" or "miles" dependant on desired units. Only used if units = "traffic",
+#' as otherwise doesn't make a difference.
+#' @return data frame of same dimensions as input, with values changed to rolling annual (if stated)
+#' @examples
+#' #first get the raw data
+#' raw <- api_get_data()
+#' #Google TRA25 if the naming convention on the left doesn't make sense
+#' TRA2504e <- raw2new(raw,roll=F, type="vehicle", units="traffic")
+#' TRA2505e <- raw2new(raw,roll=F, type="road", units="traffic")
+#' TRA2504b <- raw2new(raw,roll=T, type="vehicle", units="index")
+#' TRA2504c <- raw2new(raw,roll=T, type="vehicle", units="percentage")
+#' @export
+
+raw2new <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
+  ##Wrapper function that goes from data read to API to the formatted
+  ##output that can be put into xltabr
+
+  raw <- rolling_annual(raw,roll) #quarterly vals or rolling annual
+  new_data <- vehicle_road(raw, type) #road or vehicle
+
+  if(units=="traffic"){
+    if(!km_or_miles %in% c("km","miles")){
+     stop("When units=\"Traffic\" you must specify km_or_miles to be exactly \"km\" or \"miles\"")
+    } else {
+        if(km_or_miles == "miles"){
+          #change the values
+          n <- dim(new_data)[2]
+          new_data[,3:n] <- new_data[,3:n] * 0.621371
+        }
+      }
+    }else {
+    new_data <- chosen_units(new_data,units) #%  or index
+    }
+
+  new_data <- new_data[!is.na(new_data$AMV),] #so we don't have empty initial rows
+  return(new_data)
+}
+
+
+####Testing the functions ####
+#raw <- api_get_data()
+#TRA2504e <- raw2new(raw,roll=F, type="vehicle", units="traffic")
+#TRA2505e <- raw2new(raw,roll=F, type="road", units="traffic")
+#TRA2504a <- raw2new(raw,roll=T, type="vehicle", units="traffic")
+#TRA2504b <- raw2new(raw,roll=T, type="vehicle", units="index")
+#TRA2504c <- raw2new(raw,roll=T, type="vehicle", units="percentage")
