@@ -30,7 +30,7 @@ add_hyperlink_dft <- function(tab, title_text){
   sheet_name <- unlist(strsplit(title_text[3]," "))[2] #see above error comment if unsure why
 
   openxlsx::writeFormula(tab$wb, sheet_name, x =
-                 '=HYPERLINK("https://www.gov.uk/government/organisations/department-for-transport/series/road-traffic-statistics",
+  '=HYPERLINK("https://www.gov.uk/government/organisations/department-for-transport/series/road-traffic-statistics",
                "Traffic - www.gov.uk/government/organisations/department-for-transport/series/road-traffic-statistics")',
                startCol=1,startRow=2)
   return(tab)
@@ -90,10 +90,31 @@ add_bottom_row_style <- function(tab, stylename="heavy_bottom_border") {
   my_filter <- nrow(tab$body$body_df) + 1
 
   tab$body$body_df[my_filter, "meta_row_"] <- paste(tab$body$body_df[my_filter, "meta_row_"], stylename, sep = "|")
-  tab$body$body_df[my_filter, "meta_left_header_row_"] <- paste(tab$body$body_df[my_filter, "meta_left_header_row_"], stylename, sep = "|")
+  tab$body$body_df[my_filter, "meta_left_header_row_"] <-
+    paste(tab$body$body_df[my_filter, "meta_left_header_row_"], stylename, sep = "|")
 
   return(tab)
 }
+
+add_headers_twovars <- function(headers){
+  #if the header is in the format c("one.a", "two.a", "three.a", "one.b", "two.b") split into 2 vectors
+  #and paste into the excel doc so it prints as:
+  #_____________________
+  #     a           b
+  #one two three one two
+  #_____________________
+  #(is a subfunction of add_body_dft)
+
+  row_1 <- sapply(strsplit(headers, ".", fixed = T), '[', 2)
+  row_2 <- sapply(strsplit(headers, ".", fixed = T), '[', 1)
+  row_1 <- LStest:::varnames2english(row_1)
+  row_2 <- LStest:::varnames2english(row_2)
+
+  top_headers <- list(row_1, row_2)
+  warning("this function is incomplete")
+  return(top_headers)
+}
+
 
 add_body_dft <- function(tab, new_data){
   #adds in the main data and it's col headers to tab
@@ -106,9 +127,17 @@ add_body_dft <- function(tab, new_data){
 
   #Add col headers to tab
   headers <- varnames2english(names(new_data))
-  tab <- xltabr::add_top_headers(tab, headers
-                         , col_style_names = "col_headers")
+  if (sum(grepl(".", headers, fixed = T)) > length(headers) / 3){
+    #this is an arbitrary if condition of "if more than a third of the headers have the "." character
+    #in. The reason being that is the notation I have been using for 2 header levels (e.g. TRA2503)
+    headers <- add_headers_twovars(headers)
+    tab <- xltabr::add_top_headers(tab, headers
+                                   , row_style_names = c("col_headers_top", "col_headers_bottom"))
 
+  } else {
+    tab <- xltabr::add_top_headers(tab, headers
+                                   , col_style_names = "col_headers")
+  }
 
   #Add the data to tab (put it in presentable format)
   new_data[ ,4:n] <- round(new_data[ ,4:n],1)
@@ -127,8 +156,8 @@ add_body_dft <- function(tab, new_data){
 colrow_width_dft <- function(tab, new_data){
   #1) adjusts col width specifications
   #2) adjusts row height specifications (non NA "Year" rows are slightly bigger)
-  #3) merges title cells where needed
 
+  #3) merges title cells where needed
   ##1) col widths
   n <- dim(new_data)[2]
   tab <- xltabr::set_wb_widths(tab, body_header_col_widths = c(6, 12, 3, rep(14,n-2)))
@@ -171,8 +200,8 @@ colrow_width_dft <- function(tab, new_data){
 #' be saved as a new file? TRUE = replace the file
 #' @examples
 #' #set up scenario
-#' raw <- api_new_data()
-#' new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic")
+#' raw <- api_get_data()
+#' new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
 #' #title and footer
 #' title_text <- c("Department for Transport statistics",
 #'                "Traffic",
@@ -198,10 +227,10 @@ colrow_width_dft <- function(tab, new_data){
 #' @export
 new2xl <- function(new_data, title_text, footer_text, table_name,
                    save_to=getwd(), add_to_wb = FALSE, save_over = F){
-  #makes Excel doc from new_data, just needs title and footers
+  #makes nicely formatted Excel doc from new_data
 
   if (add_to_wb == F){
-    wb <- openxlsx::loadWorkbook("/Users/Luke/Downloads/template.xlsx")
+    wb <- openxlsx::loadWorkbook(system.file("template.xlsx", package="LStest"))
     #write what it's going to be saved as
     filename <- paste0("new2xl",gsub(" ","_",substr(Sys.time(),6,16)),".xlsx")
     filename <- gsub(":","",filename)
@@ -213,18 +242,20 @@ new2xl <- function(new_data, title_text, footer_text, table_name,
     if (save_over){
       filename <- add_to_wb}
   }
-  xltabr::set_style_path("/Users/Luke/Downloads/LS_styles_pub.xlsx")
+  xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
+  #xltabr::set_style_path("/Users/Luke/Downloads/LS_styles_pub.xlsx")
+
   setwd(save_to) #where the output will be saved. Default is current folder
 
   #now we use all the subfunctions created as part of the LStest package (behind the scense)
   tab <- xltabr::initialise(wb = wb, ws_name = table_name)
-  tab <- add_title_dft(tab, title_text)
-  tab <- add_body_dft(tab, new_data)
-  tab <- colrow_width_dft(tab, new_data)
+  tab <- LStest:::add_title_dft(tab, title_text)
+  tab <- LStest:::add_body_dft(tab, new_data)
+  tab <- LStest:::colrow_width_dft(tab, new_data)
   tab <- xltabr::add_footer(tab,footer_text, footer_style_names = "body")
   tab <- xltabr::auto_merge_footer_cells(tab)
   tab <- xltabr::write_data_and_styles_to_wb(tab) #the order matters here (LS needs extra check)
-  tab <- add_hyperlink_dft(tab, title_text)
+  tab <- LStest:::add_hyperlink_dft(tab, title_text)
 
   #write the worksheet
   if (file.exists(filename)) {

@@ -63,41 +63,63 @@ rolling_annual <- function(raw, x){
 
 
 ####vehicle type or road type####
-vehicle_road <- function(raw, type){
-  #Do you want the columns to be vehicle type or road type. Pivots the data to be that way
+pivot_raw <- function(raw, type){
+  #pivots the raw data up by one column, type being either "road" or "vehicle"
+  #only used inside the function vehicle_road
+
   if (!(type=="road" | type=="vehicle")){
-    stop("type must be vehicle or road - select the one you want as cols")
+    stop("type must be \"vehicle\", \"road\" in this subfunction - select the one you want as cols")
   }
-  if (type == "road"){
-    #sum over vehicle_type as not needed
-    new_data <- raw %>%
-      dplyr::group_by(year, quarter, road_type) %>%
-      dplyr::summarise(estimate = sum(estimate))
-    #Pivots road_type from being a row to being 4 cols (as is categorical)
-    new_data <- reshape2::dcast(new_data,
-                                year + quarter ~ road_type,
-                                value.var = "estimate",
-                                fun.aggregate = sum)
-    # Add  in a column for AMV
-    AMV <- rowSums(new_data[, which(names(new_data) %in% unique(raw$road_type))])
-    #^^^dirty code - but just selects ones we've pivoted up
-  }
-  if (type == "vehicle"){
-    #sum over road_type as not needed
-    new_data <- raw %>%
-      dplyr::group_by(year, quarter, vehicle_type) %>%
-      dplyr::summarise(estimate = sum(estimate))
-    #Pivots vehicle_type from being a row to being 5 cols (as is categorical)
-    new_data <- reshape2::dcast(new_data,
-                                year + quarter ~ vehicle_type,
-                                value.var = "estimate",
-                                fun.aggregate = sum)
-    # Add  in a column for AMV
-    AMV <- rowSums(new_data[, which(names(new_data) %in% unique(raw$vehicle_type))])
-    #^^dirty code - but just selects ones we've pivoted up
-  }
+  type <- paste0(type,"_type") #bit of backwards coding - but important due to variable names
+
+  #sum over variable that's not needed (either vehicle_type or road_type)
+  new_data <- raw %>%
+    dplyr::group_by_("year", "quarter", type) %>%
+    dplyr::summarise(estimate = sum(estimate))
+  #Pivots type from being a row to being a few cols (as is categorical)
+  new_data <- reshape2::dcast(new_data,
+                              year + quarter ~ get(type),
+                              #^^"get" is used here as we want the value of type not "type"
+                              value.var = "estimate",
+                              fun.aggregate = sum)
+  # Add  in a column for AMV
+  AMV <- rowSums(new_data[, which(names(new_data) %in%
+                                    unique(dplyr::pull(raw,type)))])
+  #^^^dirty code - but just selects ones we've pivoted up
   new_data <-  cbind(new_data, AMV)
   colnames(new_data)[length(new_data)] <- "AMV"
+  return(new_data)
+}
+
+vehicle_road <- function(raw, type){
+  #Do you want the columns to be vehicle type or road type. Pivots the data to be that way
+  if (!(type=="road" | type=="vehicle" | type=="vehicle_and_road")){
+    stop("type must be \"vehicle\", \"road\", or \"vehicle_and_road\" - select the one you want as cols")
+  }
+
+  if (type == "road" | type == "vehicle"){
+    #apply the sub function pivot_raw that changes type from being in one column
+    #to being separate rows
+    new_data <- pivot_raw(raw, type)
+  } else { #type = "vehicle_and_road"
+    #create 3 data sets to be appended to each other
+    new_data_C <- raw[raw$vehicle_type == "cars",]
+    new_data_C <- pivot_raw(new_data_C, "road")
+    names(new_data_C)[3:8] <- paste0(names(new_data_C),".cars")[3:8]
+
+    new_data_H <- raw[raw$vehicle_type == "hgv",]
+    new_data_H <- pivot_raw(new_data_H, "road")
+    names(new_data_H)[3:8] <- paste0(names(new_data_H),".hgv")[3:8]
+
+    new_data_L <- raw[raw$vehicle_type == "lgv",]
+    new_data_L <- pivot_raw(new_data_L, "road")
+    names(new_data_L)[3:8] <- paste0(names(new_data_L),".lgv")[3:8]
+
+    new_data <- base::merge(new_data_C, new_data_H, by = c("year", "quarter"))
+    new_data <- base::merge(new_data, new_data_L, by = c("year", "quarter"))
+
+    }
+
   return(new_data)
 }
 
@@ -156,7 +178,7 @@ chosen_units <- function(new_data, units, index_from=NA){
 #' @examples
 #' #first get the raw data
 #' raw <- api_get_data()
-#' #Google TRA25 if the naming convention on the left doesn't make sense
+#' #Google TRA25 if the naming convention on the left ("TRA25...") doesn't make sense
 #' TRA2504e <- raw2new(raw,roll=F, type="vehicle", units="traffic")
 #' TRA2505e <- raw2new(raw,roll=F, type="road", units="traffic")
 #' TRA2504b <- raw2new(raw,roll=T, type="vehicle", units="index")
@@ -172,7 +194,7 @@ raw2new <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
 
   if(units=="traffic"){
     if(!km_or_miles %in% c("km","miles")){
-     stop("When units=\"Traffic\" you must specify km_or_miles to be exactly \"km\" or \"miles\"")
+     stop("When units=\"traffic\" you must specify km_or_miles to be exactly \"km\" or \"miles\"")
     } else {
         if(km_or_miles == "miles"){
           #change the values
@@ -184,15 +206,6 @@ raw2new <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
     new_data <- chosen_units(new_data,units) #%  or index
     }
 
-  new_data <- new_data[!is.na(new_data$AMV),] #so we don't have empty initial rows
+  new_data <- new_data[rowSums(is.na(new_data)) != ncol(new_data),] #so we don't have empty rows
   return(new_data)
 }
-
-
-####Testing the functions ####
-#raw <- api_get_data()
-#TRA2504e <- raw2new(raw,roll=F, type="vehicle", units="traffic")
-#TRA2505e <- raw2new(raw,roll=F, type="road", units="traffic")
-#TRA2504a <- raw2new(raw,roll=T, type="vehicle", units="traffic")
-#TRA2504b <- raw2new(raw,roll=T, type="vehicle", units="index")
-#TRA2504c <- raw2new(raw,roll=T, type="vehicle", units="percentage")
