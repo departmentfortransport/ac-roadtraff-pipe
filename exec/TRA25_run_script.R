@@ -15,6 +15,11 @@ title_text <- c("Department for Transport statistics",
                 "Car and goods vehicle traffic (vehicle miles) by road class in Great Britain, rolling annual totals from 1993",
                 "",
                 "Billion vehicle miles (not seasonally adjusted)")
+footer_text <- c("",
+                 "(1) Two wheeled motor vehicles, buses, and coaches",
+                 "(2) Total may not match sum due to rounding",
+                 "(3) figures affected by September 2000 fuel protest",
+                 "The figures in these tables are National Statistics")
 new2xl(new_data,
        title_text,
        footer_text,
@@ -63,11 +68,7 @@ title_text <- c("Department for Transport statistics",
                 "Road traffic (vehicle kilometres) by vehicle type in Great Britain, quarterly from 1993",
                 "",
                 "Billion vehicle kilometres (not seasonally adjusted)")
-footer_text <- footer_text <- c("",
-                                "(1) Two wheeled motor vehicles, buses, and coaches",
-                                "(2) Total may not match sum due to rounding",
-                                "(3) figures affected by September 2000 fuel protest",
-                                "The figures in these tables are National Statistics")
+
 #apply the function (look in folder to see output)
 new2xl(new_data,
        title_text,

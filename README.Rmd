@@ -1,0 +1,93 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+**Warning: `LStest` is in its early stages of development.** It is based heavily on the `xltabr` developed by members of the Ministry of Justice (MoJ).
+
+If you are not a member of the Department for Transport (DfT) **I highly recommend you instead [use the `xltabr` package](https://github.com/moj-analytical-services/xltabr)**, as it is a far more developed and organised package. Even if you do work for DfT, that package is definitely worth a look!
+
+# I'm stuck - help!
+If you are having problems with this package, there are different places you can find help:
+
+* Google (it can't hurt)
+* Raise an issue on GitHub if you have found a bug
+* Look at other documentation: _______
+* Email me: 
+
+update
+
+# LStest - what is it?
+
+This purpose of this package is to help users present beautifully formatted Excel tables in the DfT standard format. This will act as a segment of the [pipeline dream](https://ukgovdatascience.github.io/rap_companion/) for transforming the way that official statistics are produced. 
+
+It acts as a DfT-tailored version of xltabr, including all the functions and code that I (Luke Shaw) wrote and developed - all focused primarily around `xltabr`. 
+
+The "patient zero" tables which this package was initially created for at the Quarterly provisional road traffic estimate tables, [TRA25](https://www.gov.uk/government/statistical-data-sets/tra25-quarterly-estimates). Many of the in-built checks and code are bespoke to issues with those tables, however the intention is that these can be used as a springboard to producing reproducible code for other teams' tables.
+
+## <a name="inst"></a> Installation
+update 
+
+## Example
+
+This is an example of the power of this package - it can reproduce and update tables through the simple updating of the data in its raw format online.
+
+First, ensure the package is in the Environment. Note you would have to have installed the package first (see [above](#inst) - only needs to be done once per desktop).
+
+```{r library}
+library(LStest) 
+```
+
+Second, download the raw data from online. 
+```{r getdata}
+raw <- api_get_data("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly") 
+raw
+```
+If your data is in a csv on your desktop you can get it into R easily, an example of how to do that is given at http://rprogramming.net/read-csv-in-r/ 
+
+There are 2 steps to outputting nice Excel tables from raw data: 
+1. rearrange the data into correct shape
+2. create the Excel table (including headers, footers, formatting etc.)
+
+###Step 1 - rearranging the data
+We can format the data as desired, which for sheet TRA2504a in table TRA2504 is:
+rolling annual vehicle kilometres split into different vehicle types. Using the bespoke function `raw2new` this means simply one line of code specifying each decision: 
+
+```{r example1}
+new_data <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "km")
+head(new_data)
+```
+
+###Step 2 - format into an Excel table
+Now the data is in the right shape for making the table. After naming the title and footer this is all done inside the `new2xl` function:
+
+```{r example2}
+title_text <- c("Department for Transport statistics",
+                "Traffic",
+                "Table TRA2504a",
+                "Road traffic (vehicle kilometres) by vehicle type in Great Britain, rolling annual totals from 1993",
+                "",
+                "Billion vehicle kilometres (not seasonally adjusted)")
+footer_text <- c("",
+                 "(1) Two wheeled motor vehicles, buses, and coaches",
+                 "(2) Total may not match sum due to rounding",
+                 "(3) figures affected by September 2000 fuel protest",
+                 "The figures in these tables are National Statistics")
+new2xl(new_data,
+       title_text,
+       footer_text,
+       table_name = "TRA2504a")
+```
+The table has now been saved in the directory where you're working, if you can find it you can see the path by typing `getwd()` in R. 
+
+to do - add the image of outputted Excel table 
