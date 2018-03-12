@@ -3,8 +3,9 @@
 ##06/03/2018 work in progress
 ########
 
-setwd("/Users/Luke/LStest")
-#^^ how to generalise?
+save_loc <- "/Users/Luke/Documents/table_dump/"
+#^^^^CHANGE the above line to where in your documents you want to save the file
+
 raw <- api_get_data()
 
 ####TRA2503a####
@@ -24,8 +25,9 @@ new2xl(new_data,
        title_text,
        footer_text,
        table_name = "TRA2503a",
-       save_to = "/Users/Luke/Documents/xltabr_TRA2504e/sheet_builder_test",
-       add_to_wb = "builder.xlsx")
+       save_to = save_loc,
+       add_to_wb = "TRA2503.xlsx",
+       save_over = TRUE)
 
 
 ###TRA2504a####
@@ -40,8 +42,9 @@ new2xl(new_data,
        title_text,
        footer_text,
        table_name = "TRA2504a",
-       save_to = "/Users/Luke/Documents/xltabr_TRA2504e/sheet_builder_test",
-       add_to_wb = "builder.xlsx")
+       save_to = save_loc,
+       add_to_wb = "TRA2504.xlsx",
+       save_over = TRUE)
 
 ####TRA2504c####
 new_data <- raw2new(raw, roll=T, type="vehicle", units="percentage")
@@ -56,8 +59,9 @@ new2xl(new_data,
        title_text,
        footer_text,
        table_name = "TRA2504c",
-       save_to = "/Users/Luke/Documents/xltabr_TRA2504e/sheet_builder_test",
-       add_to_wb = F)
+       save_to = save_loc,
+       add_to_wb = "TRA2504.xlsx",
+       save_over = TRUE)
 
 ####TRA2504e####
 new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
@@ -74,8 +78,9 @@ new2xl(new_data,
        title_text,
        footer_text,
        table_name = "TRA2504e",
-       save_to = "/Users/Luke/Documents/xltabr_TRA2504e/sheet_builder_test",
-       add_to_wb = "builder.xlsx")
+       save_to = save_loc,
+       add_to_wb = "TRA2504.xlsx",
+       save_over = TRUE)
 
 
 ####TRA2505b####
@@ -90,6 +95,6 @@ new2xl(new_data,
        title_text,
        footer_text,
        table_name = "TRA2505b",
-       save_to = "/Users/Luke/Documents/xltabr_TRA2504e/sheet_builder_test",
-       add_to_wb = "builder.xlsx")
+       save_to = save_loc,
+       add_to_wb = FALSE)
 

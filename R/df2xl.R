@@ -107,23 +107,58 @@ add_headers_twovars <- function(headers){
 
   row_1 <- sapply(strsplit(headers, ".", fixed = T), '[', 2)
   row_2 <- sapply(strsplit(headers, ".", fixed = T), '[', 1)
-  row_1 <- LStest:::varnames2english(row_1)
-  row_2 <- LStest:::varnames2english(row_2)
+  row_1 <- unname(LStest:::varnames2english(row_1))
+  row_2 <- unname(LStest:::varnames2english(row_2))
+
+  #replace ("a", "a", "a", "a", "b", "b", "b") with ("a", "","","","b","","")
+  for (temp in unique(row_1)){
+    first_appearance <- which(row_1 == temp)[1]
+    row_1[row_1 == temp] <- ""
+    row_1[first_appearance] <- temp
+  }
 
   top_headers <- list(row_1, row_2)
   warning("this function is incomplete")
   return(top_headers)
 }
 
+add_footnote_refs <- function(new_data){
+  #Adds in the footnote notations to the third col.
+  #Returns 2 objects in a list, the first being new_data with updated third col
+  #and the second being a named list of footnote linking to reference
+  #(subfunction of add_body_dft)
+  d <- new_data #just for simplicity (easier to read)
+
+  #2000 fuel protest
+  d[d$year == 1999 & d$quarter == 3, 3] <- "(1)"
+
+  #2001 foot and mouth
+  d[d$year == 2001, 3] <- "(2)"
+
+  #heavy snowfall
+  d[d$year == 2009 & d$quarter == 1, 3] <- "(3)"
+  d[d$year == 2010 & d$quarter == 1, 3] <- "(3)"
+  d[d$year == 2010 & d$quarter == 4, 3] <- "(3)"
+  d[d$year == 2013 & d$quarter == 1, 3] <- "(3)"
+
+  #provisional estimates
+  d[d$year == tail(d$year,1), 3] <- "P"
+  #LS: provisional are currently defined by if most recent year. Maybe not true?
+
+  footnote_refs <- unique(d[,3])
+
+  return(list(d, footnote_refs))
+}
 
 add_body_dft <- function(tab, new_data){
   #adds in the main data and it's col headers to tab
 
-  ###LS - maybe this should be part of "raw2df"?
   n <- dim(new_data)[2]
-  new_data <- cbind(new_data[,1:2], NA, new_data[,3:n]) #add in col for footnotes (eg "P" for provisional)
-  n <- n + 1 #we've added a new col in
-  ###LS - maybe this should be part of "raw2df"?
+  new_data <- cbind(new_data[,1:2], NA, new_data[,3:n])
+  n <- n+1 #because we've added a new col
+
+  #add in col for footnotes (eg "P" for provisional)
+  new_data <- add_footnote_refs(new_data)[[1]]
 
   #Add col headers to tab
   headers <- varnames2english(names(new_data))
@@ -131,8 +166,9 @@ add_body_dft <- function(tab, new_data){
     #this is an arbitrary if condition of "if more than a third of the headers have the "." character
     #in. The reason being that is the notation I have been using for 2 header levels (e.g. TRA2503)
     headers <- add_headers_twovars(headers)
+
     tab <- xltabr::add_top_headers(tab, headers
-                                   , row_style_names = c("col_headers_top", "col_headers_bottom"))
+                                   , row_style_names = c("ch_top", "ch_bottom"))
 
   } else {
     tab <- xltabr::add_top_headers(tab, headers
@@ -165,7 +201,8 @@ colrow_width_dft <- function(tab, new_data){
   ##2) row height
   ws_name <- tab$misc$ws_name
   #tare is the point at which the data ("body" in xltabr language) starts
-  tare <- length(tab$title$title_text) + 1 #plus one for top headers (col names)
+  tare <- length(tab$title$title_text) + length(tab$top_headers$top_headers_list)
+
   year_rows <- which(new_data$quarter==1) #first quarter has year attached
   if (!(1 %in% year_rows)){year_rows <- append(1,year_rows)} #first row needs year
   year_rows <- year_rows + tare #to make it the actual index in the ws
@@ -238,16 +275,20 @@ new2xl <- function(new_data, title_text, footer_text, table_name,
                         (see \"save_over\" and \"add_to_wb\" definitions in help)")}
   } else {
     wb <- openxlsx::loadWorkbook(paste0(save_to, "/", add_to_wb))
+    if (table_name %in% wb$sheet_names){
+      warning(paste("there was already a sheet named",table_name,"which has now been overwritten"))
+      openxlsx::removeWorksheet(wb,table_name)
+      #So we have removed the old sheet that was there
+    }
     filename <- paste(add_to_wb,gsub(" ","_",substr(Sys.time(),6,16)))
     if (save_over){
       filename <- add_to_wb}
   }
   xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
-  #xltabr::set_style_path("/Users/Luke/Downloads/LS_styles_pub.xlsx")
 
   setwd(save_to) #where the output will be saved. Default is current folder
 
-  #now we use all the subfunctions created as part of the LStest package (behind the scense)
+  #now we use all the subfunctions created as part of the LStest package (behind the scenes)
   tab <- xltabr::initialise(wb = wb, ws_name = table_name)
   tab <- LStest:::add_title_dft(tab, title_text)
   tab <- LStest:::add_body_dft(tab, new_data)
@@ -261,4 +302,13 @@ new2xl <- function(new_data, title_text, footer_text, table_name,
   if (file.exists(filename)) {
     file.remove(filename)}
   openxlsx::saveWorkbook(tab$wb, filename)
+
+  #print statement to show success, and where it was outputted
+  cat("\n The file: ", filename, "\n", "Has been saved in the following location on your desktop: \n", save_to, "\n")
+
+  if(add_to_wb!=FALSE){
+    cat("\n \n NB the file", filename, "has been saved over")
+  }
 }
+
+

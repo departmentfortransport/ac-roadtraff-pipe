@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-**Warning: `LStest` is in its early stages of development.** It is based heavily on the `xltabr` developed by members of the Ministry of Justice (MoJ).
+**Warning: `LStest` is in its early stages of development.** It is based heavily on the `xltabr` package developed by members of the Ministry of Justice (MoJ).
 
 If you are not a member of the Department for Transport (DfT) **I highly recommend you instead [use the `xltabr` package](https://github.com/moj-analytical-services/xltabr)**, as it is a far more developed and organised package. Even if you do work for DfT, that package is definitely worth a look!
 
@@ -102,6 +102,10 @@ new2xl(new_data,
        title_text,
        footer_text,
        table_name = "TRA2504a")
+#> 
+#>  The file:  new2xl03-12_1636.xlsx 
+#>  Has been saved in the following location on your desktop: 
+#>  /Users/Luke/LStest
 ```
 
 The table has now been saved in the directory where you're working, if you can find it you can see the path by typing `getwd()` in R.
