@@ -30,8 +30,8 @@ Made with xltabr as main base.
 }
 \examples{
 #set up scenario
-raw <- api_new_data()
-new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic")
+raw <- api_get_data()
+new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
 #title and footer
 title_text <- c("Department for Transport statistics",
                "Traffic",

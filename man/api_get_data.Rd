@@ -14,5 +14,5 @@
 Downloads data from road traffic API and formats correctly into data frame
 }
 \examples{
-raw <- api_new_data()
+raw <- api_get_data()
 }

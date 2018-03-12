@@ -12,7 +12,7 @@
 #'
 #' @param url the API url. Preset to one that works but can be overwritten (for example, seasonal data)
 #' @examples
-#' raw <- api_new_data()
+#' raw <- api_get_data()
 #' @export
 api_get_data <- function(
   url="https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly"){
