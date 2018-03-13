@@ -190,24 +190,26 @@ raw2new <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
   ##output that can be put into xltabr
 
   raw <- rolling_annual(raw,roll) #quarterly vals or rolling annual
+
+  if(units=="traffic"){
+    if(!km_or_miles %in% c("km","miles")){
+      stop("When units=\"traffic\" you must specify km_or_miles to be exactly \"km\" or \"miles\"")
+    } else {
+      if(km_or_miles == "miles"){
+        #change the values from km to miles
+        raw$estimate <- raw$estimate * 0.621371
+      }
+    }
+  }
+
   new_data <- vehicle_road(raw, type) #road or vehicle
 
   temp <- new_data[ ,-which(names(new_data) %in% c("year", "quarter"))]
   new_data <- new_data[rowSums(is.na(temp)) != ncol(temp),] #so we don't have empty rows
 
-  if(units=="traffic"){
-    if(!km_or_miles %in% c("km","miles")){
-     stop("When units=\"traffic\" you must specify km_or_miles to be exactly \"km\" or \"miles\"")
-    } else {
-        if(km_or_miles == "miles"){
-          #change the values
-          n <- dim(new_data)[2]
-          new_data[,3:n] <- new_data[,3:n] * 0.621371
-        }
-      }
-    } else {
-    new_data <- chosen_units(new_data,units) #%  or index
-    }
+
+  new_data <- chosen_units(new_data, units) #traff, %, or index
+
   temp <- new_data[ ,-which(names(new_data) %in% c("year", "quarter"))]
   new_data <- new_data[rowSums(is.na(temp)) != ncol(temp),] #so we don't have empty rows
   return(new_data)
