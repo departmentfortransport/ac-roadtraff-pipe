@@ -7,7 +7,7 @@ raw <- LStest:::rolling_annual(raw, TRUE)
 new_data <- LStest:::vehicle_road(raw, "vehicle_and_road")
 
 LStest::new2xl(new_data, title_text, footer_text, table_name,
-save_to=getwd(), add_to_wb = FALSE, save_over = F)
+save_to=getwd(), start_from_wb = FALSE, save_over = F)
 
 
 ###Trying to fix the "add_top_headers" function to work for 2 levels

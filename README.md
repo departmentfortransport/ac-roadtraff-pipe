@@ -46,8 +46,8 @@ If you receive an error in the above, it is likely that you are on the ETHOS net
 
 Click the "Clone or download" button in the top right hand corner of this page and select "Download ZIP". Then, you will have to open your file explorer and manually put the folder into the location of your installed R packages. To find out where your R packages are installed, type `.libPaths()` in your console. Hopefully you can then type `library(LStest)` and everything works out fine.
 
-<b name="notSRF2"></b> "I'm in DfT, but not the Road Stats team"
-----------------------------------------------------------------
+<b name="notSRF"></b> "I'm in DfT, but not the Road Stats team"
+---------------------------------------------------------------
 
 Great! Depending on how "heavy" an R-user you are may affect how much you want to use my package.
 
@@ -134,4 +134,4 @@ new2xl(new_data,
 
 The above process can be repeated for each sheet in the Excel file, and by the end you will have the finished table. Currently there is no way to make the Contents page, but this could be done as an extra feature of this package. The recommended method is to have the file saved with the Contents sheet already in place, and to write over the file each time. To see how to do this, look in `?new2xl`.
 
-Note if you are not in the Road Traffics team the function `new2xl` is not necessarily helpful, please see [above](#notSRF2)
+Note if you are not in the Road Traffics team the function `new2xl` is not necessarily helpful, please see [above](#notSRF)

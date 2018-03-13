@@ -5,7 +5,7 @@
 \title{new2xl}
 \usage{
 new2xl(new_data, title_text, footer_text, table_name, save_to = getwd(),
-  add_to_wb = FALSE, save_over = F)
+  start_from_wb = FALSE, save_over = F)
 }
 \arguments{
 \item{new_data}{data frame outputted from \code{\link{raw2df}}}
@@ -18,10 +18,10 @@ new2xl(new_data, title_text, footer_text, table_name, save_to = getwd(),
 
 \item{save_to}{where the xlsx document will be saved. Default is current folder.}
 
-\item{add_to_wb}{Give name of workbook the sheet will be added on to. If left blank, new workbook
+\item{start_from_wb}{Give name of workbook the sheet will be added on to. If left blank, new workbook
 will be created}
 
-\item{save_over}{TRUE or FALSE. Should the output file replace the file of "add_to_wb" or
+\item{save_over}{TRUE or FALSE. Should the output file replace the file of "start_from_wb" or
 be saved as a new file? TRUE = replace the file}
 }
 \description{
@@ -52,6 +52,6 @@ new2xl(new_data,
        footer_text,
        table_name = "TRA2504e",
        save_to = "/Users/Luke/Documents/xltabr_TRA2504e/sheet_builder_test",
-       add_to_wb = "builder.xlsx",
+       start_from_wb = "builder.xlsx",
        save_over = F)
 }

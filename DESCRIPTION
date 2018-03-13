@@ -36,6 +36,7 @@ Imports:
   zoo,
   stats,
   xltabr,
-  magrittr
+  magrittr,
+  openxlsx
 Suggests: 
     testthat

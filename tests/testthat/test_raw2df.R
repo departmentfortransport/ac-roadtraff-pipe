@@ -22,7 +22,7 @@ test_that("api data in expected format",{
   #below is quite a strict error test - var names can't change, neither can order
   expect_equal(names(raw), c("year", "quarter", "road_type", "vehicle_type", "estimate"))
   #can't have negative? or NA traffic flow
-  expect_that(min(raw$estimate), is_weakly_more_than(0-10^-100) , label = "negative values")
+  expect_true(min(raw$estimate) > (0-10^-100) , label = "negative values")
   expect_that(sum(is.na(raw)), equals(0),label="NA vals")
   expect_equal(raw,raw[order(raw$year, raw$quarter),], label = "ordered abnormally")
 })

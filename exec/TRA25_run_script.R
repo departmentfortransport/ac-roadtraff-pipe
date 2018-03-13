@@ -26,7 +26,7 @@ new2xl(new_data,
        footer_text,
        table_name = "TRA2503a",
        save_to = save_loc,
-       add_to_wb = "TRA2503.xlsx",
+       start_from_wb = "TRA2503.xlsx",
        save_over = TRUE)
 
 
@@ -43,7 +43,7 @@ new2xl(new_data,
        footer_text,
        table_name = "TRA2504a",
        save_to = save_loc,
-       add_to_wb = "TRA2504.xlsx",
+       start_from_wb = "TRA2504.xlsx",
        save_over = TRUE)
 
 ####TRA2504c####
@@ -60,7 +60,7 @@ new2xl(new_data,
        footer_text,
        table_name = "TRA2504c",
        save_to = save_loc,
-       add_to_wb = "TRA2504.xlsx",
+       start_from_wb = "TRA2504.xlsx",
        save_over = TRUE)
 
 ####TRA2504e####
@@ -79,7 +79,7 @@ new2xl(new_data,
        footer_text,
        table_name = "TRA2504e",
        save_to = save_loc,
-       add_to_wb = "TRA2504.xlsx",
+       start_from_wb = "TRA2504.xlsx",
        save_over = TRUE)
 
 
@@ -96,5 +96,5 @@ new2xl(new_data,
        footer_text,
        table_name = "TRA2505b",
        save_to = save_loc,
-       add_to_wb = FALSE)
+       start_from_wb = FALSE)
 

@@ -222,6 +222,39 @@ colrow_width_dft <- function(tab, new_data){
   return(tab)
 }
 
+get_filename <- function(start_from_wb, save_over, table_name){
+  #decides on the name of the file based off the following:
+
+  #start_from_wb given?     save_over the file?   filename is
+  #--------------------     -------------------   -----------
+  #       No                      No              table_name_date_time.xlsx
+  #       No                      Yes             ERROR
+  #       Yes                     No              start_from_wb_date_time.xlsx
+  #       Yes                     Yes             start_from_wb.xlsx
+
+  n <- nchar(start_from_wb)
+  if (substr(start_from_wb, n-4, n) != ".xlsx"){
+    stop("the workbook you're starting from is not a .xlsx file. Make sure it ends \".xlsx\".
+         If it is a different type it is safest to resave as a .xlsx")
+  }
+  start_from_wb <- substr(start_from_wb, 1, n-5) #take off the .xlsx part
+
+  #Now can do the main part of the function
+  if (start_from_wb == F){
+    #filename will just be the table_name with date_time attached
+    filename <- paste0(table_name,"_",gsub(" ","_",substr(Sys.time(),6,16)),".xlsx")
+    filename <- gsub(":","",filename)
+    if (save_over){stop("can't save over file when not given workbook to add to
+                        (see \"save_over\" and \"start_from_wb\" definitions in help)")}
+  } else {
+    if (save_over){
+      filename <- paste0(start_from_wb, ".xlsx")
+    } else {
+      filename <- paste0(start_from_wb, "_", gsub(" ","_",substr(Sys.time(),6,16)),".xlsx")
+      filename <- gsub(":","",filename)}}
+  return(filename)
+}
+
 ####Go from the data frame "new_data" to Excel doc####
 #' @title new2xl
 #' @description takes a data frame with title and footer text and outputs a beautiful Excel table.
@@ -231,11 +264,12 @@ colrow_width_dft <- function(tab, new_data){
 #' @param footer_text vector of strings, can be any length
 #' @param table_name string eg "TRA2504e"
 #' @param save_to where the xlsx document will be saved. Default is current folder.
-#' @param add_to_wb Give name of workbook the sheet will be added on to. If left blank, new workbook
+#' @param start_from_wb Give name of workbook the sheet will be added on to. If left blank, new workbook
 #' will be created
-#' @param save_over TRUE or FALSE. Should the output file replace the file of "add_to_wb" or
+#' @param save_over TRUE or FALSE. Should the output file replace the file of "start_from_wb" or
 #' be saved as a new file? TRUE = replace the file
 #' @examples
+#' \dontrun{
 #' #set up scenario
 #' raw <- api_get_data()
 #' new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
@@ -259,31 +293,30 @@ colrow_width_dft <- function(tab, new_data){
 #'        footer_text,
 #'        table_name = "TRA2504e",
 #'        save_to = "/Users/Luke/Documents/xltabr_TRA2504e/sheet_builder_test",
-#'        add_to_wb = "builder.xlsx",
+#'        start_from_wb = "builder.xlsx",
 #'        save_over = F)
+#'        }
 #' @export
 new2xl <- function(new_data, title_text, footer_text, table_name,
-                   save_to=getwd(), add_to_wb = FALSE, save_over = F){
+                   save_to=getwd(), start_from_wb = FALSE, save_over = F){
   #makes nicely formatted Excel doc from new_data
 
-  if (add_to_wb == F){
+  #Open the workbook
+  if (start_from_wb == F){
     wb <- openxlsx::loadWorkbook(system.file("template.xlsx", package="LStest"))
-    #write what it's going to be saved as
-    filename <- paste0("new2xl",gsub(" ","_",substr(Sys.time(),6,16)),".xlsx")
-    filename <- gsub(":","",filename)
-    if (save_over){stop("can't save over file when not given workbook to add to
-                        (see \"save_over\" and \"add_to_wb\" definitions in help)")}
   } else {
-    wb <- openxlsx::loadWorkbook(paste0(save_to, "/", add_to_wb))
-    if (table_name %in% wb$sheet_names){
-      warning(paste("there was already a sheet named",table_name,"which has now been overwritten"))
-      openxlsx::removeWorksheet(wb,table_name)
-      #So we have removed the old sheet that was there
-    }
-    filename <- paste(add_to_wb,gsub(" ","_",substr(Sys.time(),6,16)))
-    if (save_over){
-      filename <- add_to_wb}
-  }
+    wb <- openxlsx::loadWorkbook(paste0(save_to, "/", start_from_wb))}
+
+  filename <- get_filename(start_from_wb, save_over, table_name)
+
+  if ( (start_from_wb != F) #we have a starting point
+       & (save_over = T) #we are overwriting this wb
+       & (table_name %in% wb$sheet_names) #there is already a sheet with the name we want
+       ){
+    warning(paste("there was already a sheet named",table_name,"which has now been overwritten"))
+    openxlsx::removeWorksheet(wb,table_name)}
+
+
   xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
 
   setwd(save_to) #where the output will be saved. Default is current folder
@@ -304,10 +337,11 @@ new2xl <- function(new_data, title_text, footer_text, table_name,
   openxlsx::saveWorkbook(tab$wb, filename)
 
   #print statement to show success, and where it was outputted
-  cat("\n The file: ", filename, "\n", "Has been saved in the following location on your desktop: \n", save_to, "\n")
+  cat("The file: ", filename, "\n", "Has been saved in the following location on your desktop: \n", save_to, "\n")
 
-  if(add_to_wb!=FALSE){
-    cat("\n \n NB the file", filename, "has been saved over")
+  if(start_from_wb!=FALSE){
+    cat("\n NB the file", filename, "has been overwritten \n", "and now has sheet", table_name, "\n ",
+        rep("-",50),"\n")
   }
 }
 
