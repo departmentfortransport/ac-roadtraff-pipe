@@ -2,6 +2,7 @@
 
 export("%>%")
 export(api_get_data)
+export(contents_TRA25)
 export(new2xl)
 export(raw2new)
 importFrom(magrittr,"%>%")

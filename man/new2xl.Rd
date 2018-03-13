@@ -29,6 +29,7 @@ takes a data frame with title and footer text and outputs a beautiful Excel tabl
 Made with xltabr as main base.
 }
 \examples{
+\dontrun{
 #set up scenario
 raw <- api_get_data()
 new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
@@ -54,4 +55,5 @@ new2xl(new_data,
        save_to = "/Users/Luke/Documents/xltabr_TRA2504e/sheet_builder_test",
        start_from_wb = "builder.xlsx",
        save_over = F)
+       }
 }
