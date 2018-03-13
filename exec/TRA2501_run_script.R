@@ -42,7 +42,7 @@ make_TRA2501 <- function(save_loc=getwd()){
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2501a",
-                  "Road traffic (vehicle miles) by vehicle type in Great Britain, rolling annual totals from 1993",
+                  "Road traffic (vehicle miles) by vehicle type in Great Britain, rolling annual totals from 1994",
                   "",
                   "Billion vehicle miles (not seasonally adjusted)")
   new2xl(new_data,
@@ -51,7 +51,7 @@ make_TRA2501 <- function(save_loc=getwd()){
          table_name = "TRA2501a",
          save_to = save_loc,
          start_from_wb = "TRA2501.xlsx",
-         save_over = FALSE)
+         save_over = TRUE)
 
   ###TRA2501b####
   new_data <- raw2new(raw, roll=T, type="vehicle", units="index")
@@ -91,7 +91,7 @@ make_TRA2501 <- function(save_loc=getwd()){
   #waiting on seasonal data
 
   ####TRA2501e####
-  new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
+  new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "miles")
   #title and footer
   title_text <- c("Department for Transport statistics",
                   "Traffic",
