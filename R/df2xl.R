@@ -196,7 +196,11 @@ colrow_width_dft <- function(tab, new_data){
   #3) merges title cells where needed
   ##1) col widths
   n <- dim(new_data)[2]
-  tab <- xltabr::set_wb_widths(tab, body_header_col_widths = c(6, 12, 3, rep(14,n-2)))
+  #tab <- xltabr::set_wb_widths(tab,
+  #                             body_header_col_widths = "auto")
+  tab <- xltabr::set_wb_widths(tab, body_header_col_widths = 1.1 * c(6, 12, 3, rep(14,n-2)))
+  #Adds up to 9 rows where new_data only has 8, but this is because we have added in
+  #the row for blanks in col3
 
   ##2) row height
   ws_name <- tab$misc$ws_name
@@ -231,14 +235,14 @@ get_filename <- function(start_from_wb, save_over, table_name){
   #       No                      Yes             ERROR
   #       Yes                     No              start_from_wb_date_time.xlsx
   #       Yes                     Yes             start_from_wb.xlsx
-
+  if(start_from_wb != FALSE){
   n <- nchar(start_from_wb)
   if (substr(start_from_wb, n-4, n) != ".xlsx"){
-    stop("the workbook you're starting from is not a .xlsx file. Make sure it ends \".xlsx\".
-         If it is a different type it is safest to resave as a .xlsx")
+    stop(cat("the workbook you're starting from is not a .xlsx file. Make sure it ends \".xlsx\". \n",
+         "If it is a different type it is safest to resave as a .xlsx"))
   }
   start_from_wb <- substr(start_from_wb, 1, n-5) #take off the .xlsx part
-
+  }
   #Now can do the main part of the function
   if (start_from_wb == F){
     #filename will just be the table_name with date_time attached
@@ -259,7 +263,7 @@ get_filename <- function(start_from_wb, save_over, table_name){
 #' @title new2xl
 #' @description takes a data frame with title and footer text and outputs a beautiful Excel table.
 #' Made with xltabr as main base.
-#' @param new_data data frame outputted from \code{\link{raw2df}}
+#' @param new_data data frame outputted from \code{\link{raw2new}}
 #' @param title_text vector of strings, if not length 6 has warning (see Examples below for correct notation)
 #' @param footer_text vector of strings, can be any length
 #' @param table_name string eg "TRA2504e"
@@ -305,9 +309,11 @@ new2xl <- function(new_data, title_text, footer_text, table_name,
   if (start_from_wb == F){
     wb <- openxlsx::loadWorkbook(system.file("template.xlsx", package="LStest"))
   } else {
-    wb <- openxlsx::loadWorkbook(paste0(save_to, "/", start_from_wb))}
+    wb <- openxlsx::loadWorkbook(paste0(save_to, "/", start_from_wb))
+  }
 
   filename <- get_filename(start_from_wb, save_over, table_name)
+
 
   if ( (start_from_wb != F) #we have a starting point
        & (save_over = T) #we are overwriting this wb
@@ -319,7 +325,6 @@ new2xl <- function(new_data, title_text, footer_text, table_name,
 
   xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
 
-  setwd(save_to) #where the output will be saved. Default is current folder
 
   #now we use all the subfunctions created as part of the LStest package (behind the scenes)
   tab <- xltabr::initialise(wb = wb, ws_name = table_name)
@@ -332,6 +337,7 @@ new2xl <- function(new_data, title_text, footer_text, table_name,
   tab <- LStest:::add_hyperlink_dft(tab, title_text)
 
   #write the worksheet
+  setwd(save_to) #where the output will be saved. Default is current folder
   if (file.exists(filename)) {
     file.remove(filename)}
   openxlsx::saveWorkbook(tab$wb, filename)
