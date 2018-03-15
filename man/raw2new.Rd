@@ -18,7 +18,7 @@ raw2new(raw, roll = NA, type = NA, units = NA, km_or_miles = NA)
  \itemize{
   \item "traffic" - traffic values (vehicle Kms)
   \item "percentage" - percentage change from previous year same quarter
-  \item "index" - indexed values from first quarter in data (LS - CHANGE), with that quarter being 100
+  \item "index" - indexed values from first quarter in data, with that quarter being 100
 }}
 
 \item{km_or_miles}{"km" or "miles" dependant on desired units. Only used if units = "traffic",

@@ -3,18 +3,36 @@
 #############
 
 #' @title contents
-#' @description makes the contents page for TRA25 tables
-#' @param table_set
-#' @param UPDATE
+#' @description makes the contents page for TRA25 tables. Pulls templates
+#' from the package LStest and then adds in the bits that change, which are
+#' the year, quarter, last updated, next updated
+#' @param table_set the table name
+#' @param year of most recent data as an integer
+#' @param quarter of most recent data as an integer
+#' @param save_to where the xlsx document witll be saved
+#' @param save_over TRUE or FALSE - if there is a file with the same name in save_to should it
+#' overwrite? Default is FALSE, don't overwrite
+#' @param last_updated Character string. When the table set was (will be) published
+#' @param next_update Character string. When the table set will be next published
 #' @examples
+#' save_to <- getwd() #saves to current working directory
+#' year <- 2017
+#' quarter <- 3
+#' last_updated <- "November 2017"
+#' next_update <- "May 2018"
+#' contents_TRA25("TRA2501", year = year, quarter = quarter,
+#'                  save_to = save_to, save_over = FALSE,
+#'                  last_updated = last_updated,
+#'                  next_update = next_update)
+#' #look in working directory to see outputted file
 #' @export
 contents_TRA25 <- function(table_set, year, quarter, save_to, save_over=F,
                            last_updated="FILL IN", next_update="FILL IN"){
   #Uses the Contents template and adds the right year, quarter to the table
 
-  #if (!(table_set %in% c("TRA2501","TRA2502","TRA2503","TRA2504","TRA2505","TRA2506"))){
-  #  stop(paste("the table set", table_set, "does not exist"))
-  #}
+  if (!(table_set %in% c("TRA2501","TRA2502","TRA2503","TRA2504","TRA2505","TRA2506"))){
+    stop(paste("the table set", table_set, "does not exist"))
+  }
 
   wb <- openxlsx::loadWorkbook(system.file(paste0(table_set,"_template.xlsx"), package="LStest"))
 
@@ -56,16 +74,16 @@ contents_TRA25 <- function(table_set, year, quarter, save_to, save_over=F,
   #Hide the gridlines and add the 2 images (DfT, National Stats)
   openxlsx::showGridLines(wb, "Contents", showGridLines = FALSE)
   unit <- 0.8 #can alter to scale how large you want the images
-  openxlsx::insertImage(wb, "Contents", system.file("DfT_logo.png", package = "LStest"),  height = 2*unit, width = 2*unit*1.5,
-                        startRow = 2,startCol = 2)
-  openxlsx::insertImage(wb, "Contents", system.file("nationalstats_logo.png", package = "LStest"),  height = unit, width = unit,
-                        startRow = 2,startCol = 7)
+  # openxlsx::insertImage(wb, "Contents", system.file("DfT_logo.png", package = "LStest"),  height = 2*unit, width = 2*unit*1.5,
+  #                       startRow = 2,startCol = 2)
+  # openxlsx::insertImage(wb, "Contents", system.file("nationalstats_logo.png", package = "LStest"),  height = unit, width = unit,
+  #                       startRow = 2,startCol = 7)
 
   #Save the file
   openxlsx::saveWorkbook(wb, filename)
   #print statement to show success, and where it was outputted
   cat("The file: ", filename, "\n", "with updated contents page been saved in the following location on your desktop: \n",
-      save_to, "\n")
+      save_to, "\n", rep("-",50),"\n")
 
 }
 

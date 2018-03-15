@@ -84,6 +84,20 @@ Second, download the raw data from online.
 ``` r
 raw <- api_get_data("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly") 
 raw
+#> # A tibble: 1,900 x 5
+#>     year quarter road_type vehicle_type estimate
+#>    <dbl>   <dbl> <chr>     <chr>           <dbl>
+#>  1  1994    1.00 AR        cars           21.8  
+#>  2  1994    1.00 AR        hgv             2.22 
+#>  3  1994    1.00 AR        lgv             2.77 
+#>  4  1994    1.00 AR        other           0.324
+#>  5  1994    1.00 AU        cars           15.9  
+#>  6  1994    1.00 AU        hgv             0.762
+#>  7  1994    1.00 AU        lgv             1.80 
+#>  8  1994    1.00 AU        other           0.428
+#>  9  1994    1.00 MR        cars           11.1  
+#> 10  1994    1.00 MR        hgv             0.433
+#> # ... with 1,890 more rows
 ```
 
 If your data is in a csv on your desktop you can get it into R easily, an example of how to do that is given at <http://rprogramming.net/read-csv-in-r/>
@@ -97,9 +111,16 @@ We can format the data as desired, which for sheet TRA2504a in table TRA2504 is:
 ``` r
 new_data <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
 head(new_data)
+#>   year quarter     cars      hgv      lgv    other      AMV
+#> 1 1994       4 214.3886 15.39442 26.92739 5.222279 261.9327
+#> 2 1995       1 215.4086 15.53502 27.07652 5.238177 263.2583
+#> 3 1995       2 216.5472 15.64935 27.33318 5.285051 264.8148
+#> 4 1995       3 217.5244 15.71081 27.57971 5.336299 266.1512
+#> 5 1995       4 218.1757 15.81008 27.65709 5.373812 267.0167
+#> 6 1996       1 219.7889 15.90126 27.92875 5.398444 269.0173
 ```
 
-### Step 2 - format into an Excel table
+### Step 2 - format into a lovely Excel Sheet
 
 Now the data is in the right shape for making the table. After naming the title and footer this is all done inside the `new2xl` function:
 

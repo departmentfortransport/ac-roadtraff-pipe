@@ -86,7 +86,7 @@ library(LStest)
 ```
 
 Second, download the raw data from online. 
-```{r getdata, eval=FALSE}
+```{r getdata}
 raw <- api_get_data("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly") 
 raw
 ```
@@ -100,12 +100,12 @@ There are 2 steps to outputting nice Excel tables from raw data:
 We can format the data as desired, which for sheet TRA2504a in table TRA2504 is:
 rolling annual vehicle kilometres split into different vehicle types. Using the bespoke function `raw2new` this means simply one line of code specifying each decision: 
 
-```{r example1, eval=FALSE}
+```{r example1}
 new_data <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
 head(new_data)
 ```
 
-###Step 2 - format into an Excel table
+###Step 2 - format into a lovely Excel Sheet
 Now the data is in the right shape for making the table. After naming the title and footer this is all done inside the `new2xl` function:
 
 ```{r example2, eval=FALSE}

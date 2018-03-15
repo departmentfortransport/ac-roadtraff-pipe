@@ -7,7 +7,7 @@
 add_title_dft <- function(tab,title_text){
   #adds the title text, nicely formatted (cells are merged later)
   if(length(title_text)!=6){
-    stop("title_text must have 6 elements, consider adding \"\" to make it long enough")
+    stop("title_text must hafve 6 elements, consider adding \"\" to make it long enough")
   }
   title_style_names <- c("header",
                          "body",
@@ -30,20 +30,50 @@ add_hyperlink_dft <- function(tab, title_text){
   sheet_name <- unlist(strsplit(title_text[3]," "))[2] #see above error comment if unsure why
 
   openxlsx::writeFormula(tab$wb, sheet_name, x =
-  '=HYPERLINK("https://www.gov.uk/government/organisations/department-for-transport/series/road-traffic-statistics",
-               "Traffic - www.gov.uk/government/organisations/department-for-transport/series/road-traffic-statistics")',
-               startCol=1,startRow=2)
+                           '=HYPERLINK("https://www.gov.uk/government/organisations/department-for-transport/series/road-traffic-statistics",
+                         "Traffic - www.gov.uk/government/organisations/department-for-transport/series/road-traffic-statistics")',
+                         startCol=1,startRow=2)
   return(tab)
+}
+
+any_totals <- function(headers){
+  #BADLY WRITTEN FUNCTION
+  #subfunction of "varnames2english" that deals with occurances of "total".
+  #Very limited to current TRA25 options
+
+
+  if(length(grep("total",headers)) != 0){
+    #^^was the word "total" anywhere within here? Even if inside a string eg "hgv.total"
+    t <- match("total", headers) #place where "total" occurs. NA if doesn't
+    if(!is.na(t)){
+      #"total" occurs on its own
+      if (setequal(headers[-t], c("year","quarter","NA","AR","AU","MR","MU","MW"))){
+        headers[t] <- "all roads"
+      } else if (identical(headers[-t], c("year","quarter","NA","cars","hgv","lgv","other"))){
+        headers[t] <- "all motor vehicles"
+      }
+    } else {
+      #now case where "total" was in some character string but never on it's own
+      t1 <- grep("total",headers)
+      if (setequal(gsub("total.","",headers[t1]),c("cars","hgv","lgv"))){
+        headers[t1] <- "all roads"
+      } else { warning(cat("total column is not in format seen before - this ",
+                           "is a problem and your column headers may be wrong"))}
+    }
   }
+  return(headers)
+}
 
 ####add in the body (main data in table)####
 varnames2english <- function(headers){
   #given a vector of character strings, returns the same vector in "Full english"
 
+  #First have to deal with "total" columns
+  headers <- any_totals(headers)
+
   #change known words (based off headers from API)
   headers[headers=="hgv"] <- "heavy goods vehicles"
   headers[headers=="lgv"] <- "light commercial vehicles"
-  headers[headers=="AMV"] <- "all motor vehicles"
   headers[headers=="AR"] <- "rural 'A' roads"
   headers[headers=="AU"] <- "urban 'A' roads"
   headers[headers=="MR"] <- "rural minor roads"
@@ -56,8 +86,8 @@ varnames2english <- function(headers){
   .simpleCap <- function(x) { #bad to create function inside function. Stollen from ?toupper
     s <- strsplit(x, " ")[[1]]
     paste(toupper(substring(s, 1, 1)), substring(s, 2),
-          sep = "", collapse = " ")
-  }
+          sep = "", collapse = " ")}
+
   headers <- sapply(headers, .simpleCap)
   return(headers)
 }
@@ -110,7 +140,7 @@ add_headers_twovars <- function(headers){
   row_1 <- unname(LStest:::varnames2english(row_1))
   row_2 <- unname(LStest:::varnames2english(row_2))
 
-  #replace ("a", "a", "a", "a", "b", "b", "b") with ("a", "","","","b","","")
+  #replace ("a", "a", "a", "a", "b", "b", "b") with ("a","","","","b","","")
   for (temp in unique(row_1)){
     first_appearance <- which(row_1 == temp)[1]
     row_1[row_1 == temp] <- ""
@@ -160,8 +190,17 @@ add_body_dft <- function(tab, new_data){
   #add in col for footnotes (eg "P" for provisional)
   new_data <- add_footnote_refs(new_data)[[1]]
 
+  #write the column styles - which ones to make bold
+  headers <- names(new_data)
+  col_style_names <- rep("body", length(headers))
+  col_style_names[headers=="year"] <- "body_bold_year" #so year nums formatted as 2013 not 2,013
+  col_style_names[headers=="quarter"] <- "body_bold"
+  col_style_names[grepl("total",headers)] <- "body_bold" #all totals will be bold
+
+
   #Add col headers to tab
-  headers <- varnames2english(names(new_data))
+  headers <- varnames2english(headers)
+
   if (sum(grepl(".", headers, fixed = T)) > length(headers) / 3){
     #this is an arbitrary if condition of "if more than a third of the headers have the "." character
     #in. The reason being that is the notation I have been using for 2 header levels (e.g. TRA2503)
@@ -181,10 +220,7 @@ add_body_dft <- function(tab, new_data){
   new_data$year <- nice_year(new_data$year, new_data$quarter)
   new_data$quarter <- nice_quart(new_data$quarter)
   tab <- xltabr::add_body(tab, new_data,
-                  col_style_names = c("body_bold_year", #where numbers are 2013 not 2,013.0s
-                                      "body_bold",
-                                      rep("body",n-3),
-                                      "body_bold"))
+                          col_style_names = col_style_names)
   tab <- add_bottom_row_style(tab) #the border along the bottom
   return(tab)
 }
@@ -196,11 +232,13 @@ colrow_width_dft <- function(tab, new_data){
   #3) merges title cells where needed
   ##1) col widths
   n <- dim(new_data)[2]
-  #tab <- xltabr::set_wb_widths(tab,
-  #                             body_header_col_widths = "auto")
-  tab <- xltabr::set_wb_widths(tab, body_header_col_widths = 1.1 * c(6, 12, 3, rep(14,n-2)))
-  #Adds up to 9 rows where new_data only has 8, but this is because we have added in
-  #the row for blanks in col3
+  tab <- xltabr::set_wb_widths(tab, body_header_col_widths = c(6, 12, 3, rep(14,n-2)))
+  #^^2 points about the above line:
+  #1) the 1.2 factor is due to an unsolved issue around the col widths changing based on
+  #   which file is read in, i.e. a contents page already exists and the structure of that
+  #   page. It is not known exactly what happens.
+  #2) n+1 rows are defined where new_data only has n, but this is because in 'tab' we have
+  #   added in a col for footnote references in col3
 
   ##2) row height
   ws_name <- tab$misc$ws_name
@@ -212,7 +250,7 @@ colrow_width_dft <- function(tab, new_data){
   year_rows <- year_rows + tare #to make it the actual index in the ws
   #now to change the row heights
   openxlsx::setRowHeights(tab$wb, sheet = ws_name, rows=year_rows,
-                         heights=25)
+                          heights=25)
 
   ##3) cell merge
   #bastardising "auto_merge_title_cells" to not merge the first row
@@ -236,12 +274,12 @@ get_filename <- function(start_from_wb, save_over, table_name){
   #       Yes                     No              start_from_wb_date_time.xlsx
   #       Yes                     Yes             start_from_wb.xlsx
   if(start_from_wb != FALSE){
-  n <- nchar(start_from_wb)
-  if (substr(start_from_wb, n-4, n) != ".xlsx"){
-    stop(cat("the workbook you're starting from is not a .xlsx file. Make sure it ends \".xlsx\". \n",
-         "If it is a different type it is safest to resave as a .xlsx"))
-  }
-  start_from_wb <- substr(start_from_wb, 1, n-5) #take off the .xlsx part
+    n <- nchar(start_from_wb)
+    if (substr(start_from_wb, n-4, n) != ".xlsx"){
+      stop(cat("the workbook you're starting from is not a .xlsx file. Make sure it ends \".xlsx\". \n",
+               "If it is a different type it is safest to resave as a .xlsx"))
+    }
+    start_from_wb <- substr(start_from_wb, 1, n-5) #take off the .xlsx part
   }
   #Now can do the main part of the function
   if (start_from_wb == F){
@@ -318,7 +356,7 @@ new2xl <- function(new_data, title_text, footer_text, table_name,
   if ( (start_from_wb != F) #we have a starting point
        & (save_over = T) #we are overwriting this wb
        & (table_name %in% wb$sheet_names) #there is already a sheet with the name we want
-       ){
+  ){
     warning(paste("there was already a sheet named",table_name,"which has now been overwritten"))
     openxlsx::removeWorksheet(wb,table_name)}
 

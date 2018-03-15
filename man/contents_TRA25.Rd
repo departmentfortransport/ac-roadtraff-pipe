@@ -7,6 +7,36 @@
 contents_TRA25(table_set, year, quarter, save_to, save_over = F,
   last_updated = "FILL IN", next_update = "FILL IN")
 }
+\arguments{
+\item{table_set}{the table name}
+
+\item{year}{of most recent data as an integer}
+
+\item{quarter}{of most recent data as an integer}
+
+\item{save_to}{where the xlsx document witll be saved}
+
+\item{save_over}{TRUE or FALSE - if there is a file with the same name in save_to should it
+overwrite? Default is FALSE, don't overwrite}
+
+\item{last_updated}{Character string. When the table set was (will be) published}
+
+\item{next_update}{Character string. When the table set will be next published}
+}
 \description{
-makes the contents page for TRA25 tables
+makes the contents page for TRA25 tables. Pulls templates
+from the package LStest and then adds in the bits that change, which are
+the year, quarter, last updated, next updated
+}
+\examples{
+save_to <- getwd() #saves to current working directory
+year <- 2017
+quarter <- 3
+last_updated <- "November 2017"
+next_update <- "May 2018"
+contents_TRA25("TRA2501", year = year, quarter = quarter,
+                 save_to = save_to, save_over = FALSE,
+                 last_updated = last_updated,
+                 next_update = next_update)
+#look in working directory to see outputted file
 }

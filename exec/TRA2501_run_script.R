@@ -13,6 +13,11 @@ save_loc <- "/Users/Luke/Documents/table_dump/"
 #and then it will be saved to where your current session is, which you can see
 #by running:
 #  getwd()
+year <- 2017
+quarter <- 3
+last_updated <- "November 2017"
+next_update <- "May 2018"
+#^^^^Update the year and quarter to most recent
 
 ###############################################
 ##RUN EVERYTHING BELOW THIS IN ONE

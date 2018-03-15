@@ -76,18 +76,18 @@ pivot_raw <- function(raw, type){
   new_data <- raw %>%
     dplyr::group_by_("year", "quarter", type) %>%
     dplyr::summarise(estimate = sum(estimate))
-  #Pivots type from being a row to being a few cols (as is categorical)
+  #Pivots type from being a row tso being a few cols (as is categorical)
   new_data <- reshape2::dcast(new_data,
                               year + quarter ~ get(type),
                               #^^"get" is used here as we want the value of type not "type"
                               value.var = "estimate",
                               fun.aggregate = sum)
-  # Add  in a column for AMV
-  AMV <- rowSums(new_data[, which(names(new_data) %in%
+  # Add  in a column for the sum ie the totals
+  total <- rowSums(new_data[, which(names(new_data) %in%
                                     unique(dplyr::pull(raw,type)))])
   #^^^dirty code - but just selects ones we've pivoted up
-  new_data <-  cbind(new_data, AMV)
-  colnames(new_data)[length(new_data)] <- "AMV"
+  new_data <-  cbind(new_data, total)
+  colnames(new_data)[length(new_data)] <- "total"
   return(new_data)
 }
 
@@ -143,9 +143,10 @@ chosen_units <- function(new_data, units, index_from=NA){
     }
   }
   if (units == "index"){
-    if(is.na(index_from)){index_from <- list(year=new_data$year[1], quarter=new_data$quarter[1])}
-
-    warning("index_from is not yet sorted properly (LS needs to fix)")
+    if(is.na(index_from)){index_from <- list(year=new_data$year[1], quarter=new_data$quarter[1])
+    } else {
+      stop("index_from is not sorted from vals other than first in data set - sorry!")
+    }
     #next 5 lines is probably bad practice - using loops in R!
     n <- dim(new_data)[2] #width of the data frame
     m <- dim(new_data)[1] #length of the data frame
@@ -170,7 +171,7 @@ chosen_units <- function(new_data, units, index_from=NA){
 #'  \itemize{
 #'   \item "traffic" - traffic values (vehicle Kms)
 #'   \item "percentage" - percentage change from previous year same quarter
-#'   \item "index" - indexed values from first quarter in data (LS - CHANGE), with that quarter being 100
+#'   \item "index" - indexed values from first quarter in data, with that quarter being 100
 #' }
 #' @param km_or_miles "km" or "miles" dependant on desired units. Only used if units = "traffic",
 #' as otherwise doesn't make a difference.
