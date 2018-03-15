@@ -179,10 +179,10 @@ chosen_units <- function(new_data, units, index_from=NA){
 #' #first get the raw data
 #' raw <- api_get_data()
 #' #Google TRA25 if the naming convention on the left ("TRA25...") doesn't make sense
-#' TRA2504e <- raw2new(raw,roll=F, type="vehicle", units="traffic")
-#' TRA2505e <- raw2new(raw,roll=F, type="road", units="traffic")
-#' TRA2504b <- raw2new(raw,roll=T, type="vehicle", units="index")
-#' TRA2504c <- raw2new(raw,roll=T, type="vehicle", units="percentage")
+#' TRA2504e <- raw2new(raw,roll=FALSE, type="vehicle", units="traffic", km_or_miles = "km")
+#' TRA2505e <- raw2new(raw,roll=FALSE, type="road", units="traffic", km_or_miles = "km")
+#' TRA2504b <- raw2new(raw,roll=TRUE, type="vehicle", units="index")
+#' TRA2504c <- raw2new(raw,roll=TRUE, type="vehicle", units="percentage")
 #' @export
 
 raw2new <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){

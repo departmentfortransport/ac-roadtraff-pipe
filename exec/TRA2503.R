@@ -6,9 +6,19 @@ raw <- api_get_data()
 raw <- LStest:::rolling_annual(raw, TRUE)
 new_data <- LStest:::vehicle_road(raw, "vehicle_and_road")
 
+table_name <- "TRA2503a"
+title_text <- c("Department for Transport statistics",
+               "Traffic",
+               "Table TRA2503a",
+               "test",
+               "",
+               "test")
 LStest::new2xl(new_data, title_text, footer_text, table_name,
-save_to=getwd(), start_from_wb = FALSE, save_over = F)
+               save_to=getwd(), start_from_wb = FALSE, save_over = F)
 
+
+
+##########OLD (Probably Outdate) CODE##########
 
 ###Trying to fix the "add_top_headers" function to work for 2 levels
 headers_0 <- names(new_data)

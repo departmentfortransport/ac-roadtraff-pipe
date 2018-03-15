@@ -1,8 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-|                                                                                                                                                                 |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Warning: `LStest` is in its early stages of development.** It is based heavily on the `xltabr` package developed by members of the Ministry of Justice (MoJ). |
+**Warning: `LStest` is in its early stages of development.** It is based heavily on the `xltabr` package developed by members of the Ministry of Justice (MoJ).
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 If you are not a member of the Department for Transport (DfT) **I highly recommend you instead [use the `xltabr` package](https://github.com/moj-analytical-services/xltabr)**, as it is a far more developed and organised package. Even if you do work for DfT, that package is definitely worth a look!
 

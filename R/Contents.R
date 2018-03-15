@@ -12,9 +12,9 @@ contents_TRA25 <- function(table_set, year, quarter, save_to, save_over=F,
                            last_updated="FILL IN", next_update="FILL IN"){
   #Uses the Contents template and adds the right year, quarter to the table
 
-  if (!(table_set %in% c("TRA2501","TRA2502","TRA2503","TRA2504","TRA2505","TRA2506"))){
-    stop(paste("the table set", table_set, "does not exist"))
-  }
+  #if (!(table_set %in% c("TRA2501","TRA2502","TRA2503","TRA2504","TRA2505","TRA2506"))){
+  #  stop(paste("the table set", table_set, "does not exist"))
+  #}
 
   wb <- openxlsx::loadWorkbook(system.file(paste0(table_set,"_template.xlsx"), package="LStest"))
 
@@ -63,6 +63,10 @@ contents_TRA25 <- function(table_set, year, quarter, save_to, save_over=F,
 
   #Save the file
   openxlsx::saveWorkbook(wb, filename)
+  #print statement to show success, and where it was outputted
+  cat("The file: ", filename, "\n", "with updated contents page been saved in the following location on your desktop: \n",
+      save_to, "\n")
+
 }
 
 #LStest:::contents_TRA25("TRA2502", 2017, 3, save_to = "/Users/Luke/Documents/table_dump/")

@@ -8,7 +8,7 @@ new2xl(new_data, title_text, footer_text, table_name, save_to = getwd(),
   start_from_wb = FALSE, save_over = F)
 }
 \arguments{
-\item{new_data}{data frame outputted from \code{\link{raw2df}}}
+\item{new_data}{data frame outputted from \code{\link{raw2new}}}
 
 \item{title_text}{vector of strings, if not length 6 has warning (see Examples below for correct notation)}
 

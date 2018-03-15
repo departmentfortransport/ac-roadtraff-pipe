@@ -13,7 +13,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-------------
 **Warning: `LStest` is in its early stages of development.** It is based heavily on the `xltabr` package developed by members of the Ministry of Justice (MoJ).
 ------------
 
