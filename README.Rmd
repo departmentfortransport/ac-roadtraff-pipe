@@ -35,7 +35,7 @@ This purpose of this package is to help users present beautifully formatted Exce
 knitr::include_graphics(system.file("flow_pipe.png", package="LStest"))
 ```
 
-
+![image](inst/flow_pipe.png?raw=true)
 
 This will act as a segment of the [pipeline dream](https://ukgovdatascience.github.io/rap_companion/) for transforming the way that official statistics are produced. 
 
@@ -58,7 +58,11 @@ Click the "Clone or download" button in the top right hand corner of this page a
 
 ## <c name="SRF2"></c> "I'm in the Road Stats team and I want to make new TRA25 tables"
 
-Great!
+Great! You'll need to install the package onto your desktop and have R set up on the system. Then, you need to read through and run the script "TRA25_run_script.R" that is in the "exec" folder of this package. You can open it in RStudio by the usual file finder way or by running:
+```{r, eval=FALSE}
+file.edit(system.file("exec", "TRA25_run_script.R", package="LStest"))
+```
+in your console which will open the file. 
 
 ## <b name="notSRF"></b> "I'm in DfT, but not the Road Stats team"
 

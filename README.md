@@ -23,6 +23,8 @@ This purpose of this package is to help users present beautifully formatted Exce
 
 <img src="/Users/Luke/Library/R/3.4/library/LStest/flow_pipe.png" width="100%" />
 
+![image](inst/flow_pipe.png?raw=true)
+
 This will act as a segment of the [pipeline dream](https://ukgovdatascience.github.io/rap_companion/) for transforming the way that official statistics are produced.
 
 This package is a DfT-tailored version of xltabr, including all the functions and code that I (Luke Shaw) wrote and developed - all focused primarily around `xltabr`.
@@ -48,7 +50,13 @@ Click the "Clone or download" button in the top right hand corner of this page a
 <c name="SRF2"></c> "I'm in the Road Stats team and I want to make new TRA25 tables"
 ------------------------------------------------------------------------------------
 
-Great!
+Great! You'll need to install the package onto your desktop and have R set up on the system. Then, you need to read through and run the script "TRA25\_run\_script.R" that is in the "exec" folder of this package. You can open it in RStudio by the usual file finder way or by running:
+
+``` r
+file.edit(system.file("exec", "TRA25_run_script.R", package="LStest"))
+```
+
+in your console which will open the file.
 
 <b name="notSRF"></b> "I'm in DfT, but not the Road Stats team"
 ---------------------------------------------------------------
