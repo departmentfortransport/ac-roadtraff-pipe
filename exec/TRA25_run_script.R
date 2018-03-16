@@ -1,100 +1,34 @@
 ########
-##Script that outputs all TRA25 tables
-##06/03/2018 work in progress
+##Script that outputs all TRA25 tables in 6 steps :)
+##15/03/2018 work in progress
 ########
 
-save_loc <- "/Users/Luke/Documents/table_dump/"
-#^^^^CHANGE the above line to where in your documents you want to save the file
+#1) check the API at https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly has the most uptodate data
+
+#2) change the following line to where in your docs you want the tables to save (*)
+save_loc <- "/Users/Luke/Documents/table_dump/showcase/"
+#   (*)If you don't know uncomment the following line:
+#   rm(save_loc)
+#   and then it will be saved to where your current session is, which you can see by running this:
+#   getwd()
+
+#3) Update the 4 things below.
+year <- 2017
+quarter <- 3
+last_updated <- "November 2017"
+next_update <- "May 2018"
+
+#4) run this whole script - you can do this with the shortcuts "CTRL + A" then "CTRL + R"
 
 raw <- api_get_data()
+source(system.file("TRA2501_sub.r",package="LStest"))
+source(system.file("TRA2502_sub.r",package="LStest"))
+source(system.file("TRA2503_sub.r",package="LStest"))
 
-####TRA2503a####
-new_data <- raw2new(raw, roll=T, type="vehicle_and_road", units="traffic", km_or_miles = "miles")
-title_text <- c("Department for Transport statistics",
-                "Traffic",
-                "Table TRA2503a",
-                "Car and goods vehicle traffic (vehicle miles) by road class in Great Britain, rolling annual totals from 1993",
-                "",
-                "Billion vehicle miles (not seasonally adjusted)")
-footer_text <- c("",
-                 "(1) Two wheeled motor vehicles, buses, and coaches",
-                 "(2) Total may not match sum due to rounding",
-                 "(3) figures affected by September 2000 fuel protest",
-                 "The figures in these tables are National Statistics")
-new2xl(new_data,
-       title_text,
-       footer_text,
-       table_name = "TRA2503a",
-       save_to = save_loc,
-       start_from_wb = "TRA2503.xlsx",
-       save_over = TRUE)
+#5) CHECK FOR ANY ERRORS OR WARNINGS in the output - you'll know them because they are in red :)
+#   This includes scrolling right the way up the consol to where the first line was run (which is
+#   where save_loc is defined)
+#   It is important you understand any that happen, as this process is new so there could be bugs
+#   Report any bugs to the appropriate person!
 
-
-###TRA2504a####
-new_data <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "km")
-title_text <- c("Department for Transport statistics",
-                "Traffic",
-                "Table TRA2504a",
-                "Road traffic (vehicle kilometres) by vehicle type in Great Britain, rolling annual totals from 1993",
-                "",
-                "Billion vehicle kilometres (not seasonally adjusted)")
-new2xl(new_data,
-       title_text,
-       footer_text,
-       table_name = "TRA2504a",
-       save_to = save_loc,
-       start_from_wb = "TRA2504.xlsx",
-       save_over = TRUE)
-
-####TRA2504c####
-new_data <- raw2new(raw, roll=T, type="vehicle", units="percentage")
-title_text <- c("Department for Transport statistics",
-                "Traffic",
-                "Table TRA2504c",
-                "Road traffic (vehicle kilometres) by vehicle type in Great Britain, rolling annual totals from 1994",
-                "",
-                "Percentage change on previous year")
-
-new2xl(new_data,
-       title_text,
-       footer_text,
-       table_name = "TRA2504c",
-       save_to = save_loc,
-       start_from_wb = "TRA2504.xlsx",
-       save_over = TRUE)
-
-####TRA2504e####
-new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
-#title and footer
-title_text <- c("Department for Transport statistics",
-                "Traffic",
-                "Table TRA2504e",
-                "Road traffic (vehicle kilometres) by vehicle type in Great Britain, quarterly from 1993",
-                "",
-                "Billion vehicle kilometres (not seasonally adjusted)")
-
-#apply the function (look in folder to see output)
-new2xl(new_data,
-       title_text,
-       footer_text,
-       table_name = "TRA2504e",
-       save_to = save_loc,
-       start_from_wb = "TRA2504.xlsx",
-       save_over = TRUE)
-
-
-####TRA2505b####
-new_data <- raw2new(raw, roll=T, type="road", units="index")
-title_text <- c("Department for Transport statistics",
-                "Traffic",
-                "Table TRA2505b",
-                "Road traffic (vehicle kilometres) by vehicle type in Great Britain, rolling annual totals from 1994",
-                "",
-                "Index numbers (Q4 1994 = 100)")
-new2xl(new_data,
-       title_text,
-       footer_text,
-       table_name = "TRA2505b",
-       save_to = save_loc,
-       start_from_wb = FALSE)
-
+#6) Look at the tables in your location. It's important to QA them (same reason as above!)

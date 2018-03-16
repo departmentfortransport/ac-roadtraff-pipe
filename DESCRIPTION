@@ -25,3 +25,4 @@ Imports:
   openxlsx
 Suggests: 
     testthat
+BugReports: https://github.com/departmentfortransport/ac-roadtraff-pipe/issues
