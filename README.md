@@ -45,6 +45,11 @@ If you receive an error in the above, it is likely that you are on the ETHOS net
 
 Click the "Clone or download" button in the top right hand corner of this page and select "Download ZIP". Then, you will have to open your file explorer and manually put the folder into the location of your installed R packages. To find out where your R packages are installed, type `.libPaths()` in your console. Hopefully you can then type `library(LStest)` and everything works out fine.
 
+<c name="SRF2"></c> "I'm in the Road Stats team and I want to make new TRA25 tables"
+------------------------------------------------------------------------------------
+
+Great!
+
 <b name="notSRF"></b> "I'm in DfT, but not the Road Stats team"
 ---------------------------------------------------------------
 
@@ -111,7 +116,7 @@ We can format the data as desired, which for sheet TRA2504a in table TRA2504 is:
 ``` r
 new_data <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
 head(new_data)
-#>   year quarter     cars      hgv      lgv    other      AMV
+#>   year quarter     cars      hgv      lgv    other    total
 #> 1 1994       4 214.3886 15.39442 26.92739 5.222279 261.9327
 #> 2 1995       1 215.4086 15.53502 27.07652 5.238177 263.2583
 #> 3 1995       2 216.5472 15.64935 27.33318 5.285051 264.8148

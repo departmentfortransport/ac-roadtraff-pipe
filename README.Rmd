@@ -56,6 +56,10 @@ If you receive an error in the above, it is likely that you are on the ETHOS net
 
 Click the "Clone or download" button in the top right hand corner of this page and select "Download ZIP". Then, you will have to open your file explorer and manually put the folder into the location of your installed R packages. To find out where your R packages are installed, type `.libPaths()` in your console. Hopefully you can then type `library(LStest)` and everything works out fine.
 
+## <c name="SRF2"></c> "I'm in the Road Stats team and I want to make new TRA25 tables"
+
+Great!
+
 ## <b name="notSRF"></b> "I'm in DfT, but not the Road Stats team"
 
 Great! Depending on how "heavy" an R-user you are may affect how much you want to use my package.
