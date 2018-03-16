@@ -7,9 +7,11 @@
 
 make_TRA2501_sub <- function(save_loc=getwd()){
 
+  LStest::check_uptodate(raw, year, quarter)
+
   #Start by making the contents page
-  contents_TRA25("TRA2501", year = year, quarter = quarter,
-                 save_to = save_loc, save_over = TRUE,
+  filename <- contents_TRA25("TRA2501", year = year, quarter = quarter,
+                 save_to = save_loc, save_over = FALSE,
                  last_updated = last_updated,
                  next_update = next_update)
 
@@ -40,7 +42,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
          footer_text,
          table_name = "TRA2501a",
          save_to = save_loc,
-         start_from_wb = "TRA2501.xlsx",
+         start_from_wb = filename,
          save_over = TRUE)
 
   ###TRA2501b####
@@ -56,7 +58,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
          footer_text,
          table_name = "TRA2501b",
          save_to = save_loc,
-         start_from_wb = "TRA2501.xlsx",
+         start_from_wb = filename,
          save_over = TRUE)
 
 
@@ -74,7 +76,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
          footer_text,
          table_name = "TRA2501c",
          save_to = save_loc,
-         start_from_wb = "TRA2501.xlsx",
+         start_from_wb = filename,
          save_over = TRUE)
 
   ####TRA2501d####
@@ -96,7 +98,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
          footer_text,
          table_name = "TRA2501e",
          save_to = save_loc,
-         start_from_wb = "TRA2501.xlsx",
+         start_from_wb = filename,
          save_over = TRUE)
 
 

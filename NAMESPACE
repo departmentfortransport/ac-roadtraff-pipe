@@ -2,6 +2,7 @@
 
 export("%>%")
 export(api_get_data)
+export(check_uptodate)
 export(contents_TRA25)
 export(new2xl)
 export(raw2new)

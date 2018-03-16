@@ -64,8 +64,10 @@ contents_TRA25 <- function(table_set, year, quarter, save_to, save_over=F,
 
   if (file.exists(filename)) {
     if(save_over){ #we'll remove the file that exists so we can save with identical name
-      file.remove(filename)}
-    else{
+      file.remove(filename)
+      cat("\n There was a file",filename,"in", save_to,"already, it has now been overwritten. \n",
+          "This is because the parameter save_over was set to TRUE \n")
+      } else {
       #add on the date and time of saving to file name so we're not overwriting
       filename <- paste0(table_set, "_", gsub(" ","_",substr(Sys.time(),6,16)),".xlsx")
       }
@@ -73,18 +75,24 @@ contents_TRA25 <- function(table_set, year, quarter, save_to, save_over=F,
 
   #Hide the gridlines and add the 2 images (DfT, National Stats)
   openxlsx::showGridLines(wb, "Contents", showGridLines = FALSE)
-  unit <- 0.8 #can alter to scale how large you want the images
-  # openxlsx::insertImage(wb, "Contents", system.file("DfT_logo.png", package = "LStest"),  height = 2*unit, width = 2*unit*1.5,
-  #                       startRow = 2,startCol = 2)
-  # openxlsx::insertImage(wb, "Contents", system.file("nationalstats_logo.png", package = "LStest"),  height = unit, width = unit,
-  #                       startRow = 2,startCol = 7)
+
+  ###The commented out lines below are to add the logos to the contents page. This doesn't
+  ###need doing anymore due to the template having them, but in theory is still useful if need be
+  #unit <- 0.8 #can alter to scale how large you want the images
+  # openxlsx::insertImage(wb, "Contents", system.file("DfT_logo.png", package = "LStest"),
+  #                       height = 2*unit, width = 2*unit*1.5, startRow = 2,startCol = 2)
+  # openxlsx::insertImage(wb, "Contents", system.file("nationalstats_logo.png", package = "LStest"),
+  #                       height = unit, width = unit, startRow = 2,startCol = 7)
 
   #Save the file
   openxlsx::saveWorkbook(wb, filename)
   #print statement to show success, and where it was outputted
-  cat("The file: ", filename, "\n", "with updated contents page been saved in the following location on your desktop: \n",
+  cat("The file: ", filename, "\n",
+      "with updated contents page been saved in the following location on your desktop: \n",
       save_to, "\n", rep("-",50),"\n")
 
+  #returns the name of the file so that other sheets know when saving over
+  return(filename)
 }
 
 #LStest:::contents_TRA25("TRA2502", 2017, 3, save_to = "/Users/Luke/Documents/table_dump/")

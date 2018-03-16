@@ -7,8 +7,10 @@
 
 make_TRA2503_sub <- function(save_loc=getwd()){
 
+  LStest::check_uptodate(raw, year, quarter)
+
   #Start by making the contents page
-  contents_TRA25("TRA2503", year = year, quarter = quarter,
+  filename <- contents_TRA25("TRA2503", year = year, quarter = quarter,
                  save_to = save_loc, save_over = TRUE,
                  last_updated = last_updated,
                  next_update = next_update)
@@ -40,7 +42,7 @@ make_TRA2503_sub <- function(save_loc=getwd()){
          footer_text,
          table_name = "TRA2503a",
          save_to = save_loc,
-         start_from_wb = "TRA2503.xlsx",
+         start_from_wb = filename,
          save_over = TRUE)
 }
 
