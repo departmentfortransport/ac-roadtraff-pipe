@@ -25,6 +25,7 @@
 #'                  last_updated = last_updated,
 #'                  next_update = next_update)
 #' #look in working directory to see outputted file
+#' #note the object returned by the function is the filename, which is useful if adding sheets
 #' @export
 contents_TRA25 <- function(table_set, year, quarter, save_to, save_over=F,
                            last_updated="FILL IN", next_update="FILL IN"){
