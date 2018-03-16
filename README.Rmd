@@ -35,7 +35,7 @@ This purpose of this package is to help users present beautifully formatted Exce
 knitr::include_graphics(system.file("flow_pipe.png", package="LStest"))
 ```
 
-![image](inst/flow_pipe.png?raw=true)
+![image](inst/flow_pipe.PNG?raw=true)
 
 This will act as a segment of the [pipeline dream](https://ukgovdatascience.github.io/rap_companion/) for transforming the way that official statistics are produced. 
 

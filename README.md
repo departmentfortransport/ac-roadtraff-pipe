@@ -23,7 +23,7 @@ This purpose of this package is to help users present beautifully formatted Exce
 
 <img src="/Users/Luke/Library/R/3.4/library/LStest/flow_pipe.png" width="100%" />
 
-![image](inst/flow_pipe.png?raw=true)
+![image](inst/flow_pipe.PNG?raw=true)
 
 This will act as a segment of the [pipeline dream](https://ukgovdatascience.github.io/rap_companion/) for transforming the way that official statistics are produced.
 
