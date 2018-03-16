@@ -34,8 +34,7 @@ This purpose of this package is to help users present beautifully formatted Exce
 ```{r, echo=FALSE}
 knitr::include_graphics(system.file("flow_pipe.png", package="LStest"))
 ```
-
-![image](inst/flow_pipe.PNG?raw=true)
+**I know the image doesn't load on GitHub - it has been raised as an issue**
 
 This will act as a segment of the [pipeline dream](https://ukgovdatascience.github.io/rap_companion/) for transforming the way that official statistics are produced. 
 
@@ -62,7 +61,7 @@ Great! You'll need to install the package onto your desktop and have R set up on
 ```{r, eval=FALSE}
 file.edit(system.file("exec", "TRA25_run_script.R", package="LStest"))
 ```
-in your console which will open the file. 
+in your console which will open the file. Make sure you read all the comments, and without any hiccups you should have the tables ready in under 5 minutes! Whilst in the development stages, do not be afraid of hiccups...
 
 ## <b name="notSRF"></b> "I'm in DfT, but not the Road Stats team"
 

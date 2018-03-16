@@ -21,9 +21,7 @@ LStest - what is it?
 
 This purpose of this package is to help users present beautifully formatted Excel tables in the DfT standard format. When functioning as designed, it can go automate the entire table making process as shown in the image below. Part of why this is so powerful is that it is exactly repeatable, once the code is written all that is needed is an update to the data and with one click the tables are made!
 
-<img src="/Users/Luke/Library/R/3.4/library/LStest/flow_pipe.png" width="100%" />
-
-![image](inst/flow_pipe.PNG?raw=true)
+<img src="/Users/Luke/Library/R/3.4/library/LStest/flow_pipe.png" width="100%" /> **I know the image doesn't load on GitHub - it has been raised as an issue**
 
 This will act as a segment of the [pipeline dream](https://ukgovdatascience.github.io/rap_companion/) for transforming the way that official statistics are produced.
 
@@ -56,7 +54,7 @@ Great! You'll need to install the package onto your desktop and have R set up on
 file.edit(system.file("exec", "TRA25_run_script.R", package="LStest"))
 ```
 
-in your console which will open the file.
+in your console which will open the file. Make sure you read all the comments, and without any hiccups you should have the tables ready in under 5 minutes! Whilst in the development stages, do not be afraid of hiccups...
 
 <b name="notSRF"></b> "I'm in DfT, but not the Road Stats team"
 ---------------------------------------------------------------
