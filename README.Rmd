@@ -32,7 +32,7 @@ If you are having problems with this package, there are different places you can
 This purpose of this package is to help users present beautifully formatted Excel tables in the DfT standard format. When functioning as designed, it can go automate the entire table making process as shown in the image below. Part of why this is so powerful is that it is exactly repeatable, once the code is written all that is needed is an update to the data and with one click the tables are made!
 
 ```{r, echo=FALSE}
-knitr::include_graphics(system.file("image3.png", package="LStest"))
+knitr::include_graphics(system.file("flow_pipe.png", package="LStest"))
 ```
 
 

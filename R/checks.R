@@ -13,7 +13,8 @@
 #' # can see if look at mini_raw that goes to 1995 Q4
 
 #' check_uptodate(mini_raw,1995,4) #no error
-#' check_uptodate(mini_raw,1995,2) #error
+#' \dontrun{
+#' check_uptodate(mini_raw,1995,2) #error}
 #' @export
 check_uptodate <- function(raw, year, quarter){
   y <- tail(raw$year,1)
@@ -21,8 +22,8 @@ check_uptodate <- function(raw, year, quarter){
   if (y == year & q == quarter){
     return()
   } else {
-    stop(paste("The API data downloaded doesn't match year =", year,
-               "quarter =", quarter,"\n to see the bottom of the data table run tail(raw) \n"))
+    stop(paste0("The API data downloaded doesn't match year = ", year,
+               "quarter = ", quarter,"\n to see the bottom of the data table run tail(raw) \n"))
   }
 }
 

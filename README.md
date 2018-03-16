@@ -21,7 +21,7 @@ LStest - what is it?
 
 This purpose of this package is to help users present beautifully formatted Excel tables in the DfT standard format. When functioning as designed, it can go automate the entire table making process as shown in the image below. Part of why this is so powerful is that it is exactly repeatable, once the code is written all that is needed is an update to the data and with one click the tables are made!
 
-<img src="/Users/Luke/Library/R/3.4/library/LStest/image3.png" width="100%" />
+<img src="/Users/Luke/Library/R/3.4/library/LStest/flow_pipe.png" width="100%" />
 
 This will act as a segment of the [pipeline dream](https://ukgovdatascience.github.io/rap_companion/) for transforming the way that official statistics are produced.
 
