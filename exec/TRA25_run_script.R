@@ -2,7 +2,7 @@
 ##Script that outputs all TRA25 tables in 6 steps :)
 ##15/03/2018 work in progress
 ########
-
+library(LStest)
 #1) check the API at https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly has the most uptodate data
 
 #2) change the following line to where in your docs you want the tables to save (*)
