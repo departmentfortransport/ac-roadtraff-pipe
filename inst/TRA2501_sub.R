@@ -17,17 +17,17 @@ make_TRA2501_sub <- function(save_loc=getwd()){
 
   footer_text <- c("Other = Two wheeled motor vehicles, buses, and coaches",
                    "Note: Total column may not match sum due to rounding",
-                   "(1) Figures affected by September 2000 fuel protest",
-                   "(2) 2001 figures affected by the impact of Foot and Mouth disease",
-                   "(3) Affected by heavy snowfall",
+                   "[1] Figures affected by September 2000 fuel protest",
+                   "[2] 2001 figures affected by the impact of Foot and Mouth disease",
+                   "[3] Affected by heavy snowfall",
                    "P Provisional",
                    "Telephone: 020 7944 3095",
                    "Email: roadtraff.stats@dft.gsi.gov.uk",
                    "The figures in this table are National Statistics",
                    "",
                    "Source: DfT National Road Traffic Survey",
-                   "Last updated: November 2017",
-                   "Next update: May 2018")
+                   paste("Last updated:", last_updated),
+                   paste("Next update:", next_update))
 
   ###TRA2501a####
   new_data <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")

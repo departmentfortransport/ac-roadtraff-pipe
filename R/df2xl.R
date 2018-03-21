@@ -76,8 +76,8 @@ varnames2english <- function(headers){
   headers[headers=="lgv"] <- "light commercial vehicles"
   headers[headers=="AR"] <- "rural 'A' roads"
   headers[headers=="AU"] <- "urban 'A' roads"
-  headers[headers=="MR"] <- "rural minor roads"
-  headers[headers=="MU"] <- "urban minor roads"
+  headers[headers=="MR"] <- "minor rural roads"
+  headers[headers=="MU"] <- "minor urban roads"
   headers[headers=="MW"] <- "motorway"
   headers[headers=="NA"] <- ""
   headers[is.na(headers)] <- ""
@@ -160,16 +160,16 @@ add_footnote_refs <- function(new_data){
   d <- new_data #just for simplicity (easier to read)
 
   #2000 fuel protest
-  d[d$year == 1999 & d$quarter == 3, 3] <- "(1)"
+  d[d$year == 1999 & d$quarter == 3, 3] <- "[1]"
 
   #2001 foot and mouth
-  d[d$year == 2001, 3] <- "(2)"
+  d[d$year == 2001, 3] <- "[2]"
 
   #heavy snowfall
-  d[d$year == 2009 & d$quarter == 1, 3] <- "(3)"
-  d[d$year == 2010 & d$quarter == 1, 3] <- "(3)"
-  d[d$year == 2010 & d$quarter == 4, 3] <- "(3)"
-  d[d$year == 2013 & d$quarter == 1, 3] <- "(3)"
+  d[d$year == 2009 & d$quarter == 1, 3] <- "[3]"
+  d[d$year == 2010 & d$quarter == 1, 3] <- "[3]"
+  d[d$year == 2010 & d$quarter == 4, 3] <- "[3]"
+  d[d$year == 2013 & d$quarter == 1, 3] <- "[3]"
 
   #provisional estimates
   d[d$year == tail(d$year,1), 3] <- "P"
@@ -323,9 +323,9 @@ get_filename <- function(start_from_wb, save_over, table_name){
 #'               "",
 #'               "Billion vehicle kilometres (not seasonally adjusted)")
 #' footer_text <- footer_text <- c("",
-#'               "(1) Two wheeled motor vehicles, buses, and coaches",
-#'               "(2) Total may not match sum due to rounding",
-#'               "(3) figures affected by September 2000 fuel protest",
+#'               "[1] Two wheeled motor vehicles, buses, and coaches",
+#'               "[2] Total may not match sum due to rounding",
+#'               "[3] figures affected by September 2000 fuel protest",
 #'               "The figures in these tables are National Statistics")
 #'
 #'

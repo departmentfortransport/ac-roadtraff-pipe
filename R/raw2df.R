@@ -101,6 +101,10 @@ vehicle_road <- function(raw, type){
     #apply the sub function pivot_raw that changes type from being in one column
     #to being separate rows
     new_data <- pivot_raw(raw, type)
+    if (type == "vehicle"){
+      new_data <- new_data[c("year", "quarter", "cars", "lgv", "hgv","other","total")]
+    } else {#type == "road"
+      new_data <- new_data[c("year", "quarter", "MW", "AR", "AU","MR","MU", "total")]}
   } else { #type = "vehicle_and_road"
     #create 3 data sets to be appended to each other
     new_data_C <- raw[raw$vehicle_type == "cars",]

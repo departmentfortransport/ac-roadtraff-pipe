@@ -26,8 +26,8 @@ make_TRA2502_sub <- function(save_loc=getwd()){
                    "The figures in this table are National Statistics",
                    "",
                    "Source: DfT National Road Traffic Survey",
-                   "Last updated: November 2017",
-                   "Next update: May 2018")
+                   paste("Last updated:", last_updated),
+                   paste("Next update:", next_update))
 
   ###TRA2502a####
   new_data <- raw2new(raw, roll=T, type="road", units="traffic", km_or_miles = "miles")

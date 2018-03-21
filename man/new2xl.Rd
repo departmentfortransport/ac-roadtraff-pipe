@@ -41,9 +41,9 @@ title_text <- c("Department for Transport statistics",
               "",
               "Billion vehicle kilometres (not seasonally adjusted)")
 footer_text <- footer_text <- c("",
-              "(1) Two wheeled motor vehicles, buses, and coaches",
-              "(2) Total may not match sum due to rounding",
-              "(3) figures affected by September 2000 fuel protest",
+              "[1] Two wheeled motor vehicles, buses, and coaches",
+              "[2] Total may not match sum due to rounding",
+              "[3] figures affected by September 2000 fuel protest",
               "The figures in these tables are National Statistics")
 
 
