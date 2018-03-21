@@ -350,7 +350,7 @@ new2xl <- function(new_data, title_text, footer_text, table_name,
     wb <- openxlsx::loadWorkbook(paste0(save_to, "/", start_from_wb))
   }
 
-  filename <- get_filename(start_from_wb, save_over, table_name)
+  filename <- LStest:::get_filename(start_from_wb, save_over, table_name)
 
 
   if ( (start_from_wb != F) #we have a starting point
@@ -373,6 +373,12 @@ new2xl <- function(new_data, title_text, footer_text, table_name,
   tab <- xltabr::auto_merge_footer_cells(tab)
   tab <- xltabr::write_data_and_styles_to_wb(tab) #the order matters here (LS needs extra check)
   tab <- LStest:::add_hyperlink_dft(tab, title_text)
+
+  #Freeze panes (extra thing, should probably be own function)
+  tare <- length(tab$title$title_text) + length(tab$top_headers$top_headers_list) + 1
+  openxlsx::freezePane(tab$wb, table_name,
+                       firstActiveRow = tare,
+                       firstActiveCol = 1)
 
   #write the worksheet
   setwd(save_to) #where the output will be saved. Default is current folder
