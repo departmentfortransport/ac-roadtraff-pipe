@@ -43,7 +43,7 @@ make_TRA2503_sub <- function(save_loc=getwd()){
          table_name = "TRA2503a",
          save_to = save_loc,
          start_from_wb = filename,
-         save_over = FALSE)
+         save_over = TRUE)
 }
 
 make_TRA2503_sub(save_loc)
