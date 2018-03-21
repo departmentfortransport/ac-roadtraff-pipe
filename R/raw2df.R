@@ -32,6 +32,7 @@ api_get_data <- function(
     dplyr::bind_rows()
   return(raw)
 }
+
 ####quarterly or rolling annual####
 rolling_annual <- function(raw, x){
   #given the API output changes the estimate column into rolling annual, if
@@ -122,6 +123,14 @@ vehicle_road <- function(raw, type){
     new_data <- base::merge(new_data_C, new_data_H, by = c("year", "quarter"))
     new_data <- base::merge(new_data, new_data_L, by = c("year", "quarter"))
 
+    #remove MR.hgv and MU.hgv - done to match the way tables have been made. Totals col still
+    #has them though, which is odd in my opinion (could easily derive "minor HGV")
+    new_data <- new_data[,-which(names(new_data) %in% c("MU.hgv","MR.hgv"))]
+    #re-order for consistency with old (I don't like this as it limits to very specific scenario)
+    new_data <- new_data[c("year", "quarter",
+                           "MW.cars", "AR.cars", "AU.cars", "MR.cars", "MU.cars" , "total.cars"
+                           ,"MW.hgv", "AR.hgv",  "AU.hgv",  "total.hgv"
+                           ,"MW.lgv", "AR.lgv",  "AU.lgv",  "MR.lgv",  "MU.lgv", "total.lgv")]
     }
 
   return(new_data)
