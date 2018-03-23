@@ -49,7 +49,7 @@ any_totals <- function(headers){
       #"total" occurs on its own
       if (setequal(headers[-t], c("year","quarter","NA","AR","AU","MR","MU","MW"))){
         headers[t] <- "all roads"
-      } else if (identical(headers[-t], c("year","quarter","NA","cars","hgv","lgv","other"))){
+      } else if (identical(headers[-t], c("year","quarter","NA","cars","lgv","hgv","other"))){
         headers[t] <- "all motor vehicles"
       }
     } else {
@@ -234,10 +234,10 @@ colrow_width_dft <- function(tab, new_data){
   n <- dim(new_data)[2]
   tab <- xltabr::set_wb_widths(tab, body_header_col_widths = c(6, 12, 3, rep(14,n-2)))
   #^^2 points about the above line:
-  #1) the 1.2 factor is due to an unsolved issue around the col widths changing based on
+  #- the 1.2 factor is due to an unsolved issue around the col widths changing based on
   #   which file is read in, i.e. a contents page already exists and the structure of that
   #   page. It is not known exactly what happens.
-  #2) n+1 rows are defined where new_data only has n, but this is because in 'tab' we have
+  #- n+1 rows are defined where new_data only has n, but this is because in 'tab' we have
   #   added in a col for footnote references in col3
 
   ##2) row height
@@ -297,6 +297,19 @@ get_filename <- function(start_from_wb, save_over, table_name){
   return(filename)
 }
 
+
+TRA2503_header_merge <- function(tab, table_name){
+  #simple function that merges the cells in the right places for the scenario of TRA2503 sheets
+
+  ws_name <- table_name
+  if ("TRA2503" == substr(table_name,1,7)){
+    row <- 7
+    openxlsx::mergeCells(tab$wb, ws_name, 4:9, row)
+    openxlsx::mergeCells(tab$wb, ws_name, 10:14, row)
+    openxlsx::mergeCells(tab$wb, ws_name, 15:20, row)
+    }
+  return(tab)
+}
 ####Go from the data frame "new_data" to Excel doc####
 #' @title new2xl
 #' @description takes a data frame with title and footer text and outputs a beautiful Excel table.
@@ -378,7 +391,9 @@ new2xl <- function(new_data, title_text, footer_text, table_name,
   tare <- length(tab$title$title_text) + length(tab$top_headers$top_headers_list) + 1
   openxlsx::freezePane(tab$wb, table_name,
                        firstActiveRow = tare,
-                       firstActiveCol = 1)
+                       firstActiveCol = 3)
+  #Cheap solution to cell merge problem with TRA2503 - bespoke function for it
+  tab <- TRA2503_header_merge(tab, table_name)
 
   #write the worksheet
   setwd(save_to) #where the output will be saved. Default is current folder
