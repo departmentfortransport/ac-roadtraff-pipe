@@ -42,13 +42,20 @@ The "patient zero" tables which this package was initially created for at the Qu
 ## <a name="inst"></a> Installation
 This document assumes you have an understanding of coding in RStudio.
 
-Installing the most up-to-date version of this package can be done in 2 lines of code in R:
+Installing the most up-to-date version of this package can be done inside R, *IF* you are working off the network:
 ```{r, eval=FALSE}
-install.packages("devtools")
-devtools::install_github("username/packagename")
+#1) first be logged in to departmentfortransport private repo
+#2) in browser, go to github/settings/tokens
+#3) set up token - scope 'repo'
+#copy token and use that in auth_token argument
+
+library(devtools) #devtools has to be installed first
+devtools::install_github(repo = "departmentfortransport/ac-roadtraff-pipe"
+                         ,auth_token = "copyinyournewflashytoken")
+library(LStest)
 ```
 
-If you receive an error in the above, it is likely that you are on the ETHOS network and RStudio is forbidden from accessing the internet. A workaround for this is the following:
+If you are working on the network, a workaround for this is the following:
 
 Click the "Clone or download" button in the top right hand corner of this page and select "Download ZIP". Then, you will have to open your file explorer and manually put the folder into the location of your installed R packages. To find out where your R packages are installed, type `.libPaths()` in your console. Hopefully you can then type `library(LStest)` and everything works out fine.
 
