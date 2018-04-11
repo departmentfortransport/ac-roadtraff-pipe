@@ -19,7 +19,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
                    "Note: Total column may not match sum due to rounding",
                    "[1] Figures affected by September 2000 fuel protest",
                    "[2] 2001 figures affected by the impact of Foot and Mouth disease",
-                   "[3] Affected by heavy snowfall",
+                   "[3] Affected by heavy snowfall. It is estimates that snowfall during Q4 2010 had a greater impact on traffic levels than for the other assigned quarters",
                    "P Provisional",
                    "Telephone: 020 7944 3095",
                    "Email: roadtraff.stats@dft.gsi.gov.uk",
