@@ -1,9 +1,12 @@
 #############
-##Getting from raw data to output that can be inputted to xltabr
-##Allows for differences in all sheets, tries to make it not very painful!
-
-#devtools::load_all()
-#devtools::document()
+##Functions that go from downloading data from API to formatting in desired format
+##for table set TRA25 so that can be made into Excel tables. 
+##
+##The only two functions that are not subfunctions in here are:
+##TRA25_data_api
+##TRA25_arrange_data
+##
+##ALL other functions are subfunctions of TRA25_arrange_data
 #############
 
 
