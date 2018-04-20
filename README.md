@@ -19,7 +19,7 @@ If you are having problems with this package, there are different places you can
 LStest - what is it?
 --------------------
 
-This purpose of this package is to help users present beautifully formatted Excel tables in the DfT standard format. When functioning as designed, it can go automate the entire table making process as shown in the image below. Part of why this is so powerful is that it is exactly repeatable, once the code is written all that is needed is an update to the data and with one click the tables are made!
+This purpose of this package is to help users present beautifully formatted Excel tables in the DfT standard format. This package can automate the entire table making process, as shown in the image below. Part of why this is so powerful is that it is exactly repeatable, once the code is written all that is needed is an update to the data and then just re-run!
 
 <img src="https://image.ibb.co/iWMyHx/flow_pipe.png?raw=TRUE" />
 
@@ -27,14 +27,14 @@ This will act as a segment of the [pipeline dream](https://ukgovdatascience.gith
 
 This package is a DfT-tailored version of xltabr, including all the functions and code that I (Luke Shaw) wrote and developed - all focused primarily around `xltabr`.
 
-The "patient zero" tables which this package was initially created for at the Quarterly provisional road traffic estimate tables, [TRA25](https://www.gov.uk/government/statistical-data-sets/tra25-quarterly-estimates). Many of the in-built checks and code are bespoke to issues with those tables, however the intention is that these can be used as a springboard to producing reproducible code for other teams' tables.
+The "patient zero" tables which this package was initially created for at the Quarterly provisional road traffic estimate tables, [TRA25](https://www.gov.uk/government/statistical-data-sets/tra25-quarterly-estimates). Practically all of the in-built checks and code are bespoke to issues with those tables, however the intention is that these can be used as a springboard to producing reproducible code for other teams' tables.
 
 <a name="inst"></a> Installation
 --------------------------------
 
 This document assumes you have an understanding of coding in RStudio.
 
-Installing the most up-to-date version of this package can be done inside R, *IF* you are working off the network:
+Installing the most up-to-date version of this package can be done inside R, *IF* you are working off-network (eg on a laptop):
 
 ``` r
 #1) first be logged in to departmentfortransport private repo
@@ -68,7 +68,7 @@ in your console which will open the file. Make sure you read all the comments, a
 
 Great! Depending on how "heavy" an R-user you are may affect how much you want to use my package.
 
-If the tables you are trying to produce are wildly different to the ones I have created with this package, you may not find any of my sub-functions useful. If you are comfortable with R, having a look at my subfunctions may prove inspirational. If you wouldn't know how to look at the subfunctions in a package, I wouldn't worry about it.
+If the tables you are trying to produce are wildly different to the ones I have created with this package, you may not find any of my sub-functions useful. If you are comfortable with R, having a look at my functions may prove inspirational. If you wouldn't know how to look at the functions in a package, I wouldn't worry about it.
 
 Mainly, I would suggest reading all of the [`xltabr` readme](https://github.com/moj-analytical-services/xltabr/) to understand what this is about. Then, when writing your scripts use the DfT Style Path document in this package, which you can get in 2 ways:
 
@@ -85,6 +85,14 @@ xltabr::set_style_path("/whereyousavedit/.../DfT_styles.xlsx")
 ```
 
 This ensures that DfT\_styles can act as a master document for DfT-formatted tables, and as such we have no inconsistencies with font style, size, and colourings.
+
+A general workflow for creating new DfT Tables should be:
+
+1.  have a default Contents page that is made in Excel
+2.  have an R script that gets the data
+3.  have separate R scripts for each sheet you want to add, which takes raw data, rearranges, and formats into an excel doc
+
+^<sup>^</sup> The above workflow and process will be updated as I try this out more within DfT. Watch this space!
 
 Example
 -------
@@ -105,26 +113,28 @@ raw
 #> # A tibble: 1,900 x 5
 #>     year quarter road_type vehicle_type estimate
 #>    <dbl>   <dbl> <chr>     <chr>           <dbl>
-#>  1  1994    1.00 AR        cars           21.8  
-#>  2  1994    1.00 AR        hgv             2.22 
-#>  3  1994    1.00 AR        lgv             2.77 
-#>  4  1994    1.00 AR        other           0.324
-#>  5  1994    1.00 AU        cars           15.9  
-#>  6  1994    1.00 AU        hgv             0.762
-#>  7  1994    1.00 AU        lgv             1.80 
-#>  8  1994    1.00 AU        other           0.428
-#>  9  1994    1.00 MR        cars           11.1  
-#> 10  1994    1.00 MR        hgv             0.433
+#>  1 1994.      1. AR        cars           21.8  
+#>  2 1994.      1. AR        hgv             2.22 
+#>  3 1994.      1. AR        lgv             2.77 
+#>  4 1994.      1. AR        other           0.324
+#>  5 1994.      1. AU        cars           15.9  
+#>  6 1994.      1. AU        hgv             0.762
+#>  7 1994.      1. AU        lgv             1.80 
+#>  8 1994.      1. AU        other           0.428
+#>  9 1994.      1. MR        cars           11.1  
+#> 10 1994.      1. MR        hgv             0.433
 #> # ... with 1,890 more rows
 ```
 
 If your data is in a csv on your desktop you can get it into R easily, an example of how to do that is given at <http://rprogramming.net/read-csv-in-r/>
 
-There are 2 steps to outputting nice Excel tables from raw data: 1. rearrange the data into correct shape 2. create the Excel table (including headers, footers, formatting etc.)
+There are 2 steps to outputting nice Excel tables from raw data:
+1. rearrange the data into correct shape
+2. create the Excel table (including headers, footers, formatting etc.)
 
-### Step 1 - rearranging the data
+#### Step 1 - rearranging the data
 
-We can format the data as desired, which for sheet TRA2504a in table TRA2504 is: rolling annual vehicle kilometres split into different vehicle types. Using the bespoke function `TRA25_arrange_data` this means simply one line of code specifying each decision:
+We can format the data as desired, which for sheet TRA2501a in table TRA2501 is: rolling annual vehicle miles split into different vehicle types. Using the bespoke function `TRA25_arrange_data` this means simply one line of code specifying each decision:
 
 ``` r
 data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
@@ -138,7 +148,7 @@ head(data_for_xl)
 #> 6 1996       1 219.7889 27.92875 15.90126 5.398444 269.0173
 ```
 
-### Step 2 - format into a lovely Excel Sheet
+#### Step 2 - format into a lovely Excel Sheet
 
 Now the data is in the right shape for making the table. After naming the title and footer this is all done inside the `TRA25_format_to_xl` function:
 
@@ -170,6 +180,10 @@ TRA25_format_to_xl(data_for_xl,
        table_name = "TRA2501a")
 ```
 
-The above process can be repeated for each sheet in the Excel file, and by the end you will have the finished table. Currently there is no way to make the Contents page, but this could be done as an extra feature of this package. The recommended method is to have the file saved with the Contents sheet already in place, and to write over the file each time. To see how to do this, look in `?TRA25_format_to_xl`.
+The above process can be repeated for each sheet in the Excel file, and by the end you will have the finished table. There is a way to append the sheet to a workbook, which is how I have made the TRA25 series. The Contents pages are the templates I use (all contained within this package) and then each sheet can be bolted on to the file. To see this in action, see the "TRA25\_run\_script.R" script in this package, which can be found by running:
+
+``` r
+file.edit(system.file("exec", "TRA25_run_script.R", package="LStest"))
+```
 
 Note if you are not in the Road Traffics team the function `TRA25_format_to_xl` is not necessarily helpful, please see [above](#notSRF)
