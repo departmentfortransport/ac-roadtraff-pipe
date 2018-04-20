@@ -52,7 +52,7 @@ TRA25_rolling_annual <- function(raw, x){
          rolling annual figures or not")
   }
   if (!is.data.frame(raw)) {
-    stop("first input must be a data frame output from TRA25_)
+    stop("first input must be a data frame output from TRA25_data_api")
   }
   if (!identical(names(raw),
                  c("year", "quarter", "road_type", "vehicle_type", "estimate"))){
@@ -74,7 +74,7 @@ TRA25_rolling_annual <- function(raw, x){
 ####vehicle type or road type####
 pivot_raw <- function(raw, type){
   #pivots the raw data up by one column, type being either "road" or "vehicle"
-  #only used inside the function vehicle_road
+  #only used inside the function TRA25_vehicle_road
 
   if (!(type=="road" | type=="vehicle")){
     stop("type must be \"vehicle\", \"road\" in this subfunction - select the one you want as cols")
@@ -100,7 +100,8 @@ pivot_raw <- function(raw, type){
   return(new_data)
 }
 
-vehicle_road <- function(raw, type){
+TRA25_vehicle_road <- function(raw, type){
+  #Takes the initial data "raw" from function TRA25_rolling_annual
   #Do you want the columns to be vehicle type or road type. Pivots the data to be that way
   if (!(type=="road" | type=="vehicle" | type=="vehicle_and_road")){
     stop("type must be \"vehicle\", \"road\", or \"vehicle_and_road\" - select the one you want as cols")
@@ -224,7 +225,7 @@ raw2new <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
     }
   }
 
-  new_data <- vehicle_road(raw, type) #road or vehicle
+  new_data <- TRA25_vehicle_road(raw, type) #road or vehicle
 
   temp <- new_data[ ,-which(names(new_data) %in% c("year", "quarter"))]
   new_data <- new_data[rowSums(is.na(temp)) != ncol(temp),] #so we don't have empty rows
