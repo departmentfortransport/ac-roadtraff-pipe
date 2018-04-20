@@ -198,7 +198,8 @@ chosen_units <- function(new_data, units){
 #'
 #' @param raw data frame outputted from \code{\link{TRA25_data_api}()}
 #' @param roll logical. TRUE if rolling annual values desired, FALSE if not
-#' @param type character string. Either "road" or "vehicle" dependant on which wanted for column headers
+#' @param type character string. Either "road", "vehicle", or "vehicle_and_road"
+#'  dependant on which wanted for column headers
 #' @param units character string. Either
 #'  \itemize{
 #'   \item "traffic" - traffic values (vehicle Kms)
@@ -207,15 +208,14 @@ chosen_units <- function(new_data, units){
 #' }
 #' @param km_or_miles "km" or "miles" dependant on desired units. Only used if units = "traffic",
 #' as otherwise doesn't make a difference.
-#' @return data frame of same dimensions as input, with values changed to rolling annual (if stated)
+#' @return pivotted data frame that is ready to be formatted nicely as an Excel (.xlsx) doc 
+#' using the function LStest::new2xl
 #' @examples
 #' #first get the raw data
 #' raw <- TRA25_data_api()
 #' #Google TRA25 if the naming convention on the left ("TRA25...") doesn't make sense
-#' TRA2504e <- raw2new(raw,roll=FALSE, type="vehicle", units="traffic", km_or_miles = "km")
-#' TRA2505e <- raw2new(raw,roll=FALSE, type="road", units="traffic", km_or_miles = "km")
-#' TRA2504b <- raw2new(raw,roll=TRUE, type="vehicle", units="index")
-#' TRA2504c <- raw2new(raw,roll=TRUE, type="vehicle", units="percentage")
+#' TRA2501a_new_data <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
+#' View(TRA2501a_new_data) #look at the data frame created - is the same as sheet TRA2501a (search online)
 #' @export
 
 raw2new <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
