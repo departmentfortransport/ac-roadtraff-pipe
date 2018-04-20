@@ -131,12 +131,17 @@ make_TRA2501_sub <- function(save_loc=getwd()){
 
 
   ####TRA2501f####
-  data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="vehicle", units="index", km_or_miles = "miles")
+  data_for_xl <- TRA25_arrange_data(raw_seasonal, 
+                                    roll=F, 
+                                    type="vehicle", 
+                                    units="index", 
+                                    km_or_miles = "miles",
+                                    index_from = c(1,2,3,4))
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2501f",
                   "Road traffic (vehicle miles) by vehicle type in Great Britain, quarterly from 1994",
-                  "Seasonally adjusted* index numbers (1994 Q1 = 100)",
+                  "Seasonally adjusted* index numbers (1994 = 100)",
                   "Seasonally adjusted figures")
   TRA25_format_to_xl(data_for_xl,
                      title_text,
@@ -150,7 +155,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
   data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="vehicle", units="percentage", km_or_miles = "miles")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
-                  "Table TRA2501f",
+                  "Table TRA2501g",
                   "Road traffic (vehicle miles) by vehicle type in Great Britain, quarterly from 1994",
                   "Percentage change on same quarter in previous year (seasonally adjusted figures)",
                   "Seasonally adjusted figures")

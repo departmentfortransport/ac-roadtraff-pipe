@@ -156,15 +156,19 @@ TRA25_vehicle_road <- function(raw, type){
 #'
 #' @param data_for_xl the pivotted data, outputted from \code{\link{TRA25_vehicle_road}}
 #' @param units either "traffic", "percentage", "index" depending on what values required. 
+#' @param index_from which row you want to index the values from. Default is first, if multiple
+#' rows are given then index is from their average
 #' @export
 chosen_units <- function(data_for_xl, units, index_from = NA){
   #Changes the "estimates" column from the initial data to be either percentage change on
   #previous year, indexed from chosen point, or the same values themselves
-
+  
+  ##IMPORTANT - the assumption here is that the first 2 cols are Year, Quarter and the rest are data
+  
   if (!(units %in% c("traffic", "percentage", "index"))){
     stop("units input must be one of: traffic, percentage, or index")
   }
-
+  
   if (units == "percentage"){
 
     #percentage change - always 4 quarters apart regardless of whether the data is rolling annual or quarterly :)
@@ -176,17 +180,18 @@ chosen_units <- function(data_for_xl, units, index_from = NA){
     }
   }
   if (units == "index"){
-    if(is.na(index_from)){index_from <- list(year=data_for_xl$year[1], quarter=data_for_xl$quarter[1])
-    } else {
-      stop("index_from is not sorted from vals other than first in data set - sorry! This needs updating in the package")
-    }
-    #next 5 lines is probably bad practice - using loops in R!
     n <- dim(data_for_xl)[2] #width of the data frame
-    m <- dim(data_for_xl)[1] #length of the data frame
-    index_vals <- data_for_xl[1,3:n]
-    index_vals <- as.numeric(index_vals) #otherwise in loop we get one number (due to fact is data frame)
+    if(is.na(index_from[1])){
+      #default to index from first row
+      index_vals <- as.numeric(data_for_xl[1,3:n]) 
+      #^^^ as.numeric because otherwise in loop we get one number (due to fact is data frame)
+    } else {
+      temp <- data_for_xl[index_from, 3:n]
+      temp <- apply(temp,2,mean) #find the mean of each column
+      index_vals <- as.numeric(temp) 
+    }
     for (i in 3:n){
-      data_for_xl[,i] <- 100 * data_for_xl[,i] / index_vals[i-2]
+      data_for_xl[,i] <- 100 * data_for_xl[,i] / index_vals[i-2] #actually applying the index
     }
   }
   #NOTE - when units="traffic" we don't change anything. Important to make user define that that is the value they want
@@ -211,6 +216,7 @@ chosen_units <- function(data_for_xl, units, index_from = NA){
 #' as otherwise doesn't make a difference.
 #' @return pivotted data frame that is ready to be formatted nicely as an Excel (.xlsx) doc 
 #' using the function LStest::TRA25_format_to_xl
+#' @param index_from integer or vector. Rows from which to index from if chosen_units = "index"
 #' @examples
 #' #first get the raw data
 #' raw <- TRA25_data_api()
@@ -219,7 +225,7 @@ chosen_units <- function(data_for_xl, units, index_from = NA){
 #' View(TRA2501a_data_for_xl) #look at the data frame created - is the same as sheet TRA2501a (search online)
 #' @export
 
-TRA25_arrange_data <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
+TRA25_arrange_data <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA, index_from = NA){
   ##Wrapper function that rehsapes the data downloaded from the api into the structure desired for the Excel table
   raw <- TRA25_rolling_annual(raw,roll) #quarterly vals or rolling annual
 
@@ -240,7 +246,7 @@ TRA25_arrange_data <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
   data_for_xl <- data_for_xl[rowSums(is.na(temp)) != ncol(temp),] #so we don't have empty rows
 
 
-  data_for_xl <- chosen_units(data_for_xl, units) #traff, %, or index
+  data_for_xl <- chosen_units(data_for_xl, units, index_from) #traff, %, or index
 
   temp <- data_for_xl[ ,-which(names(data_for_xl) %in% c("year", "quarter"))]
   data_for_xl <- data_for_xl[rowSums(is.na(temp)) != ncol(temp),] #so we don't have empty rows
