@@ -152,12 +152,12 @@ add_headers_twovars <- function(headers){
   return(top_headers)
 }
 
-add_footnote_refs <- function(new_data){
+add_footnote_refs <- function(data_for_xl){
   #Adds in the footnote notations to the third col.
-  #Returns 2 objects in a list, the first being new_data with updated third col
+  #Returns 2 objects in a list, the first being data_for_xl with updated third col
   #and the second being a named list of footnote linking to reference
   #(subfunction of add_body_dft)
-  d <- new_data #just for simplicity (easier to read)
+  d <- data_for_xl #just for simplicity (easier to read)
 
   #2000 fuel protest
   d[d$year == 1999 & d$quarter == 3, 3] <- "[1]"
@@ -180,18 +180,18 @@ add_footnote_refs <- function(new_data){
   return(list(d, footnote_refs))
 }
 
-add_body_dft <- function(tab, new_data){
+add_body_dft <- function(tab, data_for_xl){
   #adds in the main data and it's col headers to tab
 
-  n <- dim(new_data)[2]
-  new_data <- cbind(new_data[,1:2], NA, new_data[,3:n])
+  n <- dim(data_for_xl)[2]
+  data_for_xl <- cbind(data_for_xl[,1:2], NA, data_for_xl[,3:n])
   n <- n+1 #because we've added a new col
 
   #add in col for footnotes (eg "P" for provisional)
-  new_data <- add_footnote_refs(new_data)[[1]]
+  data_for_xl <- add_footnote_refs(data_for_xl)[[1]]
 
   #write the column styles - which ones to make bold
-  headers <- names(new_data)
+  headers <- names(data_for_xl)
   col_style_names <- rep("body", length(headers))
   col_style_names[headers=="year"] <- "body_bold_year" #so year nums formatted as 2013 not 2,013
   col_style_names[headers=="quarter"] <- "body_bold"
@@ -215,29 +215,29 @@ add_body_dft <- function(tab, new_data){
   }
 
   #Add the data to tab (put it in presentable format)
-  new_data[ ,4:n] <- round(new_data[ ,4:n],1)
+  data_for_xl[ ,4:n] <- round(data_for_xl[ ,4:n],1)
   #Add data to tab (after making slightly nicer)
-  new_data$year <- nice_year(new_data$year, new_data$quarter)
-  new_data$quarter <- nice_quart(new_data$quarter)
-  tab <- xltabr::add_body(tab, new_data,
+  data_for_xl$year <- nice_year(data_for_xl$year, data_for_xl$quarter)
+  data_for_xl$quarter <- nice_quart(data_for_xl$quarter)
+  tab <- xltabr::add_body(tab, data_for_xl,
                           col_style_names = col_style_names)
   tab <- add_bottom_row_style(tab) #the border along the bottom
   return(tab)
 }
 ####col and row widths / merging ####
-colrow_width_dft <- function(tab, new_data){
+colrow_width_dft <- function(tab, data_for_xl){
   #1) adjusts col width specifications
   #2) adjusts row height specifications (non NA "Year" rows are slightly bigger)
 
   #3) merges title cells where needed
   ##1) col widths
-  n <- dim(new_data)[2]
+  n <- dim(data_for_xl)[2]
   tab <- xltabr::set_wb_widths(tab, body_header_col_widths = c(6, 12, 3, rep(14,n-2)))
   #^^2 points about the above line:
   #- the 1.2 factor is due to an unsolved issue around the col widths changing based on
   #   which file is read in, i.e. a contents page already exists and the structure of that
   #   page. It is not known exactly what happens.
-  #- n+1 rows are defined where new_data only has n, but this is because in 'tab' we have
+  #- n+1 rows are defined where data_for_xl only has n, but this is because in 'tab' we have
   #   added in a col for footnote references in col3
 
   ##2) row height
@@ -245,7 +245,7 @@ colrow_width_dft <- function(tab, new_data){
   #tare is the point at which the data ("body" in xltabr language) starts
   tare <- length(tab$title$title_text) + length(tab$top_headers$top_headers_list)
 
-  year_rows <- which(new_data$quarter==1) #first quarter has year attached
+  year_rows <- which(data_for_xl$quarter==1) #first quarter has year attached
   if (!(1 %in% year_rows)){year_rows <- append(1,year_rows)} #first row needs year
   year_rows <- year_rows + tare #to make it the actual index in the ws
   #now to change the row heights
@@ -310,11 +310,11 @@ TRA2503_header_merge <- function(tab, table_name){
     }
   return(tab)
 }
-####Go from the data frame "new_data" to Excel doc####
+####Go from the data frame "data_for_xl" to Excel doc####
 #' @title new2xl
 #' @description takes a data frame with title and footer text and outputs a beautiful Excel table.
 #' Made with xltabr as main base.
-#' @param new_data data frame outputted from \code{\link{raw2new}}
+#' @param data_for_xl data frame outputted from \code{\link{raw2new}}
 #' @param title_text vector of strings, if not length 6 has warning (see Examples below for correct notation)
 #' @param footer_text vector of strings, can be any length
 #' @param table_name string eg "TRA2504e"
@@ -327,7 +327,7 @@ TRA2503_header_merge <- function(tab, table_name){
 #' \dontrun{
 #' #set up scenario
 #' raw <- TRA25_data_api()
-#' new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
+#' data_for_xl <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
 #' #title and footer
 #' title_text <- c("Department for Transport statistics",
 #'                "Traffic",
@@ -343,7 +343,7 @@ TRA2503_header_merge <- function(tab, table_name){
 #'
 #'
 #' #apply the function (look in folder to see output)
-#' new2xl(new_data,
+#' new2xl(data_for_xl,
 #'        title_text,
 #'        footer_text,
 #'        table_name = "TRA2504e",
@@ -352,9 +352,9 @@ TRA2503_header_merge <- function(tab, table_name){
 #'        save_over = F)
 #'        }
 #' @export
-new2xl <- function(new_data, title_text, footer_text, table_name,
+new2xl <- function(data_for_xl, title_text, footer_text, table_name,
                    save_to=getwd(), start_from_wb = FALSE, save_over = F){
-  #makes nicely formatted Excel doc from new_data
+  #makes nicely formatted Excel doc from data_for_xl
 
   #Open the workbook
   if (start_from_wb == F){
@@ -380,8 +380,8 @@ new2xl <- function(new_data, title_text, footer_text, table_name,
   #now we use all the subfunctions created as part of the LStest package (behind the scenes)
   tab <- xltabr::initialise(wb = wb, ws_name = table_name)
   tab <- LStest:::add_title_dft(tab, title_text)
-  tab <- LStest:::add_body_dft(tab, new_data)
-  tab <- LStest:::colrow_width_dft(tab, new_data)
+  tab <- LStest:::add_body_dft(tab, data_for_xl)
+  tab <- LStest:::colrow_width_dft(tab, data_for_xl)
   tab <- xltabr::add_footer(tab,footer_text, footer_style_names = "body")
   tab <- xltabr::auto_merge_footer_cells(tab)
   tab <- xltabr::write_data_and_styles_to_wb(tab) #the order matters here (LS needs extra check)

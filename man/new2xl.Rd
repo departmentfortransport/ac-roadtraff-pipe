@@ -4,11 +4,11 @@
 \alias{new2xl}
 \title{new2xl}
 \usage{
-new2xl(new_data, title_text, footer_text, table_name, save_to = getwd(),
+new2xl(data_for_xl, title_text, footer_text, table_name, save_to = getwd(),
   start_from_wb = FALSE, save_over = F)
 }
 \arguments{
-\item{new_data}{data frame outputted from \code{\link{raw2new}}}
+\item{data_for_xl}{data frame outputted from \code{\link{raw2new}}}
 
 \item{title_text}{vector of strings, if not length 6 has warning (see Examples below for correct notation)}
 
@@ -32,7 +32,7 @@ Made with xltabr as main base.
 \dontrun{
 #set up scenario
 raw <- TRA25_data_api()
-new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
+data_for_xl <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
 #title and footer
 title_text <- c("Department for Transport statistics",
                "Traffic",
@@ -48,7 +48,7 @@ footer_text <- footer_text <- c("",
 
 
 #apply the function (look in folder to see output)
-new2xl(new_data,
+new2xl(data_for_xl,
        title_text,
        footer_text,
        table_name = "TRA2504e",

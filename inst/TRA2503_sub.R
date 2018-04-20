@@ -30,14 +30,14 @@ make_TRA2503_sub <- function(save_loc=getwd()){
                    paste("Next update:", next_update))
 
   ###TRA2503a####
-  new_data <- raw2new(raw, roll=T, type="vehicle_and_road", units="traffic", km_or_miles = "miles")
+  data_for_xl <- raw2new(raw, roll=T, type="vehicle_and_road", units="traffic", km_or_miles = "miles")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2503a",
                   "Car and goods vehicle traffic (vehicle miles) by road class in Great Britain, rollong annual totals from 1994",
                   "",
                   "Billion vehicle miles (not seasonally adjusted)")
-  new2xl(new_data,
+  new2xl(data_for_xl,
          title_text,
          footer_text,
          table_name = "TRA2503a",

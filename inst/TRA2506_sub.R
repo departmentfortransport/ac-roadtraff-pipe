@@ -32,7 +32,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
                    paste("Next update:", next_update))
 
   ###TRA2506a####
-  new_data <- raw2new(raw, roll=T, type="vehicle_and_road", units="traffic", km_or_miles = "km")
+  data_for_xl <- raw2new(raw, roll=T, type="vehicle_and_road", units="traffic", km_or_miles = "km")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2506a",
@@ -64,15 +64,15 @@ make_TRA2506_sub <- function(save_loc=getwd()){
   tab <- xltabr::initialise(wb = wb, ws_name = table_name)
 
   #RIPPED add_body_dft AS DON'T WANT TO ADD ALL
-  n <- dim(new_data)[2]
-  new_data <- cbind(new_data[,1:2], NA, new_data[,3:n])
+  n <- dim(data_for_xl)[2]
+  data_for_xl <- cbind(data_for_xl[,1:2], NA, data_for_xl[,3:n])
   n <- n+1 #because we've added a new col
 
   #add in col for footnotes (eg "P" for provisional)
-  new_data <- LStest:::add_footnote_refs(new_data)[[1]]
+  data_for_xl <- LStest:::add_footnote_refs(data_for_xl)[[1]]
 
   #write the column styles - which ones to make bold
-  headers <- names(new_data)
+  headers <- names(data_for_xl)
   col_style_names <- rep("body", length(headers))
   col_style_names[headers=="year"] <- "body_bold_year" #so year nums formatted as 2013 not 2,013
   col_style_names[headers=="quarter"] <- "body_bold"
@@ -96,16 +96,16 @@ make_TRA2506_sub <- function(save_loc=getwd()){
   }
 
   #Add the data to tab (put it in presentable format)
-  new_data[ ,4:n] <- round(new_data[ ,4:n],1)
+  data_for_xl[ ,4:n] <- round(data_for_xl[ ,4:n],1)
   #Add data to tab (after making slightly nicer)
-  new_data$year <- LStest:::nice_year(new_data$year, new_data$quarter)
-  new_data$quarter <- LStest:::nice_quart(new_data$quarter)
-  tab <- xltabr::add_body(tab, new_data,
+  data_for_xl$year <- LStest:::nice_year(data_for_xl$year, data_for_xl$quarter)
+  data_for_xl$quarter <- LStest:::nice_quart(data_for_xl$quarter)
+  tab <- xltabr::add_body(tab, data_for_xl,
                           col_style_names = col_style_names)
   tab <- LStest:::add_bottom_row_style(tab) #the border along the bottom
 
 
-  #tab <- LStest:::colrow_width_dft(tab, new_data)
+  #tab <- LStest:::colrow_width_dft(tab, data_for_xl)
   tab <- xltabr::add_footer(tab,footer_text, footer_style_names = "body")
   tab <- xltabr::auto_merge_footer_cells(tab)
   tab <- xltabr::write_data_and_styles_to_wb(tab) #the order matters here (LS needs extra check)

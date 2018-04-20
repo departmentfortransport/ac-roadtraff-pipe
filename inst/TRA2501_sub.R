@@ -30,14 +30,14 @@ make_TRA2501_sub <- function(save_loc=getwd()){
                    paste("Next update:", next_update))
 
   ###TRA2501a####
-  new_data <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
+  data_for_xl <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2501a",
                   "Road traffic (vehicle miles) by vehicle type in Great Britain, rolling annual totals from 1994",
                   "Billion vehicle miles (not seasonally adjusted)",
                   "Rolling annual totals")
-  new2xl(new_data,
+  new2xl(data_for_xl,
          title_text,
          footer_text,
          table_name = "TRA2501a",
@@ -46,14 +46,14 @@ make_TRA2501_sub <- function(save_loc=getwd()){
          save_over = TRUE)
 
   ###TRA2501b####
-  new_data <- raw2new(raw, roll=T, type="vehicle", units="index")
+  data_for_xl <- raw2new(raw, roll=T, type="vehicle", units="index")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2501b",
                   "Road traffic (vehicle miles) by vehicle type in Great Britain, rolling annual totals from 1994",
                   "",
                   "Index numbers (Q4 1994 = 100)")
-  new2xl(new_data,
+  new2xl(data_for_xl,
          title_text,
          footer_text,
          table_name = "TRA2501b",
@@ -63,7 +63,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
 
 
   ####TRA2501c####
-  new_data <- raw2new(raw, roll=T, type="vehicle", units="percentage")
+  data_for_xl <- raw2new(raw, roll=T, type="vehicle", units="percentage")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2501c",
@@ -71,7 +71,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
                   "",
                   "Percentage change on previous year")
 
-  new2xl(new_data,
+  new2xl(data_for_xl,
          title_text,
          footer_text,
          table_name = "TRA2501c",
@@ -83,7 +83,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
   #waiting on seasonal data
 
   ####TRA2501e####
-  new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "miles")
+  data_for_xl <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "miles")
   #title and footer
   title_text <- c("Department for Transport statistics",
                   "Traffic",
@@ -93,7 +93,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
                   "Billion vehicle miles (not seasonally adjusted)")
 
   #apply the function (look in folder to see output)
-  new2xl(new_data,
+  new2xl(data_for_xl,
          title_text,
          footer_text,
          table_name = "TRA2501e",

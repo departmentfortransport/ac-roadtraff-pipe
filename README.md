@@ -127,8 +127,8 @@ There are 2 steps to outputting nice Excel tables from raw data: 1. rearrange th
 We can format the data as desired, which for sheet TRA2504a in table TRA2504 is: rolling annual vehicle kilometres split into different vehicle types. Using the bespoke function `raw2new` this means simply one line of code specifying each decision:
 
 ``` r
-new_data <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
-head(new_data)
+data_for_xl <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
+head(data_for_xl)
 #>   year quarter     cars      lgv      hgv    other    total
 #> 1 1994       4 214.3886 26.92739 15.39442 5.222279 261.9327
 #> 2 1995       1 215.4086 27.07652 15.53502 5.238177 263.2583
@@ -164,7 +164,7 @@ footer_text <- c("Other = Two wheeled motor vehicles, buses, and coaches",
                  "Last updated: November 2017",
                  "Next update: May 2018")
 
-new2xl(new_data,
+new2xl(data_for_xl,
        title_text,
        footer_text,
        table_name = "TRA2501a")

@@ -84,22 +84,22 @@ pivot_raw <- function(raw, type){
   type <- paste0(type,"_type") #bit of backwards coding - but important due to variable names
 
   #sum over variable that's not needed (either vehicle_type or road_type)
-  new_data <- raw %>%
+  data_for_xl <- raw %>%
     dplyr::group_by_("year", "quarter", type) %>%
     dplyr::summarise(estimate = sum(estimate))
   #Pivots type from being a row tso being a few cols (as is categorical)
-  new_data <- reshape2::dcast(new_data,
+  data_for_xl <- reshape2::dcast(data_for_xl,
                               year + quarter ~ get(type),
                               #^^"get" is used here as we want the value of type not "type"
                               value.var = "estimate",
                               fun.aggregate = sum)
   # Add  in a column for the sum ie the totals
-  total <- rowSums(new_data[, which(names(new_data) %in%
+  total <- rowSums(data_for_xl[, which(names(data_for_xl) %in%
                                     unique(dplyr::pull(raw,type)))])
   #^^^dirty code - but just selects ones we've pivoted up
-  new_data <-  cbind(new_data, total)
-  colnames(new_data)[length(new_data)] <- "total"
-  return(new_data)
+  data_for_xl <-  cbind(data_for_xl, total)
+  colnames(data_for_xl)[length(data_for_xl)] <- "total"
+  return(data_for_xl)
 }
 
 TRA25_vehicle_road <- function(raw, type){
@@ -113,39 +113,39 @@ TRA25_vehicle_road <- function(raw, type){
   if (type == "road" | type == "vehicle"){
     #apply the sub function pivot_raw that changes type from being in one column
     #to being separate rows
-    new_data <- pivot_raw(raw, type)
+    data_for_xl <- pivot_raw(raw, type)
     if (type == "vehicle"){
-      new_data <- new_data[c("year", "quarter", "cars", "lgv", "hgv","other","total")]
+      data_for_xl <- data_for_xl[c("year", "quarter", "cars", "lgv", "hgv","other","total")]
     } else {#type == "road"
-      new_data <- new_data[c("year", "quarter", "MW", "AR", "AU","MR","MU", "total")]}
+      data_for_xl <- data_for_xl[c("year", "quarter", "MW", "AR", "AU","MR","MU", "total")]}
   } else { #type = "vehicle_and_road"
     #create 3 data sets to be appended to each other
-    new_data_C <- raw[raw$vehicle_type == "cars",]
-    new_data_C <- pivot_raw(new_data_C, "road")
-    names(new_data_C)[3:8] <- paste0(names(new_data_C),".cars")[3:8]
+    data_for_xl_C <- raw[raw$vehicle_type == "cars",]
+    data_for_xl_C <- pivot_raw(data_for_xl_C, "road")
+    names(data_for_xl_C)[3:8] <- paste0(names(data_for_xl_C),".cars")[3:8]
 
-    new_data_H <- raw[raw$vehicle_type == "hgv",]
-    new_data_H <- pivot_raw(new_data_H, "road")
-    names(new_data_H)[3:8] <- paste0(names(new_data_H),".hgv")[3:8]
+    data_for_xl_H <- raw[raw$vehicle_type == "hgv",]
+    data_for_xl_H <- pivot_raw(data_for_xl_H, "road")
+    names(data_for_xl_H)[3:8] <- paste0(names(data_for_xl_H),".hgv")[3:8]
 
-    new_data_L <- raw[raw$vehicle_type == "lgv",]
-    new_data_L <- pivot_raw(new_data_L, "road")
-    names(new_data_L)[3:8] <- paste0(names(new_data_L),".lgv")[3:8]
+    data_for_xl_L <- raw[raw$vehicle_type == "lgv",]
+    data_for_xl_L <- pivot_raw(data_for_xl_L, "road")
+    names(data_for_xl_L)[3:8] <- paste0(names(data_for_xl_L),".lgv")[3:8]
 
-    new_data <- base::merge(new_data_C, new_data_H, by = c("year", "quarter"))
-    new_data <- base::merge(new_data, new_data_L, by = c("year", "quarter"))
+    data_for_xl <- base::merge(data_for_xl_C, data_for_xl_H, by = c("year", "quarter"))
+    data_for_xl <- base::merge(data_for_xl, data_for_xl_L, by = c("year", "quarter"))
 
     #remove MR.hgv and MU.hgv - done to match the way tables have been made. Totals col still
     #has them though, which is odd in my opinion (could easily derive "minor HGV")
-    new_data <- new_data[,-which(names(new_data) %in% c("MU.hgv","MR.hgv"))]
+    data_for_xl <- data_for_xl[,-which(names(data_for_xl) %in% c("MU.hgv","MR.hgv"))]
     #re-order for consistency with old (I don't like this as it limits to very specific scenario)
-    new_data <- new_data[c("year", "quarter",
+    data_for_xl <- data_for_xl[c("year", "quarter",
                            "MW.cars", "AR.cars", "AU.cars", "MR.cars", "MU.cars" , "total.cars"
                            ,"MW.hgv", "AR.hgv",  "AU.hgv",  "total.hgv"
                            ,"MW.lgv", "AR.lgv",  "AU.lgv",  "MR.lgv",  "MU.lgv", "total.lgv")]
     }
 
-  return(new_data)
+  return(data_for_xl)
 }
 
 ####Traffic, index numbers, or % change####
@@ -153,10 +153,10 @@ TRA25_vehicle_road <- function(raw, type){
 
 #' Downloads data from road traffic API and formats correctly into data frame
 #'
-#' @param new_data the pivotted data, outputted from \code{\link{TRA25_vehicle_road}}
+#' @param data_for_xl the pivotted data, outputted from \code{\link{TRA25_vehicle_road}}
 #' @param units either "traffic", "percentage", "index" depending on what values required. 
 #' @export
-chosen_units <- function(new_data, units){
+chosen_units <- function(data_for_xl, units){
   #Changes the "estimates" column from the initial data to be either percentage change on
   #previous year, indexed from chosen point, or the same values themselves
 
@@ -168,28 +168,28 @@ chosen_units <- function(new_data, units){
 
     #percentage change - always 4 quarters apart regardless of whether the data is rolling annual or quarterly :)
     warning("LS fix - bad practice probably in this bit of code below")
-    n <- dim(new_data)[2] #width of the data frame
+    n <- dim(data_for_xl)[2] #width of the data frame
     for (i in 3:n){
-      new_data[,i] <- ave(new_data[,i], #the colum we're 'ave'raging
+      data_for_xl[,i] <- ave(data_for_xl[,i], #the colum we're 'ave'raging
                           FUN = function(x) {100 * ( x / dplyr::lag(x,4) - 1 )}) #the -1 is to get perc CHANGE
     }
   }
   if (units == "index"){
-    if(is.na(index_from)){index_from <- list(year=new_data$year[1], quarter=new_data$quarter[1])
+    if(is.na(index_from)){index_from <- list(year=data_for_xl$year[1], quarter=data_for_xl$quarter[1])
     } else {
       stop("index_from is not sorted from vals other than first in data set - sorry!")
     }
     #next 5 lines is probably bad practice - using loops in R!
-    n <- dim(new_data)[2] #width of the data frame
-    m <- dim(new_data)[1] #length of the data frame
-    index_vals <- new_data[1,3:n]
+    n <- dim(data_for_xl)[2] #width of the data frame
+    m <- dim(data_for_xl)[1] #length of the data frame
+    index_vals <- data_for_xl[1,3:n]
     index_vals <- as.numeric(index_vals) #otherwise in loop we get one number (due to fact is data frame)
     for (i in 3:n){
-      new_data[,i] <- 100 * new_data[,i] / index_vals[i-2]
+      data_for_xl[,i] <- 100 * data_for_xl[,i] / index_vals[i-2]
     }
   }
   #NOTE - when units="traffic" we don't change anything. Important to make user define that that is the value they want
-  return(new_data)
+  return(data_for_xl)
 }
 
 ####Wrapper function####
@@ -214,8 +214,8 @@ chosen_units <- function(new_data, units){
 #' #first get the raw data
 #' raw <- TRA25_data_api()
 #' #Google TRA25 if the naming convention on the left ("TRA25...") doesn't make sense
-#' TRA2501a_new_data <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
-#' View(TRA2501a_new_data) #look at the data frame created - is the same as sheet TRA2501a (search online)
+#' TRA2501a_data_for_xl <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
+#' View(TRA2501a_data_for_xl) #look at the data frame created - is the same as sheet TRA2501a (search online)
 #' @export
 
 raw2new <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
@@ -235,15 +235,15 @@ raw2new <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
     }
   }
 
-  new_data <- TRA25_vehicle_road(raw, type) #road or vehicle
+  data_for_xl <- TRA25_vehicle_road(raw, type) #road or vehicle
 
-  temp <- new_data[ ,-which(names(new_data) %in% c("year", "quarter"))]
-  new_data <- new_data[rowSums(is.na(temp)) != ncol(temp),] #so we don't have empty rows
+  temp <- data_for_xl[ ,-which(names(data_for_xl) %in% c("year", "quarter"))]
+  data_for_xl <- data_for_xl[rowSums(is.na(temp)) != ncol(temp),] #so we don't have empty rows
 
 
-  new_data <- chosen_units(new_data, units) #traff, %, or index
+  data_for_xl <- chosen_units(data_for_xl, units) #traff, %, or index
 
-  temp <- new_data[ ,-which(names(new_data) %in% c("year", "quarter"))]
-  new_data <- new_data[rowSums(is.na(temp)) != ncol(temp),] #so we don't have empty rows
-  return(new_data)
+  temp <- data_for_xl[ ,-which(names(data_for_xl) %in% c("year", "quarter"))]
+  data_for_xl <- data_for_xl[rowSums(is.na(temp)) != ncol(temp),] #so we don't have empty rows
+  return(data_for_xl)
 }

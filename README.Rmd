@@ -112,8 +112,8 @@ We can format the data as desired, which for sheet TRA2504a in table TRA2504 is:
 rolling annual vehicle kilometres split into different vehicle types. Using the bespoke function `raw2new` this means simply one line of code specifying each decision: 
 
 ```{r example1}
-new_data <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
-head(new_data)
+data_for_xl <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
+head(data_for_xl)
 ```
 
 ###Step 2 - format into a lovely Excel Sheet
@@ -141,7 +141,7 @@ footer_text <- c("Other = Two wheeled motor vehicles, buses, and coaches",
                  "Last updated: November 2017",
                  "Next update: May 2018")
 
-new2xl(new_data,
+new2xl(data_for_xl,
        title_text,
        footer_text,
        table_name = "TRA2501a")
