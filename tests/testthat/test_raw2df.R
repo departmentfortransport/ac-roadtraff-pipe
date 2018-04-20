@@ -18,7 +18,7 @@ test_that("api data in expected format",{
   check_api_working("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly")
   #^^ skip this bit if can't even access API
 
-  raw <- api_get_data()
+  raw <- TRA25_data_api()
   #below is quite a strict error test - var names can't change, neither can order
   expect_equal(names(raw), c("year", "quarter", "road_type", "vehicle_type", "estimate"))
   #can't have negative? or NA traffic flow

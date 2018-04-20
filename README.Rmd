@@ -98,7 +98,7 @@ library(LStest)
 
 Second, download the raw data from online. 
 ```{r getdata}
-raw <- api_get_data("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly") 
+raw <- TRA25_data_api("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly") 
 raw
 ```
 If your data is in a csv on your desktop you can get it into R easily, an example of how to do that is given at http://rprogramming.net/read-csv-in-r/ 

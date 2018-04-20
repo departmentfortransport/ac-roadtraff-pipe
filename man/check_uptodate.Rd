@@ -7,7 +7,7 @@
 check_uptodate(raw, year, quarter)
 }
 \arguments{
-\item{raw}{output from \code{\link{api_get_data}}}
+\item{raw}{output from \code{\link{TRA25_data_api}}}
 
 \item{year}{integer - year of most recent data}
 

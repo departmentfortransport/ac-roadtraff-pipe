@@ -12,9 +12,9 @@
 #'
 #' @param url the API url. Preset to one that works but can be overwritten (for example, seasonal data)
 #' @examples
-#' raw <- api_get_data()
+#' raw <- TRA25_data_api()
 #' @export
-api_get_data <- function(
+TRA25_data_api <- function(
   url="https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly"){
   ##Gets the data from Luke V's API webiste and changes it from messy list
   ##to nice data frame
@@ -174,10 +174,10 @@ chosen_units <- function(new_data, units, index_from=NA){
 }
 
 ####Wrapper function####
-#' given the API output from \code{\link{api_get_data}}, formats into a data frame
+#' given the API output from \code{\link{TRA25_data_api}}, formats into a data frame
 #' with values defined by the user.
 #'
-#' @param raw data frame outputted from \code{\link{api_get_data}()}
+#' @param raw data frame outputted from \code{\link{TRA25_data_api}()}
 #' @param roll logical. TRUE if rolling annual values desired, FALSE if not
 #' @param type character string. Either "road" or "vehicle" dependant on which wanted for column headers
 #' @param units character string. Either
@@ -191,7 +191,7 @@ chosen_units <- function(new_data, units, index_from=NA){
 #' @return data frame of same dimensions as input, with values changed to rolling annual (if stated)
 #' @examples
 #' #first get the raw data
-#' raw <- api_get_data()
+#' raw <- TRA25_data_api()
 #' #Google TRA25 if the naming convention on the left ("TRA25...") doesn't make sense
 #' TRA2504e <- raw2new(raw,roll=FALSE, type="vehicle", units="traffic", km_or_miles = "km")
 #' TRA2505e <- raw2new(raw,roll=FALSE, type="road", units="traffic", km_or_miles = "km")

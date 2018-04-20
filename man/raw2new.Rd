@@ -2,13 +2,13 @@
 % Please edit documentation in R/raw2df.R
 \name{raw2new}
 \alias{raw2new}
-\title{given the API output from \code{\link{api_get_data}}, formats into a data frame
+\title{given the API output from \code{\link{TRA25_data_api}}, formats into a data frame
 with values defined by the user.}
 \usage{
 raw2new(raw, roll = NA, type = NA, units = NA, km_or_miles = NA)
 }
 \arguments{
-\item{raw}{data frame outputted from \code{\link{api_get_data}()}}
+\item{raw}{data frame outputted from \code{\link{TRA25_data_api}()}}
 
 \item{roll}{logical. TRUE if rolling annual values desired, FALSE if not}
 
@@ -28,12 +28,12 @@ as otherwise doesn't make a difference.}
 data frame of same dimensions as input, with values changed to rolling annual (if stated)
 }
 \description{
-given the API output from \code{\link{api_get_data}}, formats into a data frame
+given the API output from \code{\link{TRA25_data_api}}, formats into a data frame
 with values defined by the user.
 }
 \examples{
 #first get the raw data
-raw <- api_get_data()
+raw <- TRA25_data_api()
 #Google TRA25 if the naming convention on the left ("TRA25...") doesn't make sense
 TRA2504e <- raw2new(raw,roll=FALSE, type="vehicle", units="traffic", km_or_miles = "km")
 TRA2505e <- raw2new(raw,roll=FALSE, type="road", units="traffic", km_or_miles = "km")

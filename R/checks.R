@@ -5,7 +5,7 @@
 #' @title check_uptodate
 #' @description checks that the incoming data's most recent info matches what the user
 #' thinks it is
-#' @param raw output from \code{\link{api_get_data}}
+#' @param raw output from \code{\link{TRA25_data_api}}
 #' @param year integer - year of most recent data
 #' @param quarter integer - quarter of most recent data
 #' @examples

@@ -6,7 +6,7 @@ library(LStest)
 #1) check the API at https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly has the most uptodate data
 
 #2) change the following line to where in your docs you want the tables to save (*)
-save_loc <- "/Users/Luke/Documents/table_dump/showcase/"
+save_loc <- "~/table_dump"
 #   (*)If you don't know uncomment the following line:
 #   rm(save_loc)
 #   and then it will be saved to where your current session is, which you can see by running this:
@@ -20,7 +20,7 @@ next_update <- "May 2018"
 
 #4) run this whole script - you can do this with the shortcuts "CTRL + A" then "CTRL + R"
 
-raw <- api_get_data()
+raw <- TRA25_data_api()
 source(system.file("TRA2501_sub.r",package="LStest"))
 source(system.file("TRA2502_sub.r",package="LStest"))
 source(system.file("TRA2503_sub.r",package="LStest"))

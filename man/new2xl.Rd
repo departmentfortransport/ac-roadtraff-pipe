@@ -31,7 +31,7 @@ Made with xltabr as main base.
 \examples{
 \dontrun{
 #set up scenario
-raw <- api_get_data()
+raw <- TRA25_data_api()
 new_data <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
 #title and footer
 title_text <- c("Department for Transport statistics",

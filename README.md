@@ -100,7 +100,7 @@ library(LStest)
 Second, download the raw data from online.
 
 ``` r
-raw <- api_get_data("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly") 
+raw <- TRA25_data_api("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly") 
 raw
 #> # A tibble: 1,900 x 5
 #>     year quarter road_type vehicle_type estimate
