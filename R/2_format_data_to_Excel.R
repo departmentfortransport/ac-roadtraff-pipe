@@ -4,6 +4,24 @@
 #############
 
 ####add title####
+#' Adds the title to the tab. title_text must be of the same format as TRA25 tables
+#'
+#' @param tab the core tab object
+#' @param title_text vector string with 6 elements 
+#' @examples
+#'tab <- xltabr::initialise()
+#'title_text <- c("Department for Transport statistics",
+#'                "Traffic",
+#'                "Table TRA2501a",
+#'                "Road traffic (vehicle miles) by vehicle type in Great Britain, rolling annual totals from 1994",
+#'                "Billion vehicle miles (not seasonally adjusted)",
+#'                "Rolling annual totals")
+#'#setting the DfT style path - defines font size, colour, etc.
+#'xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
+#'tab <- add_title_dft(tab, title_text)
+#'#to see the result:
+#'openxlsx::openXL(tab)
+#' @export
 add_title_dft <- function(tab,title_text){
   #adds the title text, nicely formatted (cells are merged later)
   if(length(title_text)!=6){
