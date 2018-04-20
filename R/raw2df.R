@@ -34,6 +34,8 @@ TRA25_data_api <- function(
 }
 
 ####quarterly or rolling annual####
+#' Ultimately a subfunction of \code{\link{raw2new}}
+#'
 #' Creates the rolling annual totals from quarterly values
 #'
 #' @param raw the raw data, from \code{\link{TRA25_data_api}}
@@ -73,8 +75,8 @@ TRA25_rolling_annual <- function(raw, x){
 
 ####vehicle type or road type####
 pivot_raw <- function(raw, type){
+  #ONLY USED INSIDE the function TRA25_vehicle_road
   #pivots the raw data up by one column, type being either "road" or "vehicle"
-  #only used inside the function TRA25_vehicle_road
 
   if (!(type=="road" | type=="vehicle")){
     stop("type must be \"vehicle\", \"road\" in this subfunction - select the one you want as cols")
@@ -102,7 +104,8 @@ pivot_raw <- function(raw, type){
 
 TRA25_vehicle_road <- function(raw, type){
   #Takes the initial data "raw" from function TRA25_rolling_annual
-  #Do you want the columns to be vehicle type or road type. Pivots the data to be that way
+  #Do you want the columns to be vehicle type or road type? Pivots the data to be that way
+
   if (!(type=="road" | type=="vehicle" | type=="vehicle_and_road")){
     stop("type must be \"vehicle\", \"road\", or \"vehicle_and_road\" - select the one you want as cols")
   }
@@ -146,7 +149,14 @@ TRA25_vehicle_road <- function(raw, type){
 }
 
 ####Traffic, index numbers, or % change####
-chosen_units <- function(new_data, units, index_from=NA){
+#' Ultimately a subfunction of \code{\link{raw2new}}
+
+#' Downloads data from road traffic API and formats correctly into data frame
+#'
+#' @param new_data the pivotted data, outputted from \code{\link{TRA25_vehicle_road}}
+#' @param units either "traffic", "percentage", "index" depending on what values required. 
+#' @export
+chosen_units <- function(new_data, units){
   #Changes the "estimates" column from the initial data to be either percentage change on
   #previous year, indexed from chosen point, or the same values themselves
 
@@ -184,7 +194,7 @@ chosen_units <- function(new_data, units, index_from=NA){
 
 ####Wrapper function####
 #' given the API output from \code{\link{TRA25_data_api}}, formats into a data frame
-#' with values defined by the user.
+#' pivotted to the right format for making into the Excel document.
 #'
 #' @param raw data frame outputted from \code{\link{TRA25_data_api}()}
 #' @param roll logical. TRUE if rolling annual values desired, FALSE if not
