@@ -1,5 +1,5 @@
 ########
-##Place for checking functions that dob't fit as unit tests
+##Place for checking functions that don't fit as unit tests
 ########
 
 #' @title check_uptodate
