@@ -22,7 +22,7 @@ new2xl(data_for_xl, title_text, footer_text, table_name, save_to = getwd(),
 will be created}
 
 \item{save_over}{TRUE or FALSE. Should the output file replace the file of "start_from_file" or
-be saved as a new file? TRUE = replace the file}
+be saved as a new file? TRUE = replace the file. FALSE = will save with time stamp as part of name}
 }
 \description{
 takes a data frame with title and footer text and outputs a beautiful Excel table.
@@ -47,13 +47,12 @@ footer_text <- footer_text <- c("",
               "The figures in these tables are National Statistics")
 
 
-#apply the function (look in folder to see output)
 new2xl(data_for_xl,
        title_text,
        footer_text,
        table_name = "TRA2504e",
-       save_to = "/Users/Luke/Documents/xltabr_TRA2504e/sheet_builder_test",
-       start_from_file = "builder.xlsx",
+       save_to = getwd(),
+       start_from_file = system.file("template.xlsx", package="LStest"),
        save_over = F)
        }
 }

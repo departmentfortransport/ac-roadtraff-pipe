@@ -323,8 +323,9 @@ colrow_width_dft <- function(tab, data_for_xl){
 
 #' Decides the name of your .xlsx file, simplest case is just use the table name.
 #'
-#' @param start_from_file the 
-#' @param data_for_xl output from TRA25_arrange_data
+#' @param start_from_file the name of the .xlsx file that we're going to add a sheet to
+#' @param save_over logical, if TRUE then overwrite the original file
+#' @param table_name string, eg "TRA2501" 
 #' @export
 get_filename <- function(start_from_file, save_over, table_name){
   #decides on the name of the file based off the following:
@@ -377,14 +378,14 @@ TRA2503_header_merge <- function(tab, table_name){
 #' @description takes a data frame with title and footer text and outputs a beautiful Excel table.
 #' Made with xltabr as main base.
 #' @param data_for_xl data frame outputted from \code{\link{TRA25_arrange_data}}
-#' @param title_text vector of strings, if not length 6 has warning (see Examples below for correct notation)
+#' @param title_text vector of strings, if not length 6 has error (see Examples below for correct notation)
 #' @param footer_text vector of strings, can be any length
 #' @param table_name string eg "TRA2504e"
 #' @param save_to where the xlsx document will be saved. Default is current folder.
 #' @param start_from_file Give name of workbook the sheet will be added on to. If left blank, new workbook
 #' will be created
 #' @param save_over TRUE or FALSE. Should the output file replace the file of "start_from_file" or
-#' be saved as a new file? TRUE = replace the file
+#' be saved as a new file? TRUE = replace the file. FALSE = will save with time stamp as part of name 
 #' @examples
 #' \dontrun{
 #' #set up scenario
@@ -404,13 +405,12 @@ TRA2503_header_merge <- function(tab, table_name){
 #'               "The figures in these tables are National Statistics")
 #'
 #'
-#' #apply the function (look in folder to see output)
 #' new2xl(data_for_xl,
 #'        title_text,
 #'        footer_text,
 #'        table_name = "TRA2504e",
-#'        save_to = "/Users/Luke/Documents/xltabr_TRA2504e/sheet_builder_test",
-#'        start_from_file = "builder.xlsx",
+#'        save_to = getwd(),
+#'        start_from_file = system.file("template.xlsx", package="LStest"),
 #'        save_over = F)
 #'        }
 #' @export
