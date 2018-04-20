@@ -404,7 +404,9 @@ TRA2503_header_merge <- function(tab, table_name){
 #'               "[3] figures affected by September 2000 fuel protest",
 #'               "The figures in these tables are National Statistics")
 #'
-#'
+#' #This code below currently causes an error due to the location of start_from_file being 
+#' #different to save_to. Is a bug that needs fixing! Has been flagged as an issue on GitHub
+#' #as "location of files"
 #' new2xl(data_for_xl,
 #'        title_text,
 #'        footer_text,
