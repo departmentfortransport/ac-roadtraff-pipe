@@ -1,6 +1,6 @@
 #############
-##Functions that go from downloading data from API to formatting in desired format
-##for table set TRA25 so that can be made into Excel tables. 
+##Functions that go from downloading data to rearranging into right 
+##structure for table set TRA25. THis is so that it can be made into Excel tables. 
 ##
 ##The only two functions that are not subfunctions in here are:
 ##TRA25_data_api
@@ -11,7 +11,7 @@
 
 
 ####Get data####
-#' Downloads data from road traffic API and formats correctly into data frame
+#' Downloads data from road traffic API and makes into data frame
 #'
 #' @param url the API url. Is preset to the original, but can be overwritten (for example, seasonal data)
 #' @examples
@@ -153,8 +153,6 @@ TRA25_vehicle_road <- function(raw, type){
 
 ####Traffic, index numbers, or % change####
 #' Ultimately a subfunction of \code{\link{TRA25_arrange_data}}
-
-#' Downloads data from road traffic API and formats correctly into data frame
 #'
 #' @param data_for_xl the pivotted data, outputted from \code{\link{TRA25_vehicle_road}}
 #' @param units either "traffic", "percentage", "index" depending on what values required. 
@@ -196,8 +194,8 @@ chosen_units <- function(data_for_xl, units, index_from = NA){
 }
 
 ####Wrapper function####
-#' given the API output from \code{\link{TRA25_data_api}}, formats into a data frame
-#' pivotted to the right format for making into the Excel document.
+#' given the API output from \code{\link{TRA25_data_api}}, rearranges into a data frame
+#' pivotted to the right structure for making into the Excel document.
 #'
 #' @param raw data frame outputted from \code{\link{TRA25_data_api}()}
 #' @param roll logical. TRUE if rolling annual values desired, FALSE if not
@@ -222,7 +220,7 @@ chosen_units <- function(data_for_xl, units, index_from = NA){
 #' @export
 
 TRA25_arrange_data <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
-  ##Wrapper function that rehsapes the data downloaded from the api into the format desired for the Excel table
+  ##Wrapper function that rehsapes the data downloaded from the api into the structure desired for the Excel table
   raw <- TRA25_rolling_annual(raw,roll) #quarterly vals or rolling annual
 
   if(units=="traffic"){
