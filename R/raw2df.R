@@ -156,7 +156,7 @@ TRA25_vehicle_road <- function(raw, type){
 #' @param data_for_xl the pivotted data, outputted from \code{\link{TRA25_vehicle_road}}
 #' @param units either "traffic", "percentage", "index" depending on what values required. 
 #' @export
-chosen_units <- function(data_for_xl, units){
+chosen_units <- function(data_for_xl, units, index_from = NA){
   #Changes the "estimates" column from the initial data to be either percentage change on
   #previous year, indexed from chosen point, or the same values themselves
 
@@ -177,7 +177,7 @@ chosen_units <- function(data_for_xl, units){
   if (units == "index"){
     if(is.na(index_from)){index_from <- list(year=data_for_xl$year[1], quarter=data_for_xl$quarter[1])
     } else {
-      stop("index_from is not sorted from vals other than first in data set - sorry!")
+      stop("index_from is not sorted from vals other than first in data set - sorry! This needs updating in the package")
     }
     #next 5 lines is probably bad practice - using loops in R!
     n <- dim(data_for_xl)[2] #width of the data frame
