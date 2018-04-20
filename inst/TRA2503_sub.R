@@ -37,7 +37,7 @@ make_TRA2503_sub <- function(save_loc=getwd()){
                   "Car and goods vehicle traffic (vehicle miles) by road class in Great Britain, rollong annual totals from 1994",
                   "",
                   "Billion vehicle miles (not seasonally adjusted)")
-  new2xl(data_for_xl,
+  TRA25_format_to_xl(data_for_xl,
          title_text,
          footer_text,
          table_name = "TRA2503a",

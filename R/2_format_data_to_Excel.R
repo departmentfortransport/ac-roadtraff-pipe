@@ -374,7 +374,7 @@ TRA2503_header_merge <- function(tab, table_name){
   return(tab)
 }
 ####Go from the data frame "data_for_xl" to Excel doc####
-#' @title new2xl
+#' @title TRA25_format_to_xl
 #' @description takes a data frame with title and footer text and outputs a beautiful Excel table.
 #' Made with xltabr as main base.
 #' @param data_for_xl data frame outputted from \code{\link{TRA25_arrange_data}}
@@ -407,7 +407,7 @@ TRA2503_header_merge <- function(tab, table_name){
 #' #This code below currently causes an error due to the location of start_from_file being 
 #' #different to save_to. Is a bug that needs fixing! Has been flagged as an issue on GitHub
 #' #as "location of files"
-#' new2xl(data_for_xl,
+#' TRA25_format_to_xl(data_for_xl,
 #'        title_text,
 #'        footer_text,
 #'        table_name = "TRA2504e",
@@ -416,7 +416,7 @@ TRA2503_header_merge <- function(tab, table_name){
 #'        save_over = F)
 #'        }
 #' @export
-new2xl <- function(data_for_xl, title_text, footer_text, table_name,
+TRA25_format_to_xl <- function(data_for_xl, title_text, footer_text, table_name,
                    save_to=getwd(), start_from_file = FALSE, save_over = F){
   #makes nicely formatted Excel doc from data_for_xl
 

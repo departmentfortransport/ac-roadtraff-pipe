@@ -41,7 +41,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
                   "Billion vehicle kilometres (not seasonally adjusted)")
 
 
-  #####BELOW IS A BASTARDISATION OF new2xl
+  #####BELOW IS A BASTARDISATION OF TRA25_format_to_xl
   table_name <-  "TRA2506a"
   save_to <-  save_loc
   start_from_file <- filename

@@ -37,7 +37,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
                   "Road traffic (vehicle miles) by road class in Great Britain, rolling annual totals from 1994",
                   "",
                   "Billion vehicle miles (not seasonally adjusted)")
-  new2xl(data_for_xl,
+  TRA25_format_to_xl(data_for_xl,
          title_text,
          footer_text,
          table_name = "TRA2502a",
@@ -53,7 +53,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
                   "Road traffic (vehicle miles) by road type in Great Britain, rolling annual totals from 1994",
                   "",
                   "Index numbers (Q4 1994 = 100)")
-  new2xl(data_for_xl,
+  TRA25_format_to_xl(data_for_xl,
          title_text,
          footer_text,
          table_name = "TRA2502b",
@@ -71,7 +71,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
                   "",
                   "Percentage change on previous year")
 
-  new2xl(data_for_xl,
+  TRA25_format_to_xl(data_for_xl,
          title_text,
          footer_text,
          table_name = "TRA2502c",
@@ -93,7 +93,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
                   "Billion vehicle miles (not seasonally adjusted)")
 
   #apply the function (look in folder to see output)
-  new2xl(data_for_xl,
+  TRA25_format_to_xl(data_for_xl,
          title_text,
          footer_text,
          table_name = "TRA2502e",

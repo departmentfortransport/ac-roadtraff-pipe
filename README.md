@@ -140,7 +140,7 @@ head(data_for_xl)
 
 ### Step 2 - format into a lovely Excel Sheet
 
-Now the data is in the right shape for making the table. After naming the title and footer this is all done inside the `new2xl` function:
+Now the data is in the right shape for making the table. After naming the title and footer this is all done inside the `TRA25_format_to_xl` function:
 
 ``` r
 ###TRA2501a####
@@ -164,12 +164,12 @@ footer_text <- c("Other = Two wheeled motor vehicles, buses, and coaches",
                  "Last updated: November 2017",
                  "Next update: May 2018")
 
-new2xl(data_for_xl,
+TRA25_format_to_xl(data_for_xl,
        title_text,
        footer_text,
        table_name = "TRA2501a")
 ```
 
-The above process can be repeated for each sheet in the Excel file, and by the end you will have the finished table. Currently there is no way to make the Contents page, but this could be done as an extra feature of this package. The recommended method is to have the file saved with the Contents sheet already in place, and to write over the file each time. To see how to do this, look in `?new2xl`.
+The above process can be repeated for each sheet in the Excel file, and by the end you will have the finished table. Currently there is no way to make the Contents page, but this could be done as an extra feature of this package. The recommended method is to have the file saved with the Contents sheet already in place, and to write over the file each time. To see how to do this, look in `?TRA25_format_to_xl`.
 
-Note if you are not in the Road Traffics team the function `new2xl` is not necessarily helpful, please see [above](#notSRF)
+Note if you are not in the Road Traffics team the function `TRA25_format_to_xl` is not necessarily helpful, please see [above](#notSRF)
