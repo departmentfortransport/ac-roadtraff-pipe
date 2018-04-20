@@ -10,7 +10,7 @@
 ####Get data####
 #' Downloads data from road traffic API and formats correctly into data frame
 #'
-#' @param url the API url. Preset to one that works but can be overwritten (for example, seasonal data)
+#' @param url the API url. Is preset to the original, but can be overwritten (for example, seasonal data)
 #' @examples
 #' raw <- TRA25_data_api()
 #' @export
@@ -34,7 +34,15 @@ TRA25_data_api <- function(
 }
 
 ####quarterly or rolling annual####
-rolling_annual <- function(raw, x){
+#' Creates the rolling annual totals from quarterly values
+#'
+#' @param raw the raw data, from \code{\link{TRA25_data_api}}
+#' @param x logical, if TRUE then makes values rolling annual totals. If FALSE
+#' then function does nothing (returns raw)
+#' @examples
+#' rolling_raw <- TRA25_rolling_annual(raw, TRUE)
+#' @export
+TRA25_rolling_annual <- function(raw, x){
   #given the API output changes the estimate column into rolling annual, if
   #given a positive input. If not given "TRUE" or "FALSE" returns error.
   #Note: FALSE changes nothing - the data is already in quarterly values!
@@ -44,7 +52,7 @@ rolling_annual <- function(raw, x){
          rolling annual figures or not")
   }
   if (!is.data.frame(raw)) {
-    stop("first input must be a data frame from the API output")
+    stop("first input must be a data frame output from TRA25_)
   }
   if (!identical(names(raw),
                  c("year", "quarter", "road_type", "vehicle_type", "estimate"))){
@@ -203,7 +211,7 @@ raw2new <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
   ##Wrapper function that goes from data read to API to the formatted
   ##output that can be put into xltabr
 
-  raw <- rolling_annual(raw,roll) #quarterly vals or rolling annual
+  raw <- TRA25_rolling_annual(raw,roll) #quarterly vals or rolling annual
 
   if(units=="traffic"){
     if(!km_or_miles %in% c("km","miles")){
