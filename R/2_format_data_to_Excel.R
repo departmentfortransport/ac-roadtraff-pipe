@@ -18,9 +18,13 @@
 #'                "Rolling annual totals")
 #'#setting the DfT style path - defines font size, colour, etc.
 #'xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
+#'
 #'tab <- add_title_dft(tab, title_text)
+#'
+#'#important xltabr function below - basically cements the formatting changes you defined
+#'tab <- xltabr::write_data_and_styles_to_wb(tab)
 #'#to see the result:
-#'openxlsx::openXL(tab)
+#'openxlsx::openXL(tab$wb)
 #' @export
 add_title_dft <- function(tab,title_text){
   #adds the title text, nicely formatted (cells are merged later)
@@ -39,9 +43,34 @@ add_title_dft <- function(tab,title_text){
 }
 
 ####add in the road traff hyperlink####
+#' Adds a hyperlink to the second row of the sheet. Checks that is of TRA25 format
+#' but can easily be altered not to. Based off openxlsx::writeFormula
+#'
+#' @param tab the core tab object
+#' @param title_text vector string with 6 elements 
+#' @examples
+#'tab <- xltabr::initialise()
+#'title_text <- c("Department for Transport statistics",
+#'                "Traffic",
+#'                "Table TRA2501a",
+#'                "Road traffic (vehicle miles) by vehicle type in Great Britain, rolling annual totals from 1994",
+#'                "Billion vehicle miles (not seasonally adjusted)",
+#'                "Rolling annual totals")
+#'#setting the DfT style path - defines font size, colour, etc.
+#'xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
+
+#'tab <- add_title_dft(tab, title_text)
+#'important that following line is run BEFORE add_hyperlink_dft
+#'tab <- xltabr::write_data_and_styles_to_wb(tab)
+#'
+#'tab <- add_hyperlink_dft(tab, title_text)
+#'
+#'#to see the result:
+#'openxlsx::openXL(tab$wb)
+#' @export
 add_hyperlink_dft <- function(tab, title_text){
   #adds in the hyperlink on row 2 of the sheet.
-  #has to be run AFTER xltabr::write_data_and_styles_to_wb
+  #NOTE: has to be run AFTER xltabr::write_data_and_styles_to_wb
 
   if (unlist(strsplit(title_text[3]," "))[1] != "Table"){
     stop("the third element of title_text must be \"Table ***\" where *** is the sheet name")}
@@ -54,7 +83,7 @@ add_hyperlink_dft <- function(tab, title_text){
   return(tab)
 }
 
-any_totals <- function(headers){
+TRA25_any_totals <- function(headers){
   #BADLY WRITTEN FUNCTION
   #subfunction of "varnames2english" that deals with occurances of "total".
   #Very limited to current TRA25 options
@@ -87,7 +116,7 @@ varnames2english <- function(headers){
   #given a vector of character strings, returns the same vector in "Full english"
 
   #First have to deal with "total" columns
-  headers <- any_totals(headers)
+  headers <- TRA25_any_totals(headers)
 
   #change known words (based off headers from API)
   headers[headers=="hgv"] <- "heavy goods vehicles"
@@ -198,14 +227,22 @@ add_footnote_refs <- function(data_for_xl){
   return(list(d, footnote_refs))
 }
 
+#' Adds the body (main data) to the tab. Relies on many LStest subfunctions. 
+#' Not advisable to use outside of TRA25 table compilation - but useful as 
+#' a spring board for creating bespoke functions
+#'
+#' @param tab the core tab object
+#' @param data_for_xl output from TRA25_arrange_data
+#' @export
 add_body_dft <- function(tab, data_for_xl){
   #adds in the main data and it's col headers to tab
-
+  
+  #add in a blank third column - for footnote references
   n <- dim(data_for_xl)[2]
   data_for_xl <- cbind(data_for_xl[,1:2], NA, data_for_xl[,3:n])
   n <- n+1 #because we've added a new col
 
-  #add in col for footnotes (eg "P" for provisional)
+  #add in footnote references to third column (eg "P" for provisional)
   data_for_xl <- add_footnote_refs(data_for_xl)[[1]]
 
   #write the column styles - which ones to make bold
@@ -218,7 +255,6 @@ add_body_dft <- function(tab, data_for_xl){
 
   #Add col headers to tab
   headers <- varnames2english(headers)
-
   if (sum(grepl(".", headers, fixed = T)) > length(headers) / 3){
     #this is an arbitrary if condition of "if more than a third of the headers have the "." character
     #in. The reason being that is the notation I have been using for 2 header levels (e.g. TRA2503)
@@ -232,8 +268,9 @@ add_body_dft <- function(tab, data_for_xl){
                                    , col_style_names = "col_headers")
   }
 
-  #Add the data to tab (put it in presentable format)
+  #Round data to 1 decimal place (important to do after any manipulation has happened)
   data_for_xl[ ,4:n] <- round(data_for_xl[ ,4:n],1)
+  
   #Add data to tab (after making slightly nicer)
   data_for_xl$year <- nice_year(data_for_xl$year, data_for_xl$quarter)
   data_for_xl$quarter <- nice_quart(data_for_xl$quarter)
@@ -242,21 +279,23 @@ add_body_dft <- function(tab, data_for_xl){
   tab <- add_bottom_row_style(tab) #the border along the bottom
   return(tab)
 }
+
 ####col and row widths / merging ####
 colrow_width_dft <- function(tab, data_for_xl){
+  #Adjusts the column widths and row heights to specific values. If 
+  #you want to change these vals - lift the code from this function
+  
   #1) adjusts col width specifications
   #2) adjusts row height specifications (non NA "Year" rows are slightly bigger)
-
   #3) merges title cells where needed
+
+  
   ##1) col widths
   n <- dim(data_for_xl)[2]
   tab <- xltabr::set_wb_widths(tab, body_header_col_widths = c(6, 12, 3, rep(14,n-2)))
-  #^^2 points about the above line:
-  #- the 1.2 factor is due to an unsolved issue around the col widths changing based on
-  #   which file is read in, i.e. a contents page already exists and the structure of that
-  #   page. It is not known exactly what happens.
-  #- n+1 rows are defined where data_for_xl only has n, but this is because in 'tab' we have
-  #   added in a col for footnote references in col3
+  #A comment about the above line:
+  #   n+1 rows are defined where data_for_xl only has n, but this is because in 'tab' we 
+  #have added in a col for footnote references in col3
 
   ##2) row height
   ws_name <- tab$misc$ws_name
@@ -282,6 +321,11 @@ colrow_width_dft <- function(tab, data_for_xl){
   return(tab)
 }
 
+#' Decides the name of your .xlsx file, simplest case is just use the table name.
+#'
+#' @param start_from_wb the 
+#' @param data_for_xl output from TRA25_arrange_data
+#' @export
 get_filename <- function(start_from_wb, save_over, table_name){
   #decides on the name of the file based off the following:
 
