@@ -30,7 +30,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
                    paste("Next update:", next_update))
 
   ###TRA2502a####
-  data_for_xl <- raw2new(raw, roll=T, type="road", units="traffic", km_or_miles = "miles")
+  data_for_xl <- TRA25_arrange_data(raw, roll=T, type="road", units="traffic", km_or_miles = "miles")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2502a",
@@ -46,7 +46,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
          save_over = TRUE)
 
   ###TRA2502b####
-  data_for_xl <- raw2new(raw, roll=T, type="road", units="index")
+  data_for_xl <- TRA25_arrange_data(raw, roll=T, type="road", units="index")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2502b",
@@ -63,7 +63,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
 
 
   ####TRA2502c####
-  data_for_xl <- raw2new(raw, roll=T, type="road", units="percentage")
+  data_for_xl <- TRA25_arrange_data(raw, roll=T, type="road", units="percentage")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2502c",
@@ -83,7 +83,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
   #waiting on seasonal data
 
   ####TRA2502e####
-  data_for_xl <- raw2new(raw, roll=F, type="road", units="traffic", km_or_miles = "miles")
+  data_for_xl <- TRA25_arrange_data(raw, roll=F, type="road", units="traffic", km_or_miles = "miles")
   #title and footer
   title_text <- c("Department for Transport statistics",
                   "Traffic",

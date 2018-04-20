@@ -314,7 +314,7 @@ TRA2503_header_merge <- function(tab, table_name){
 #' @title new2xl
 #' @description takes a data frame with title and footer text and outputs a beautiful Excel table.
 #' Made with xltabr as main base.
-#' @param data_for_xl data frame outputted from \code{\link{raw2new}}
+#' @param data_for_xl data frame outputted from \code{\link{TRA25_arrange_data}}
 #' @param title_text vector of strings, if not length 6 has warning (see Examples below for correct notation)
 #' @param footer_text vector of strings, can be any length
 #' @param table_name string eg "TRA2504e"
@@ -327,7 +327,7 @@ TRA2503_header_merge <- function(tab, table_name){
 #' \dontrun{
 #' #set up scenario
 #' raw <- TRA25_data_api()
-#' data_for_xl <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
+#' data_for_xl <- TRA25_arrange_data(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
 #' #title and footer
 #' title_text <- c("Department for Transport statistics",
 #'                "Traffic",

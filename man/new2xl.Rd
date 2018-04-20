@@ -8,7 +8,7 @@ new2xl(data_for_xl, title_text, footer_text, table_name, save_to = getwd(),
   start_from_wb = FALSE, save_over = F)
 }
 \arguments{
-\item{data_for_xl}{data frame outputted from \code{\link{raw2new}}}
+\item{data_for_xl}{data frame outputted from \code{\link{TRA25_arrange_data}}}
 
 \item{title_text}{vector of strings, if not length 6 has warning (see Examples below for correct notation)}
 
@@ -32,7 +32,7 @@ Made with xltabr as main base.
 \dontrun{
 #set up scenario
 raw <- TRA25_data_api()
-data_for_xl <- raw2new(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
+data_for_xl <- TRA25_arrange_data(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
 #title and footer
 title_text <- c("Department for Transport statistics",
                "Traffic",

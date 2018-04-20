@@ -34,7 +34,7 @@ TRA25_data_api <- function(
 }
 
 ####quarterly or rolling annual####
-#' Ultimately a subfunction of \code{\link{raw2new}}
+#' Ultimately a subfunction of \code{\link{TRA25_arrange_data}}
 #'
 #' Creates the rolling annual totals from quarterly values
 #'
@@ -149,7 +149,7 @@ TRA25_vehicle_road <- function(raw, type){
 }
 
 ####Traffic, index numbers, or % change####
-#' Ultimately a subfunction of \code{\link{raw2new}}
+#' Ultimately a subfunction of \code{\link{TRA25_arrange_data}}
 
 #' Downloads data from road traffic API and formats correctly into data frame
 #'
@@ -214,14 +214,12 @@ chosen_units <- function(data_for_xl, units, index_from = NA){
 #' #first get the raw data
 #' raw <- TRA25_data_api()
 #' #Google TRA25 if the naming convention on the left ("TRA25...") doesn't make sense
-#' TRA2501a_data_for_xl <- raw2new(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
+#' TRA2501a_data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
 #' View(TRA2501a_data_for_xl) #look at the data frame created - is the same as sheet TRA2501a (search online)
 #' @export
 
-raw2new <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
-  ##Wrapper function that goes from data read to API to the formatted
-  ##output that can be put into xltabr
-
+TRA25_arrange_data <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA){
+  ##Wrapper function that rehsapes the data downloaded from the api into the format desired for the Excel table
   raw <- TRA25_rolling_annual(raw,roll) #quarterly vals or rolling annual
 
   if(units=="traffic"){

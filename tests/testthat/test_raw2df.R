@@ -1,6 +1,6 @@
 ########
 ##testing the functions in the file "raw2df", which
-##culminates in the function "raw2new" (potential
+##culminates in the function "TRA25_arrange_data" (potential
 ##for confusion)
 ########
 

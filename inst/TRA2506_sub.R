@@ -32,7 +32,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
                    paste("Next update:", next_update))
 
   ###TRA2506a####
-  data_for_xl <- raw2new(raw, roll=T, type="vehicle_and_road", units="traffic", km_or_miles = "km")
+  data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle_and_road", units="traffic", km_or_miles = "km")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2506a",
