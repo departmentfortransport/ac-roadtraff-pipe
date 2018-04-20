@@ -21,6 +21,8 @@ next_update <- "May 2018"
 #4) run this whole script - you can do this with the shortcuts "CTRL + A" then "CTRL + R"
 
 raw <- TRA25_data_api()
+raw_seasonal <- TRA25_data_api("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly")
+warning("raw_seasonal URL is currently wrong (just normal values)")
 source(system.file("TRA2501_sub.r",package="LStest"))
 source(system.file("TRA2502_sub.r",package="LStest"))
 source(system.file("TRA2503_sub.r",package="LStest"))
