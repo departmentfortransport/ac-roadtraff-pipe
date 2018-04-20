@@ -368,8 +368,8 @@ TRA2503_header_merge <- function(tab, table_name){
   if ("TRA2503" == substr(table_name,1,7)){
     row <- 7
     openxlsx::mergeCells(tab$wb, ws_name, 4:9, row)
-    openxlsx::mergeCells(tab$wb, ws_name, 10:14, row)
-    openxlsx::mergeCells(tab$wb, ws_name, 15:20, row)
+    openxlsx::mergeCells(tab$wb, ws_name, 10:13, row)
+    openxlsx::mergeCells(tab$wb, ws_name, 15:19, row)
     }
   return(tab)
 }

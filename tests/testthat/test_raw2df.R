@@ -45,3 +45,11 @@ test_that("TRA25_rolling_annual not working as expected", {
   expect_equal(d_1$estimate, a)
 })
 
+test_that("historic data has changed"){
+  #If the API data for previous years changes - this clocks it
+  raw <- api_get_data()
+  raw
+  raw_original
+
+
+  }
