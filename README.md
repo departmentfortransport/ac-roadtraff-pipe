@@ -92,7 +92,11 @@ A general workflow for creating new DfT Tables should be:
 2.  have an R script that gets the data
 3.  have separate R scripts for each sheet you want to add, which takes raw data, rearranges, and formats into an excel doc
 
+<<<<<<< HEAD
 ^<sup>^</sup> The above workflow and process will be updated as I try this out more within DfT. Watch this space!
+=======
+^<sup>^</sup> The above workflow and process will be updated as I try this out more within DfT. Watch this space! `sum(1:10)`
+>>>>>>> 0e42241fc7955de1e02aeb755df5e0544bbd6818
 
 Example
 -------
