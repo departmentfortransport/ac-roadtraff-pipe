@@ -44,17 +44,17 @@ make_TRA2506_sub <- function(save_loc=getwd()){
   #####BELOW IS A BASTARDISATION OF new2xl
   table_name <-  "TRA2506a"
   save_to <-  save_loc
-  start_from_wb <- filename
+  start_from_file <- filename
   save_over <- TRUE
 
     #Open the workbook
-  if (start_from_wb == F){
+  if (start_from_file == F){
     wb <- openxlsx::loadWorkbook(system.file("template.xlsx", package="LStest"))
   } else {
-    wb <- openxlsx::loadWorkbook(paste0(save_to, "/", start_from_wb))
+    wb <- openxlsx::loadWorkbook(paste0(save_to, "/", start_from_file))
   }
 
-  filename <- LStest:::get_filename(start_from_wb, save_over, table_name)
+  filename <- LStest:::get_filename(start_from_file, save_over, table_name)
 
 
   xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
@@ -126,7 +126,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
   #print statement to show success, and where it was outputted
   cat("The file: ", filename, "\n", "Has been saved in the following location on your desktop: \n", save_to, "\n")
 
-  if(start_from_wb!=FALSE){
+  if(start_from_file!=FALSE){
     cat("\n NB the file", filename, "has been overwritten \n", "and now has sheet", table_name, "\n ",
         rep("-",50),"\n")
   }

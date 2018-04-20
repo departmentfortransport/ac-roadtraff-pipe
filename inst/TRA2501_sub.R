@@ -42,7 +42,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
          footer_text,
          table_name = "TRA2501a",
          save_to = save_loc,
-         start_from_wb = filename,
+         start_from_file = filename,
          save_over = TRUE)
 
   ###TRA2501b####
@@ -58,7 +58,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
          footer_text,
          table_name = "TRA2501b",
          save_to = save_loc,
-         start_from_wb = filename,
+         start_from_file = filename,
          save_over = TRUE)
 
 
@@ -76,7 +76,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
          footer_text,
          table_name = "TRA2501c",
          save_to = save_loc,
-         start_from_wb = filename,
+         start_from_file = filename,
          save_over = TRUE)
 
   ####TRA2501d####
@@ -98,7 +98,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
          footer_text,
          table_name = "TRA2501e",
          save_to = save_loc,
-         start_from_wb = filename,
+         start_from_file = filename,
          save_over = TRUE)
 
 

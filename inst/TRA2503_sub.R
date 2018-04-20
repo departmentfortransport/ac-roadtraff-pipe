@@ -42,7 +42,7 @@ make_TRA2503_sub <- function(save_loc=getwd()){
          footer_text,
          table_name = "TRA2503a",
          save_to = save_loc,
-         start_from_wb = filename,
+         start_from_file = filename,
          save_over = TRUE)
 }
 
