@@ -71,6 +71,8 @@ contents_TRA25 <- function(table_set, year, quarter, save_to, save_over=F,
       } else {
       #add on the date and time of saving to file name so we're not overwriting
       filename <- paste0(table_set, "_", gsub(" ","_",substr(Sys.time(),6,16)),".xlsx")
+      #remove the colon as causes errors when saving
+      filename <- gsub(":","",filename)
       }
   }
 
