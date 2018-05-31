@@ -365,7 +365,7 @@ TRA2503_header_merge <- function(tab, table_name){
   #simple function that merges the cells in the right places for the scenario of TRA2503 sheets
 
   ws_name <- table_name
-  if ("TRA2503" == substr(table_name,1,7)){
+  if (substr(table_name,1,7) %in% c("TRA2503","TRA2506")){
     row <- 7
     openxlsx::mergeCells(tab$wb, ws_name, 4:9, row)
     openxlsx::mergeCells(tab$wb, ws_name, 10:13, row)
