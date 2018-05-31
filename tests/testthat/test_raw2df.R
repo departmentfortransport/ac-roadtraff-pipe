@@ -36,7 +36,7 @@ test_that("TRA25_rolling_annual not working as expected", {
   set.seed(1) #so we get the same data every time
   d_0$estimate <- round(rnorm(32,10,2),2)
 
-  d_1 <- LStest:::TRA25_rolling_annual(d_0,TRUE)
+  d_1 <- TRA25rap:::TRA25_rolling_annual(d_0,TRUE)
   #The expected output is:
   a <- c(39.32, 33.69, 44.57, 45.36, 40.54, 35.21, 47.88, 43.36,
          41.72, 38.41, 47.06, 37.90, 41.81, 38.91, 43.73, 34.18,

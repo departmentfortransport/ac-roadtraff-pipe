@@ -23,7 +23,7 @@ title_text <- c("Department for Transport statistics",
                "Billion vehicle miles (not seasonally adjusted)",
                "Rolling annual totals")
 #setting the DfT style path - defines font size, colour, etc.
-xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
+xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "TRA25rap"))
 
 tab <- add_title_dft(tab, title_text)
 

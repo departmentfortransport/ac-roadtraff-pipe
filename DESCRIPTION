@@ -1,4 +1,4 @@
-Package: LStest
+Package: TRA25rap
 Type: Package
 Title: Makes DfT Excel tables (based off "xltabr" MoJ package)
 Version: 0.1.0

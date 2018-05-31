@@ -215,7 +215,7 @@ chosen_units <- function(data_for_xl, units, index_from = NA){
 #' @param km_or_miles "km" or "miles" dependant on desired units. Only used if units = "traffic",
 #' as otherwise doesn't make a difference.
 #' @return pivotted data frame that is ready to be formatted nicely as an Excel (.xlsx) doc 
-#' using the function LStest::TRA25_format_to_xl
+#' using the function TRA25rap::TRA25_format_to_xl
 #' @param index_from integer or vector. Rows from which to index from if chosen_units = "index"
 #' @examples
 #' #first get the raw data

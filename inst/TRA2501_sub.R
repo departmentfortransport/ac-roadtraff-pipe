@@ -7,7 +7,7 @@
 
 make_TRA2501_sub <- function(save_loc=getwd()){
 
-  LStest::check_uptodate(raw, year, quarter)
+  TRA25rap::check_uptodate(raw, year, quarter)
 
   #Start by making the contents page
   filename <- contents_TRA25("TRA2501", year = year, quarter = quarter,

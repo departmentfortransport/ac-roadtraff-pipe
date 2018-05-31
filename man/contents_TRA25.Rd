@@ -25,7 +25,7 @@ overwrite? Default is FALSE, don't overwrite}
 }
 \description{
 makes the contents page for TRA25 tables. Pulls templates
-from the package LStest and then adds in the bits that change, which are
+from the package TRA25rap and then adds in the bits that change, which are
 the year, quarter, last updated, next updated
 }
 \examples{

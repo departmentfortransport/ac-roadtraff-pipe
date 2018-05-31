@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-**Warning: `LStest` is in its early stages of development.** It is based heavily on the `xltabr` package developed by members of the Ministry of Justice (MoJ).
+**Warning: `TRA25rap` is in its early stages of development.** It is based heavily on the `xltabr` package developed by members of the Ministry of Justice (MoJ).
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 If you are not a member of the Department for Transport (DfT) **I highly recommend you instead [use the `xltabr` package](https://github.com/moj-analytical-services/xltabr)**, as it is a far more developed and organised package. Even if you do work for DfT, that package is definitely worth a look!
@@ -16,7 +16,7 @@ If you are having problems with this package, there are different places you can
 -   Email me: <Luke.Shaw@dft.gsi.gov.uk>
 -   Google (it can't hurt) - especially if your problem is likely a problem with R coding
 
-LStest - what is it?
+TRA25rap - what is it?
 --------------------
 
 This purpose of this package is to help users present beautifully formatted Excel tables in the DfT standard format. This package can automate the entire table making process, as shown in the image below. Part of why this is so powerful is that it is exactly repeatable, once the code is written all that is needed is an update to the data and then just re-run!
@@ -45,12 +45,12 @@ Installing the most up-to-date version of this package can be done inside R, *IF
 library(devtools) #devtools has to be installed first
 devtools::install_github(repo = "departmentfortransport/ac-roadtraff-pipe"
                          ,auth_token = "copyinyournewflashytoken")
-library(LStest)
+library(TRA25rap)
 ```
 
 If you are working on the network, a workaround for this is the following:
 
-Click the "Clone or download" button in the top right hand corner of this page and select "Download ZIP". Then, you will have to open your file explorer and manually put the folder into the location of your installed R packages. To find out where your R packages are installed, type `.libPaths()` in your console. Hopefully you can then type `library(LStest)` and everything works out fine.
+Click the "Clone or download" button in the top right hand corner of this page and select "Download ZIP". Then, you will have to open your file explorer and manually put the folder into the location of your installed R packages. To find out where your R packages are installed, type `.libPaths()` in your console. Hopefully you can then type `library(TRA25rap)` and everything works out fine.
 
 <c name="SRF2"></c> "I'm in the Road Stats team and I want to make new TRA25 tables"
 ------------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ Click the "Clone or download" button in the top right hand corner of this page a
 Great! You'll need to install the package onto your desktop and have R set up on the system. Then, you need to read through and run the script "TRA25\_run\_script.R" that is in the "exec" folder of this package. You can open it in RStudio by the usual file finder way or by running:
 
 ``` r
-file.edit(system.file("exec", "TRA25_run_script.R", package="LStest"))
+file.edit(system.file("exec", "TRA25_run_script.R", package="TRA25rap"))
 ```
 
 in your console which will open the file. Make sure you read all the comments, and without any hiccups you should have the tables ready in under 5 minutes! Whilst in the development stages, do not be afraid of hiccups...
@@ -75,7 +75,7 @@ Mainly, I would suggest reading all of the [`xltabr` readme](https://github.com/
 1.  Download my package and then in your script where the table is made run:
 
 ``` r
-xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
+xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "TRA25rap"))
 ```
 
 1.  Go to the 'inst' folder of this package's GitHub and download "DfT\_styles.xlsx" and then:
@@ -102,7 +102,7 @@ This is an example of the power of this package - it can reproduce and update ta
 First, ensure the package is in the Environment. Note you would have to have installed the package first (see [above](#inst) - only needs to be done once per desktop).
 
 ``` r
-library(LStest) 
+library(TRA25rap) 
 ```
 
 Second, download the raw data from online.
@@ -183,7 +183,7 @@ TRA25_format_to_xl(data_for_xl,
 The above process can be repeated for each sheet in the Excel file, and by the end you will have the finished table. There is a way to append the sheet to a workbook, which is how I have made the TRA25 series. The Contents pages are the templates I use (all contained within this package) and then each sheet can be bolted on to the file. To see this in action, see the "TRA25\_run\_script.R" script in this package, which can be found by running:
 
 ``` r
-file.edit(system.file("exec", "TRA25_run_script.R", package="LStest"))
+file.edit(system.file("exec", "TRA25_run_script.R", package="TRA25rap"))
 ```
 
 Note if you are not in the Road Traffics team the function `TRA25_format_to_xl` is not necessarily helpful, please see [above](#notSRF)

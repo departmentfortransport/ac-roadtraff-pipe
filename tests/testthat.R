@@ -1,4 +1,4 @@
 library(testthat)
-library(LStest)
+library(TRA25rap)
 
-test_check("LStest")
+test_check("TRA25rap")

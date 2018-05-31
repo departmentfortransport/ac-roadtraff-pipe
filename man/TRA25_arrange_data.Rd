@@ -28,7 +28,7 @@ as otherwise doesn't make a difference.}
 }
 \value{
 pivotted data frame that is ready to be formatted nicely as an Excel (.xlsx) doc 
-using the function LStest::TRA25_format_to_xl
+using the function TRA25rap::TRA25_format_to_xl
 }
 \description{
 given the API output from \code{\link{TRA25_data_api}}, rearranges into a data frame

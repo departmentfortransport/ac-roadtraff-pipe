@@ -9,7 +9,7 @@
 #' @param year integer - year of most recent data
 #' @param quarter integer - quarter of most recent data
 #' @examples
-#' mini_raw <- readRDS(system.file("data","mini_raw.rds", package = "LStest"))
+#' mini_raw <- readRDS(system.file("data","mini_raw.rds", package = "TRA25rap"))
 #' # can see if look at mini_raw that goes to 1995 Q4
 
 #' check_uptodate(mini_raw,1995,4) #no error

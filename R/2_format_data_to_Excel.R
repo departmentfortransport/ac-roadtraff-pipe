@@ -17,7 +17,7 @@
 #'                "Billion vehicle miles (not seasonally adjusted)",
 #'                "Rolling annual totals")
 #'#setting the DfT style path - defines font size, colour, etc.
-#'xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
+#'xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "TRA25rap"))
 #'
 #'tab <- add_title_dft(tab, title_text)
 #'
@@ -57,7 +57,7 @@ add_title_dft <- function(tab,title_text){
 #'                "Billion vehicle miles (not seasonally adjusted)",
 #'                "Rolling annual totals")
 #'#setting the DfT style path - defines font size, colour, etc.
-#'xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
+#'xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "TRA25rap"))
 
 #'tab <- add_title_dft(tab, title_text)
 #'important that following line is run BEFORE add_hyperlink_dft
@@ -184,8 +184,8 @@ add_headers_twovars <- function(headers){
 
   row_1 <- sapply(strsplit(headers, ".", fixed = T), '[', 2)
   row_2 <- sapply(strsplit(headers, ".", fixed = T), '[', 1)
-  row_1 <- unname(LStest:::varnames2english(row_1))
-  row_2 <- unname(LStest:::varnames2english(row_2))
+  row_1 <- unname(TRA25rap:::varnames2english(row_1))
+  row_2 <- unname(TRA25rap:::varnames2english(row_2))
 
   #replace ("a", "a", "a", "a", "b", "b", "b") with ("a","","","","b","","")
   for (temp in unique(row_1)){
@@ -227,7 +227,7 @@ add_footnote_refs <- function(data_for_xl){
   return(list(d, footnote_refs))
 }
 
-#' Adds the body (main data) to the tab. Relies on many LStest subfunctions. 
+#' Adds the body (main data) to the tab. Relies on many TRA25rap subfunctions. 
 #' Not advisable to use outside of TRA25 table compilation - but useful as 
 #' a spring board for creating bespoke functions
 #'
@@ -412,7 +412,7 @@ TRA2503_header_merge <- function(tab, table_name){
 #'        footer_text,
 #'        table_name = "TRA2504e",
 #'        save_to = getwd(),
-#'        start_from_file = system.file("template.xlsx", package="LStest"),
+#'        start_from_file = system.file("template.xlsx", package="TRA25rap"),
 #'        save_over = F)
 #'        }
 #' @export
@@ -422,12 +422,12 @@ TRA25_format_to_xl <- function(data_for_xl, title_text, footer_text, table_name,
 
   #Open the workbook
   if (start_from_file == F){
-    wb <- openxlsx::loadWorkbook(system.file("template.xlsx", package="LStest"))
+    wb <- openxlsx::loadWorkbook(system.file("template.xlsx", package="TRA25rap"))
   } else {
     wb <- openxlsx::loadWorkbook(paste0(save_to, "/", start_from_file))
   }
 
-  filename <- LStest:::get_filename(start_from_file, save_over, table_name)
+  filename <- TRA25rap:::get_filename(start_from_file, save_over, table_name)
 
 
   if ( (start_from_file != F) #we have a starting point
@@ -438,18 +438,18 @@ TRA25_format_to_xl <- function(data_for_xl, title_text, footer_text, table_name,
     openxlsx::removeWorksheet(wb,table_name)}
 
 
-  xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
+  xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "TRA25rap"))
 
 
-  #now we use all the subfunctions created as part of the LStest package (behind the scenes)
+  #now we use all the subfunctions created as part of the TRA25rap package (behind the scenes)
   tab <- xltabr::initialise(wb = wb, ws_name = table_name)
-  tab <- LStest:::add_title_dft(tab, title_text)
-  tab <- LStest:::add_body_dft(tab, data_for_xl)
-  tab <- LStest:::colrow_width_dft(tab, data_for_xl)
+  tab <- TRA25rap:::add_title_dft(tab, title_text)
+  tab <- TRA25rap:::add_body_dft(tab, data_for_xl)
+  tab <- TRA25rap:::colrow_width_dft(tab, data_for_xl)
   tab <- xltabr::add_footer(tab,footer_text, footer_style_names = "body")
   tab <- xltabr::auto_merge_footer_cells(tab)
   tab <- xltabr::write_data_and_styles_to_wb(tab) #the order matters here (LS needs extra check)
-  tab <- LStest:::add_hyperlink_dft(tab, title_text)
+  tab <- TRA25rap:::add_hyperlink_dft(tab, title_text)
 
   #Freeze panes (extra thing, should probably be own function)
   tare <- length(tab$title$title_text) + length(tab$top_headers$top_headers_list) + 1

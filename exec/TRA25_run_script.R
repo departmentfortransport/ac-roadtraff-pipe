@@ -2,7 +2,7 @@
 ##Script that outputs all TRA25 tables in 6 steps :)
 ##15/03/2018 work in progress
 ########
-library(LStest)
+library(TRA25rap)
 #1) check the API at https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly has the most uptodate data
 
 #2) change the following line to where in your docs you want the tables to save (*)
@@ -23,9 +23,9 @@ next_update <- "May 2018"
 raw <- TRA25_data_api()
 raw_seasonal <- TRA25_data_api("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly")
 warning("raw_seasonal URL is currently wrong (just normal values)")
-source(system.file("TRA2501_sub.r",package="LStest"))
-source(system.file("TRA2502_sub.r",package="LStest"))
-source(system.file("TRA2503_sub.r",package="LStest"))
+source(system.file("TRA2501_sub.r",package="TRA25rap"))
+source(system.file("TRA2502_sub.r",package="TRA25rap"))
+source(system.file("TRA2503_sub.r",package="TRA25rap"))
 
 #5) CHECK FOR ANY ERRORS OR WARNINGS in the output - you'll know them because they are in red :)
 #   This includes scrolling right the way up the consol to where the first line was run (which is

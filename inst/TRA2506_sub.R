@@ -9,7 +9,7 @@
 
 make_TRA2506_sub <- function(save_loc=getwd()){
 
-  LStest::check_uptodate(raw, year, quarter)
+  TRA25rap::check_uptodate(raw, year, quarter)
 
   #Start by making the contents page
   filename <- contents_TRA25("TRA2506", year = year, quarter = quarter,
@@ -49,18 +49,18 @@ make_TRA2506_sub <- function(save_loc=getwd()){
 
     #Open the workbook
   if (start_from_file == F){
-    wb <- openxlsx::loadWorkbook(system.file("template.xlsx", package="LStest"))
+    wb <- openxlsx::loadWorkbook(system.file("template.xlsx", package="TRA25rap"))
   } else {
     wb <- openxlsx::loadWorkbook(paste0(save_to, "/", start_from_file))
   }
 
-  filename <- LStest:::get_filename(start_from_file, save_over, table_name)
+  filename <- TRA25rap:::get_filename(start_from_file, save_over, table_name)
 
 
-  xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "LStest"))
+  xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "TRA25rap"))
 
 
-  #now we use all the subfunctions created as part of the LStest package (behind the scenes)
+  #now we use all the subfunctions created as part of the TRA25rap package (behind the scenes)
   tab <- xltabr::initialise(wb = wb, ws_name = table_name)
 
   #RIPPED add_body_dft AS DON'T WANT TO ADD ALL
@@ -69,7 +69,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
   n <- n+1 #because we've added a new col
 
   #add in col for footnotes (eg "P" for provisional)
-  data_for_xl <- LStest:::add_footnote_refs(data_for_xl)[[1]]
+  data_for_xl <- TRA25rap:::add_footnote_refs(data_for_xl)[[1]]
 
   #write the column styles - which ones to make bold
   headers <- names(data_for_xl)
@@ -80,12 +80,12 @@ make_TRA2506_sub <- function(save_loc=getwd()){
 
 
   #Add col headers to tab
-  headers <- LStest:::varnames2english(headers)
+  headers <- TRA25rap:::varnames2english(headers)
 
   if (sum(grepl(".", headers, fixed = T)) > length(headers) / 3){
     #this is an arbitrary if condition of "if more than a third of the headers have the "." character
     #in. The reason being that is the notation I have been using for 2 header levels (e.g. TRA2503)
-    headers <- LStest:::add_headers_twovars(headers)
+    headers <- TRA25rap:::add_headers_twovars(headers)
 
     #tab <- xltabr::add_top_headers(tab, headers
     #                               , row_style_names = c("ch_top", "ch_bottom"))
@@ -98,18 +98,18 @@ make_TRA2506_sub <- function(save_loc=getwd()){
   #Add the data to tab (put it in presentable format)
   data_for_xl[ ,4:n] <- round(data_for_xl[ ,4:n],1)
   #Add data to tab (after making slightly nicer)
-  data_for_xl$year <- LStest:::nice_year(data_for_xl$year, data_for_xl$quarter)
-  data_for_xl$quarter <- LStest:::nice_quart(data_for_xl$quarter)
+  data_for_xl$year <- TRA25rap:::nice_year(data_for_xl$year, data_for_xl$quarter)
+  data_for_xl$quarter <- TRA25rap:::nice_quart(data_for_xl$quarter)
   tab <- xltabr::add_body(tab, data_for_xl,
                           col_style_names = col_style_names)
-  tab <- LStest:::add_bottom_row_style(tab) #the border along the bottom
+  tab <- TRA25rap:::add_bottom_row_style(tab) #the border along the bottom
 
 
-  #tab <- LStest:::colrow_width_dft(tab, data_for_xl)
+  #tab <- TRA25rap:::colrow_width_dft(tab, data_for_xl)
   tab <- xltabr::add_footer(tab,footer_text, footer_style_names = "body")
   tab <- xltabr::auto_merge_footer_cells(tab)
   tab <- xltabr::write_data_and_styles_to_wb(tab) #the order matters here (LS needs extra check)
-  tab <- LStest:::add_hyperlink_dft(tab, title_text)
+  tab <- TRA25rap:::add_hyperlink_dft(tab, title_text)
 
   #Freeze panes (extra thing, should probably be own function)
   tare <- length(tab$title$title_text) + length(tab$top_headers$top_headers_list) + 1

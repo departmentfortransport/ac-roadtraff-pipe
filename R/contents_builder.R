@@ -4,7 +4,7 @@
 
 #' @title contents
 #' @description makes the contents page for TRA25 tables. Pulls templates
-#' from the package LStest and then adds in the bits that change, which are
+#' from the package TRA25rap and then adds in the bits that change, which are
 #' the year, quarter, last updated, next updated
 #' @param table_set the table name
 #' @param year of most recent data as an integer
@@ -35,7 +35,7 @@ contents_TRA25 <- function(table_set, year, quarter, save_to, save_over=F,
     stop(paste("the table set", table_set, "does not exist"))
   }
 
-  wb <- openxlsx::loadWorkbook(system.file(paste0(table_set,"_template.xlsx"), package="LStest"))
+  wb <- openxlsx::loadWorkbook(system.file(paste0(table_set,"_template.xlsx"), package="TRA25rap"))
 
 
   #Work out the text for the title of the contents page
@@ -82,9 +82,9 @@ contents_TRA25 <- function(table_set, year, quarter, save_to, save_over=F,
   ###The commented out lines below are to add the logos to the contents page. This doesn't
   ###need doing anymore due to the template having them, but in theory is still useful if need be
   #unit <- 0.8 #can alter to scale how large you want the images
-  # openxlsx::insertImage(wb, "Contents", system.file("DfT_logo.png", package = "LStest"),
+  # openxlsx::insertImage(wb, "Contents", system.file("DfT_logo.png", package = "TRA25rap"),
   #                       height = 2*unit, width = 2*unit*1.5, startRow = 2,startCol = 2)
-  # openxlsx::insertImage(wb, "Contents", system.file("nationalstats_logo.png", package = "LStest"),
+  # openxlsx::insertImage(wb, "Contents", system.file("nationalstats_logo.png", package = "TRA25rap"),
   #                       height = unit, width = unit, startRow = 2,startCol = 7)
 
   #Save the file
@@ -98,7 +98,7 @@ contents_TRA25 <- function(table_set, year, quarter, save_to, save_over=F,
   return(filename)
 }
 
-#LStest:::contents_TRA25("TRA2502", 2017, 3, save_to = "/Users/Luke/Documents/table_dump/")
+#TRA25rap:::contents_TRA25("TRA2502", 2017, 3, save_to = "/Users/Luke/Documents/table_dump/")
 
 
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/2_format_data_to_Excel.R
 \name{add_body_dft}
 \alias{add_body_dft}
-\title{Adds the body (main data) to the tab. Relies on many LStest subfunctions. 
+\title{Adds the body (main data) to the tab. Relies on many TRA25rap subfunctions. 
 Not advisable to use outside of TRA25 table compilation - but useful as 
 a spring board for creating bespoke functions}
 \usage{
@@ -14,7 +14,7 @@ add_body_dft(tab, data_for_xl)
 \item{data_for_xl}{output from TRA25_arrange_data}
 }
 \description{
-Adds the body (main data) to the tab. Relies on many LStest subfunctions. 
+Adds the body (main data) to the tab. Relies on many TRA25rap subfunctions. 
 Not advisable to use outside of TRA25 table compilation - but useful as 
 a spring board for creating bespoke functions
 }

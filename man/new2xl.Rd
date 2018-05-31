@@ -52,7 +52,7 @@ TRA25_format_to_xl(data_for_xl,
        footer_text,
        table_name = "TRA2504e",
        save_to = getwd(),
-       start_from_file = system.file("template.xlsx", package="LStest"),
+       start_from_file = system.file("template.xlsx", package="TRA25rap"),
        save_over = F)
        }
 }
