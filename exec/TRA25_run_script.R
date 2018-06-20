@@ -16,7 +16,7 @@ save_loc <- "~/table_dump"
 year <- 2017
 quarter <- 3
 last_updated <- "November 2017"
-next_update <- "May 2018 WIDH sdhf HSDF"
+next_update <- "May 2018"
 #Footnotes
 source(system.file("footnotes.R",package="TRA25rap"))
 #if you want to update the file run the commented out line below and follow instructions

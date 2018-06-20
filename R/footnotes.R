@@ -1,3 +1,4 @@
+
 ###
 ##This script contains the character strings used in footnotes.
 
@@ -34,7 +35,6 @@ foot4_end <- c("Telephone: 020 7944 3095",
                "Source: DfT National Road Traffic Survey",
                paste("Last updated:", last_updated),
                paste("Next update:", next_update))
-
 
 
 
