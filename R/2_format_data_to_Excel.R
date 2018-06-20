@@ -370,6 +370,7 @@ TRA2503_header_merge <- function(tab, table_name){
     openxlsx::mergeCells(tab$wb, ws_name, 4:9, row)
     openxlsx::mergeCells(tab$wb, ws_name, 10:13, row)
     openxlsx::mergeCells(tab$wb, ws_name, 14:19, row)
+    openxlsx::mergeCells(tab$wb, ws_name, 1:2, row)
     }
   return(tab)
 }
