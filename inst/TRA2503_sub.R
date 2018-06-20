@@ -16,7 +16,7 @@ make_TRA2503_sub <- function(save_loc=getwd()){
                  next_update = next_update)
 
   #Footer texts (two possibilities for sasonal / not)
-  footer_text <- c(foot1_not_SA, food2_vehicle_road, foot3_main, foot4_end)
+  footer_text <- c(foot1_not_SA, foot2_vehicle_road, foot3_main, foot4_end)
   footer_text_seasonal <- c(foot1_SA, foot2_vehicle_road, foot3_main, foot4_end)
   
 
@@ -47,13 +47,13 @@ make_TRA2503_sub <- function(save_loc=getwd()){
   TRA25_format_to_xl(data_for_xl,
                      title_text,
                      footer_text,
-                     table_name = "TRA2503a",
+                     table_name = "TRA2503b",
                      save_to = save_loc,
                      start_from_file = filename,
                      save_over = TRUE)
   
   ###TRA2503c####
-  data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle_and_road", units="percent", km_or_miles = "miles")
+  data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle_and_road", units="percentage", km_or_miles = "miles")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2503c",
@@ -126,7 +126,7 @@ make_TRA2503_sub <- function(save_loc=getwd()){
                      save_over = TRUE)
   
   ####TRA2503g####
-  data_for_xl <- TRA25_arrange_data(raw, roll=F, type="vehicle_and_road", units="percent", km_or_miles = "miles")
+  data_for_xl <- TRA25_arrange_data(raw, roll=F, type="vehicle_and_road", units="percentage", km_or_miles = "miles")
   #title and footer
   title_text <- c("Department for Transport statistics",
                   "Traffic",
