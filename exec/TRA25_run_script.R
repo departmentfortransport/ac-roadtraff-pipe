@@ -17,11 +17,16 @@ year <- 2017
 quarter <- 3
 last_updated <- "November 2017"
 next_update <- "May 2018"
+#Footnotes
+source(system.file("footnotes.R",package="TRA25rap"))
+#if you want to update the file run the commented out line below and follow instructions
+#file.edit(system.file("footnotes.R", package="TRA25rap"))
 
 #4) run this whole script - you can do this with the shortcuts "CTRL + A" then "CTRL + R"
 
 raw <- TRA25_data_api()
-raw_seasonal <- TRA25_data_api("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly")
+raw_seasonal <- raw
+raw_seasonal$estimate <- raw_seasonal$estimate * pi
 warning("raw_seasonal URL is currently wrong (just normal values)")
 source(system.file("TRA2501_sub.r",package="TRA25rap"))
 source(system.file("TRA2502_sub.r",package="TRA25rap"))
