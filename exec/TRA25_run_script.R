@@ -1,6 +1,6 @@
 ########
 ##Script that outputs all TRA25 tables in 6 steps :)
-##15/03/2018 work in progress
+##API currently needs altering
 ########
 library(TRA25rap)
 #1) check the API at https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly has the most uptodate data
@@ -16,7 +16,7 @@ save_loc <- "~/table_dump"
 year <- 2017
 quarter <- 3
 last_updated <- "November 2017"
-next_update <- "May 2018"
+next_update <- "May 2018 WIDH sdhf HSDF"
 #Footnotes
 source(system.file("footnotes.R",package="TRA25rap"))
 #if you want to update the file run the commented out line below and follow instructions
@@ -31,6 +31,9 @@ warning("raw_seasonal URL is currently wrong (just normal values)")
 source(system.file("TRA2501_sub.r",package="TRA25rap"))
 source(system.file("TRA2502_sub.r",package="TRA25rap"))
 source(system.file("TRA2503_sub.r",package="TRA25rap"))
+source(system.file("TRA2504_sub.r",package="TRA25rap"))
+source(system.file("TRA2505_sub.r",package="TRA25rap"))
+source(system.file("TRA2506_sub.r",package="TRA25rap"))
 
 #5) CHECK FOR ANY ERRORS OR WARNINGS in the output - you'll know them because they are in red :)
 #   This includes scrolling right the way up the consol to where the first line was run (which is
