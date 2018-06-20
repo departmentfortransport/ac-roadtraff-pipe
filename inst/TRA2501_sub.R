@@ -16,34 +16,8 @@ make_TRA2501_sub <- function(save_loc=getwd()){
                  next_update = next_update)
 
   #Footer texts (two possibilities for sasonal / not)
-  footer_text <- c("Other = Two wheeled motor vehicles, buses, and coaches",
-                   "Note: Total column may not match sum due to rounding",
-                   "[1] Figures affected by September 2000 fuel protest",
-                   "[2] 2001 figures affected by the impact of Foot and Mouth disease",
-                   "[3] Affected by heavy snowfall. It is estimates that snowfall during Q4 2010 had a greater impact on traffic levels than for the other assigned quarters",
-                   "P Provisional",
-                   "Telephone: 020 7944 3095",
-                   "Email: roadtraff.stats@dft.gsi.gov.uk",
-                   "The figures in this table are National Statistics",
-                   "",
-                   "Source: DfT National Road Traffic Survey",
-                   paste("Last updated:", last_updated),
-                   paste("Next update:", next_update))
-  footer_text_seasonal <- c(
-    "*Quarterly figures are subject to revision due to the nature of the seasonal adjustment. However, these will typically be minor and will not affect ovarall patterns shown.",
-    "Other = Two wheeled motor vehicles, buses, and coaches",
-    "Note: Total column may not match sum due to rounding",
-    "[1] Figures affected by September 2000 fuel protest",
-    "[2] 2001 figures affected by the impact of Foot and Mouth disease",
-    "[3] Affected by heavy snowfall. It is estimates that snowfall during Q4 2010 had a greater impact on traffic levels than for the other assigned quarters",
-    "P Provisional",
-    "Telephone: 020 7944 3095",
-    "Email: roadtraff.stats@dft.gsi.gov.uk",
-    "The figures in this table are National Statistics",
-    "",
-    "Source: DfT National Road Traffic Survey",
-    paste("Last updated:", last_updated),
-    paste("Next update:", next_update))
+  footer_text <- c(foot1_not_SA, foot2_vehicle, foot3_main, foot4_end)
+  footer_text_seasonal <- c(foot1_SA, foot2_vehicle, foot3_main, foot4_end)
   
   ###TRA2501a####
   data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
@@ -157,7 +131,7 @@ make_TRA2501_sub <- function(save_loc=getwd()){
                   "Traffic",
                   "Table TRA2501g",
                   "Road traffic (vehicle miles) by vehicle type in Great Britain, quarterly from 1994",
-                  "Percentage change on same quarter in previous year (seasonally adjusted figures)",
+                  "Percentage change on same quarter in previous year (seasonally adjusted* figures)",
                   "Seasonally adjusted figures")
   TRA25_format_to_xl(data_for_xl,
                      title_text,
