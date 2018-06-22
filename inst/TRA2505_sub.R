@@ -21,7 +21,7 @@ make_TRA2505_sub <- function(save_loc=getwd()){
   footer_text_seasonal <- c(foot1_SA, foot2_road, foot3_main, foot4_end)
 
   ###TRA2505a####
-  data_for_xl <- TRA25_arrange_data(raw, roll=T, type="road", units="traffic", km_or_miles = "kilometres")
+  data_for_xl <- TRA25_arrange_data(raw, roll=T, type="road", units="traffic", km_or_miles = "km")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2505a",
@@ -71,7 +71,7 @@ make_TRA2505_sub <- function(save_loc=getwd()){
          save_over = TRUE)
 
   ####TRA2505d####
-  data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="road", units="traffic", km_or_miles = "kilometres")
+  data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="road", units="traffic", km_or_miles = "km")
   #title and footer
   title_text <- c("Department for Transport statistics",
                   "Traffic",
@@ -91,7 +91,7 @@ make_TRA2505_sub <- function(save_loc=getwd()){
   
 
   ####TRA2505e####
-  data_for_xl <- TRA25_arrange_data(raw, roll=F, type="road", units="traffic", km_or_miles = "kilometres")
+  data_for_xl <- TRA25_arrange_data(raw, roll=F, type="road", units="traffic", km_or_miles = "km")
   #title and footer
   title_text <- c("Department for Transport statistics",
                   "Traffic",
@@ -115,7 +115,7 @@ make_TRA2505_sub <- function(save_loc=getwd()){
                                     roll=F, 
                                     type="road", 
                                     units="index", 
-                                    km_or_miles = "kilometres",
+                                    km_or_miles = "km",
                                     index_from = c(1,2,3,4))
   title_text <- c("Department for Transport statistics",
                   "Traffic",
@@ -132,7 +132,7 @@ make_TRA2505_sub <- function(save_loc=getwd()){
                      save_over = TRUE)
   
   ####TRA2505g####
-  data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="road", units="percentage", km_or_miles = "kilometres")
+  data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="road", units="percentage", km_or_miles = "km")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2505g",

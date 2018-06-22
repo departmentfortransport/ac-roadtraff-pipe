@@ -20,7 +20,7 @@ make_TRA2504_sub <- function(save_loc=getwd()){
   footer_text_seasonal <- c(foot1_SA, foot2_vehicle, foot3_main, foot4_end)
   
   ###TRA2504a####
-  data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "kilometres")
+  data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "km")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2504a",
@@ -70,7 +70,7 @@ make_TRA2504_sub <- function(save_loc=getwd()){
          save_over = TRUE)
 
   ####TRA2504d####
-  data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="vehicle", units="traffic", km_or_miles = "kilometres")
+  data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2504d",
@@ -86,7 +86,7 @@ make_TRA2504_sub <- function(save_loc=getwd()){
                      save_over = TRUE)
   
   ####TRA2504e####
-  data_for_xl <- TRA25_arrange_data(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "kilometres")
+  data_for_xl <- TRA25_arrange_data(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
   #title and footer
   title_text <- c("Department for Transport statistics",
                   "Traffic",
@@ -109,7 +109,7 @@ make_TRA2504_sub <- function(save_loc=getwd()){
                                     roll=F, 
                                     type="vehicle", 
                                     units="index", 
-                                    km_or_miles = "kilometres",
+                                    km_or_miles = "km",
                                     index_from = c(1,2,3,4))
   title_text <- c("Department for Transport statistics",
                   "Traffic",
@@ -126,7 +126,7 @@ make_TRA2504_sub <- function(save_loc=getwd()){
                      save_over = TRUE)
   
   ####TRA2504g####
-  data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="vehicle", units="percentage", km_or_miles = "kilometres")
+  data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="vehicle", units="percentage", km_or_miles = "km")
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2504g",
