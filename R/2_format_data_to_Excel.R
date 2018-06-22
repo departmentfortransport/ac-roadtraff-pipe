@@ -217,9 +217,11 @@ add_footnote_refs <- function(data_for_xl){
   d[d$year == 2010 & d$quarter == 1, 3] <- "[3]"
   d[d$year == 2010 & d$quarter == 4, 3] <- "[3]"
   d[d$year == 2013 & d$quarter == 1, 3] <- "[3]"
-
-  #provisional estimates
-  d[d$year == tail(d$year,1), 3] <- "P"
+  d[d$year == 2018 & d$quarter == 1, 3] <- "[3]"
+  
+  #provisional estimates. The complicated line is just ensuring the "P" doesn't overwrite a previous
+  #footnote in that cell
+  d[d$year == tail(d$year,1), 3] <- sapply(d[d$year == tail(d$year,1), 3], function(x) paste(x, "P"))
   #LS: provisional are currently defined by if most recent year. Maybe not true?
 
   footnote_refs <- unique(d[,3])

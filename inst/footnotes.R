@@ -21,6 +21,8 @@ foot2_road <- c() #currently nothing to add!
 
 foot2_vehicle_road <- c("Note: all roads for Heavy Goods Vehicles includes minor roads")
 
+#Note if you want to change where the footnotes go you need to go "deeper" into the code, it
+#is in the function "add_footnote_refs" in this package
 foot3_main <- c("[1] Figures affected by September 2000 fuel protest",
                 "[2] 2001 figures affected by the impact of Foot and Mouth disease",
                 "[3] Affected by heavy snowfall. It is estimates that snowfall during Q4 2010 had a greater impact on traffic levels than",
@@ -29,7 +31,7 @@ foot3_main <- c("[1] Figures affected by September 2000 fuel protest",
 
 
 foot4_end <- c("Telephone: 020 7944 3095",
-               "Email: roadtraff.stats@dft.gsi.gov.uk",
+               "Email: roadtraff.stats@dft.gov.uk",
                "The figures in this table are National Statistics",
                "",
                "Source: DfT National Road Traffic Survey",
