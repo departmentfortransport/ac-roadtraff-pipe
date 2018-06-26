@@ -24,7 +24,7 @@ If you are having problems with this package, there are different places you can
 * Read all of this document
 * Look at other documentation: `xltabr` is better documented(!)
 * [Raise an issue](https://github.com/departmentfortransport/ac-roadtraff-pipe/issues) on GitHub if you have found a bug within this package
-* Email me: Luke.Shaw@dft.gsi.gov.uk
+* Email me: Luke.Shaw@dft.gov.uk
 * Google (it can't hurt) - especially if your problem is likely a problem with R coding
 
 ## TRA25rap - what is it?
@@ -142,7 +142,7 @@ footer_text <- c("Other = Two wheeled motor vehicles, buses, and coaches",
                  "(5) Affected by heavy snowfall",
                  "P Provisional",
                  "Telephone: 020 7944 3095",
-                 "Email: roadtraff.stats@dft.gsi.gov.uk",
+                 "Email: roadtraff.stats@dft.gov.uk",
                  "The figures in this table are National Statistics",
                  "",
                  "Source: DfT National Road Traffic Survey",
