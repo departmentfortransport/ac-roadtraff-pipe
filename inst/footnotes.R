@@ -25,8 +25,8 @@ foot2_vehicle_road <- c("Note: all roads for Heavy Goods Vehicles includes minor
 #is in the function "add_footnote_refs" in this package
 foot3_main <- c("[1] Figures affected by September 2000 fuel protest",
                 "[2] 2001 figures affected by the impact of Foot and Mouth disease",
-                "[3] Affected by heavy snowfall. It is estimates that snowfall during Q4 2010 had a greater impact on traffic levels than",
-                "for the other assigned quarters",
+                "[3] Affected by heavy snowfall. It is estimates that snowfall during Q4 2010 and Q1 2018 had greater impact on traffic",
+                "levels than snowfall during Q1 2009, Q1 2010, and Q1 2013",
                 "P Provisional")
 
 
