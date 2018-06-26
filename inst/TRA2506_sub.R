@@ -25,7 +25,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2506a",
-                  "Car and goods vehicle traffic (vehicle kilometres) by road class in Great Britain, rollong annual totals from 1994",
+                  "Car and goods vehicle traffic (vehicle kilometres) by road class in Great Britain, rolling annual totals from 1994",
                   "",
                   "Billion vehicle kilometres (not seasonally adjusted)")
   TRA25_format_to_xl(data_for_xl,
@@ -41,7 +41,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2506b",
-                  "Car and goods vehicle traffic (vehicle kilometres) by road class in Great Britain, rollong annual totals from 1994",
+                  "Car and goods vehicle traffic (vehicle kilometres) by road class in Great Britain, rolling annual totals from 1994",
                   "",
                   "Index numbers (Q4 1994 = 100")
   TRA25_format_to_xl(data_for_xl,
@@ -57,7 +57,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
   title_text <- c("Department for Transport statistics",
                   "Traffic",
                   "Table TRA2506c",
-                  "Car and goods vehicle traffic (vehicle kilometres) by road class in Great Britain, rollong annual totals from 1994",
+                  "Car and goods vehicle traffic (vehicle kilometres) by road class in Great Britain, rolling annual totals from 1994",
                   "",
                   "Percentage change on previous year")
   TRA25_format_to_xl(data_for_xl,
