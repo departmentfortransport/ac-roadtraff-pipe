@@ -107,7 +107,8 @@ make_TRA2503_sub <- function(save_loc=getwd()){
                      save_over = TRUE)
   
   ####TRA2503f####
-  data_for_xl <- TRA25_arrange_data(raw, roll=F, type="vehicle_and_road", units="index", km_or_miles = "miles")
+  data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="vehicle_and_road", units="index", km_or_miles = "miles",
+                                    index_from = c(1,2,3,4))
   #title and footer
   title_text <- c("Department for Transport statistics",
                   "Traffic",

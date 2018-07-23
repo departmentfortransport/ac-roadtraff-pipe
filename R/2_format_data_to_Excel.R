@@ -294,7 +294,7 @@ colrow_width_dft <- function(tab, data_for_xl){
   
   ##1) col widths
   n <- dim(data_for_xl)[2]
-  tab <- xltabr::set_wb_widths(tab, body_header_col_widths = c(6, 12, 4, rep(14,n-2)))
+  tab <- xltabr::set_wb_widths(tab, body_header_col_widths = c(6, 12, 6, rep(14,n-2)))
   #A comment about the above line:
   #   n+1 rows are defined where data_for_xl only has n, but this is because in 'tab' we 
   #have added in a col for footnote references in col3
