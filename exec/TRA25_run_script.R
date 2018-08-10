@@ -13,8 +13,8 @@ save_loc <- "~/table_dump"
 #   getwd()
 
 #3) Update the 4 things below.
-year <- 2018
-quarter <- 1
+year <- 2017
+quarter <- 3
 last_updated <- "July 2018"
 next_update <- "September 2018"
 #Footnotes
@@ -28,8 +28,8 @@ raw <- TRA25_data_api()
 raw_seasonal <- raw
 raw_seasonal$estimate <- raw_seasonal$estimate * pi
 warning("raw_seasonal URL is currently wrong (just normal values)")
-source(system.file("TRA2501_sub.r",package="TRA25rap"))
 
+source(system.file("TRA2501_sub.r",package="TRA25rap"))
 source(system.file("TRA2502_sub.r",package="TRA25rap"))
 source(system.file("TRA2503_sub.r",package="TRA25rap"))
 source(system.file("TRA2504_sub.r",package="TRA25rap"))
