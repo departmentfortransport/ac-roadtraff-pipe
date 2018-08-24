@@ -34,7 +34,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
          table_name = "TRA2502a",
          save_to = save_loc,
          start_from_file = filename,
-         save_over = TRUE)
+         num_dp = num_dp, save_over=TRUE)
 
   ###TRA2502b####
   data_for_xl <- TRA25_arrange_data(raw, roll=T, type="road", units="index")
@@ -50,7 +50,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
          table_name = "TRA2502b",
          save_to = save_loc,
          start_from_file = filename,
-         save_over = TRUE)
+         num_dp = num_dp, save_over=TRUE)
 
 
   ####TRA2502c####
@@ -68,7 +68,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
          table_name = "TRA2502c",
          save_to = save_loc,
          start_from_file = filename,
-         save_over = TRUE)
+         num_dp = num_dp, save_over=TRUE)
 
   ####TRA2502d####
   data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="road", units="traffic", km_or_miles = "miles")
@@ -87,7 +87,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
                      table_name = "TRA2502d",
                      save_to = save_loc,
                      start_from_file = filename,
-                     save_over = TRUE)
+                     num_dp = num_dp, save_over=TRUE)
   
 
   ####TRA2502e####
@@ -107,7 +107,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
          table_name = "TRA2502e",
          save_to = save_loc,
          start_from_file = filename,
-         save_over = TRUE)
+         num_dp = num_dp, save_over=TRUE)
 
 
   ####TRA2502f####
@@ -129,7 +129,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
                      table_name = "TRA2502f",
                      save_to = save_loc,
                      start_from_file = filename,
-                     save_over = TRUE)
+                     num_dp = num_dp, save_over=TRUE)
   
   ####TRA2502g####
   data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="road", units="percentage", km_or_miles = "miles")
@@ -145,7 +145,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
                      table_name = "TRA2502g",
                      save_to = save_loc,
                      start_from_file = filename,
-                     save_over = TRUE)
+                     num_dp = num_dp, save_over=TRUE)
 }
 
 make_TRA2502_sub(save_loc)

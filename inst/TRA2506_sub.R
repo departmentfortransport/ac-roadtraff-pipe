@@ -34,7 +34,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
          table_name = "TRA2506a",
          save_to = save_loc,
          start_from_file = filename,
-         save_over = TRUE)
+         num_dp = num_dp, save_over=TRUE)
 
   ###TRA2506b####
   data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle_and_road", units="index", km_or_miles = "km")
@@ -50,7 +50,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
                      table_name = "TRA2506b",
                      save_to = save_loc,
                      start_from_file = filename,
-                     save_over = TRUE)
+                     num_dp = num_dp, save_over=TRUE)
   
   ###TRA2506c####
   data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle_and_road", units="percentage", km_or_miles = "km")
@@ -66,7 +66,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
                      table_name = "TRA2506c",
                      save_to = save_loc,
                      start_from_file = filename,
-                     save_over = TRUE)
+                     num_dp = num_dp, save_over=TRUE)
   
   ####TRA2506d####
   data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="vehicle_and_road", units="traffic", km_or_miles = "km")
@@ -85,7 +85,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
                      table_name = "TRA2506d",
                      save_to = save_loc,
                      start_from_file = filename,
-                     save_over = TRUE)
+                     num_dp = num_dp, save_over=TRUE)
   
   ####TRA2506e####
   data_for_xl <- TRA25_arrange_data(raw, roll=F, type="vehicle_and_road", units="traffic", km_or_miles = "km")
@@ -104,7 +104,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
                      table_name = "TRA2506e",
                      save_to = save_loc,
                      start_from_file = filename,
-                     save_over = TRUE)
+                     num_dp = num_dp, save_over=TRUE)
   
   ####TRA2506f####
   data_for_xl <- TRA25_arrange_data(raw_seasonal, roll=F, type="vehicle_and_road", units="index", km_or_miles = "km",
@@ -124,7 +124,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
                      table_name = "TRA2506f",
                      save_to = save_loc,
                      start_from_file = filename,
-                     save_over = TRUE)
+                     num_dp = num_dp, save_over=TRUE)
   
   ####TRA2506g####
   data_for_xl <- TRA25_arrange_data(raw, roll=F, type="vehicle_and_road", units="percentage", km_or_miles = "km")
@@ -143,7 +143,7 @@ make_TRA2506_sub <- function(save_loc=getwd()){
                      table_name = "TRA2506g",
                      save_to = save_loc,
                      start_from_file = filename,
-                     save_over = TRUE)
+                     num_dp = num_dp, save_over=TRUE)
   
 }
 

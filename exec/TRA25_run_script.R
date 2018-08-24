@@ -13,8 +13,8 @@ save_loc <- "~/table_dump"
 #   getwd()
 
 #3) Update the 4 things below.
-year <- 2017
-quarter <- 3
+year <- 2018
+quarter <- 1
 last_updated <- "July 2018"
 next_update <- "September 2018"
 #Footnotes
@@ -24,10 +24,11 @@ source(system.file("footnotes.R",package="TRA25rap"))
 
 #4) run this whole script - you can do this with the shortcuts "CTRL + A" then "CTRL + R"
 
-raw <- TRA25_data_api()
-raw_seasonal <- raw
-raw_seasonal$estimate <- raw_seasonal$estimate * pi
-warning("raw_seasonal URL is currently wrong (just normal values)")
+raw <- read.csv(file.choose())
+raw_seasonal <- read.csv(file.choose())
+raw <- tibble::as.tibble(raw)
+raw_seasonal <- tibble::as_tibble(raw_seasonal)
+num_dp <- 3
 source(system.file("TRA2501_sub.r",package="TRA25rap"))
 source(system.file("TRA2502_sub.r",package="TRA25rap"))
 source(system.file("TRA2503_sub.r",package="TRA25rap"))
