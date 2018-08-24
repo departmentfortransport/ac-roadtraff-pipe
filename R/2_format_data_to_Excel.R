@@ -235,8 +235,10 @@ add_footnote_refs <- function(data_for_xl){
 #'
 #' @param tab the core tab object
 #' @param data_for_xl output from TRA25_arrange_data
-#' @export
-add_body_dft <- function(tab, data_for_xl){
+#' @param num_dp number of decimal places for the output. Default is 1, 
+#' which is what published tables are
+#' #' @export
+add_body_dft <- function(tab, data_for_xl, num_dp = 1){
   #adds in the main data and it's col headers to tab
   
   #add in a blank third column - for footnote references
@@ -270,8 +272,8 @@ add_body_dft <- function(tab, data_for_xl){
                                    , col_style_names = "col_headers")
   }
 
-  #Round data to 1 decimal place (important to do after any manipulation has happened)
-  data_for_xl[ ,4:n] <- round(data_for_xl[ ,4:n],1)
+  #Round data to (default) 1 decimal place (important to do after any manipulation has happened)
+  data_for_xl[ ,4:n] <- round(data_for_xl[ ,4:n],num_dp)
   
   #Add data to tab (after making slightly nicer)
   data_for_xl$year <- nice_year(data_for_xl$year, data_for_xl$quarter)
