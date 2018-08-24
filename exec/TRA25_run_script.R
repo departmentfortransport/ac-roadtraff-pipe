@@ -17,18 +17,27 @@ year <- 2018
 quarter <- 1
 last_updated <- "July 2018"
 next_update <- "September 2018"
+num_dp <- 1 #number of decimal places of output
 #Footnotes
 source(system.file("footnotes.R",package="TRA25rap"))
 #if you want to update the file run the commented out line below and follow instructions
 #file.edit(system.file("footnotes.R", package="TRA25rap"))
 
+
+
+##You now have a choice. If the API is updated you can use the following lines:
+raw <- TRA25_data_api("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly")
+raw_seasonal <- TRA25_data_api("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly_seasonal")
+
+##If not you have to download the data as a csv into your directory and find it
+##WARNING: NEVER STORE OR SEND SENSITIVE DATA ONTO PERSONAL DEVICES
+#raw <- read.csv(file.choose())
+#raw_seasonal <- read.csv(file.choose())
+#raw <- tibble::as.tibble(raw)
+#raw_seasonal <- tibble::as_tibble(raw_seasonal)
+
 #4) run this whole script - you can do this with the shortcuts "CTRL + A" then "CTRL + R"
 
-raw <- read.csv(file.choose())
-raw_seasonal <- read.csv(file.choose())
-raw <- tibble::as.tibble(raw)
-raw_seasonal <- tibble::as_tibble(raw_seasonal)
-num_dp <- 3
 source(system.file("TRA2501_sub.r",package="TRA25rap"))
 source(system.file("TRA2502_sub.r",package="TRA25rap"))
 source(system.file("TRA2503_sub.r",package="TRA25rap"))
