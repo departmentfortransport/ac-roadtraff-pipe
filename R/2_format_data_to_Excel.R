@@ -235,8 +235,10 @@ add_footnote_refs <- function(data_for_xl){
 #'
 #' @param tab the core tab object
 #' @param data_for_xl output from TRA25_arrange_data
-#' @export
-add_body_dft <- function(tab, data_for_xl){
+#' @param num_dp number of decimal places for the output. Default is 1, 
+#' which is what published tables are
+#' #' @export
+add_body_dft <- function(tab, data_for_xl, num_dp = 1){
   #adds in the main data and it's col headers to tab
   
   #add in a blank third column - for footnote references
@@ -270,8 +272,8 @@ add_body_dft <- function(tab, data_for_xl){
                                    , col_style_names = "col_headers")
   }
 
-  #Round data to 1 decimal place (important to do after any manipulation has happened)
-  data_for_xl[ ,4:n] <- round(data_for_xl[ ,4:n],1)
+  #Round data to (default) 1 decimal place (important to do after any manipulation has happened)
+  data_for_xl[ ,4:n] <- round(data_for_xl[ ,4:n],num_dp)
   
   #Add data to tab (after making slightly nicer)
   data_for_xl$year <- nice_year(data_for_xl$year, data_for_xl$quarter)
@@ -389,6 +391,7 @@ TRA2503_header_merge <- function(tab, table_name){
 #' will be created
 #' @param save_over TRUE or FALSE. Should the output file replace the file of "start_from_file" or
 #' be saved as a new file? TRUE = replace the file. FALSE = will save with time stamp as part of name 
+#' @param num_dp TRUE or FALSE. Should the output file replace the file of "start_from_file" or
 #' @examples
 #' \dontrun{
 #' #set up scenario
@@ -420,7 +423,7 @@ TRA2503_header_merge <- function(tab, table_name){
 #'        }
 #' @export
 TRA25_format_to_xl <- function(data_for_xl, title_text, footer_text, table_name,
-                   save_to=getwd(), start_from_file = FALSE, save_over = F){
+                   save_to=getwd(), start_from_file = FALSE, save_over = F,num_dp = 1){
   #makes nicely formatted Excel doc from data_for_xl
 
   #Open the workbook
@@ -447,7 +450,7 @@ TRA25_format_to_xl <- function(data_for_xl, title_text, footer_text, table_name,
   #now we use all the subfunctions created as part of the TRA25rap package (behind the scenes)
   tab <- xltabr::initialise(wb = wb, ws_name = table_name)
   tab <- TRA25rap:::add_title_dft(tab, title_text)
-  tab <- TRA25rap:::add_body_dft(tab, data_for_xl)
+  tab <- TRA25rap:::add_body_dft(tab, data_for_xl, num_dp)
   tab <- TRA25rap:::colrow_width_dft(tab, data_for_xl)
   tab <- xltabr::add_footer(tab,footer_text, footer_style_names = "body")
   tab <- xltabr::auto_merge_footer_cells(tab)
