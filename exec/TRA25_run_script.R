@@ -13,8 +13,8 @@ save_loc <- "~/table_dump"
 #   getwd()
 
 #3) Update the 4 things below.
-year <- 2018
-quarter <- 1
+year <- 2017
+quarter <- 3
 last_updated <- "July 2018"
 next_update <- "September 2018"
 num_dp <- 1 #number of decimal places of output
