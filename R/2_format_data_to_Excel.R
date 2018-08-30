@@ -378,6 +378,7 @@ TRA2503_header_merge <- function(tab, table_name){
     }
   return(tab)
 }
+
 ####Go from the data frame "data_for_xl" to Excel doc####
 #' @title TRA25_format_to_xl
 #' @description takes a data frame with title and footer text and outputs a beautiful Excel table.
@@ -391,7 +392,7 @@ TRA2503_header_merge <- function(tab, table_name){
 #' will be created
 #' @param save_over TRUE or FALSE. Should the output file replace the file of "start_from_file" or
 #' be saved as a new file? TRUE = replace the file. FALSE = will save with time stamp as part of name 
-#' @param num_dp TRUE or FALSE. Should the output file replace the file of "start_from_file" or
+#' @param num_dp number of decimal places for output. 1 is the default (and what is published)
 #' @examples
 #' \dontrun{
 #' #set up scenario
