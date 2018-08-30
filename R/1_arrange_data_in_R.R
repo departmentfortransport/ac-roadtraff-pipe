@@ -9,6 +9,8 @@
 ##ALL other functions are subfunctions of TRA25_arrange_data
 #############
 
+commit_function_30082018 <- function(x){print("hello world")}
+
 
 ####Get data####
 #' Downloads data from road traffic API and makes into data frame
