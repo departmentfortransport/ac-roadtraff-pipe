@@ -219,6 +219,9 @@ add_footnote_refs <- function(data_for_xl){
   d[d$year == 2013 & d$quarter == 1, 3] <- "[3]"
   d[d$year == 2018 & d$quarter == 1, 3] <- "[3]"
   
+  #urban/rural break in the series
+  d[d$year == 2017 & d$quarter == 4, 3] <- "[4]"
+  
   #provisional estimates. The complicated line is just ensuring the "P" doesn't overwrite a previous
   #footnote in that cell
   d[d$year == tail(d$year,1), 3] <- sapply(d[d$year == tail(d$year,1), 3], function(x) paste(x, "P"))

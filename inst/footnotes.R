@@ -9,25 +9,23 @@
 ##"source(system.file("TRA2501_sub.r",package="TRA25rap"))"
 ##as this will revert back to the package standards
 ###
-foot1_SA <- c("*Quarterly figures are subject to revision due to the nature of the seasonal adjustment. However, these will typically",
-              "be minor and will not affect ovarall patterns shown.",
-              "Note: Totals may not match sum due to rounding")
 
-foot1_not_SA <- c("Note: Totals may not match sum due to rounding")
-
-foot2_vehicle <- c("Other = Two wheeled motor vehicles, buses, and coaches")
-
-foot2_road <- c() #currently nothing to add!
-
-foot2_vehicle_road <- c("Note: all roads for Heavy Goods Vehicles includes minor roads")
+foot1 <- c("Note: Totals may not match sum due to rounding")
 
 #Note if you want to change where the footnotes go you need to go "deeper" into the code, it
 #is in the function "add_footnote_refs" in this package
-foot3_main <- c("[1] Figures affected by September 2000 fuel protest",
+foot2_main <- c("[1] Figures affected by September 2000 fuel protest",
                 "[2] 2001 figures affected by the impact of Foot and Mouth disease",
                 "[3] Affected by heavy snowfall. It is estimates that snowfall during Q4 2010 and Q1 2018 had greater impact on traffic",
                 "levels than snowfall during Q1 2009, Q1 2010, and Q1 2013",
                 "P Provisional")
+
+foot3_vehicle <- c("Other = Two wheeled motor vehicles, buses, and coaches")
+
+foot3_road <- c("[4] The urban/rural classificiation has been updated in 2017. For more information see the accompanying release")
+
+foot3_vehicle_road <- c("[4] The urban/rural classificiation has been updated in 2017. For more information see the accompanying release",
+                        "Note: all roads for Heavy Goods Vehicles includes minor roads")
 
 
 foot4_end <- c("Telephone: 020 7944 3095",

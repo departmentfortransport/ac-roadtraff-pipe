@@ -16,8 +16,8 @@ make_TRA2503_sub <- function(save_loc=getwd()){
                  next_update = next_update)
 
   #Footer texts (two possibilities for sasonal / not)
-  footer_text <- c(foot1_not_SA, foot2_vehicle_road, foot3_main, foot4_end)
-  footer_text_seasonal <- c(foot1_SA, foot2_vehicle_road, foot3_main, foot4_end)
+  footer_text <- c(foot1, foot3_vehicle_road, foot2_main, foot4_end)
+  footer_text_seasonal <- c(foot1_SA, foot3_vehicle_road, foot2_main, foot4_end)
 
 
   ###TRA2503a####
