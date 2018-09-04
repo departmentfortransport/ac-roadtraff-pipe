@@ -13,11 +13,11 @@ save_loc <- "~/table_dump"
 #   getwd()
 
 #3) Update the 4 things below.
-year <- 2017
-quarter <- 3
+year <- 2018
+quarter <- 1
 last_updated <- "July 2018"
 next_update <- "September 2018"
-num_dp <- 1 #number of decimal places of output
+num_dp <- 100 #number of decimal places to round to for output
 #Footnotes
 source(system.file("footnotes.R",package="TRA25rap"))
 #if you want to update the file run the commented out line below and follow instructions
