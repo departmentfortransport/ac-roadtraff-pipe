@@ -241,7 +241,7 @@ add_footnote_refs <- function(data_for_xl){
 #' @param num_dp number of decimal places for the output. Default is 1, 
 #' which is what published tables are
 #' #' @export
-add_body_dft <- function(tab, data_for_xl, num_dp = 1){
+add_body_dft <- function(tab, data_for_xl, num_dp = 1,...){
   #adds in the main data and it's col headers to tab
   
   #add in a blank third column - for footnote references
@@ -368,6 +368,22 @@ get_filename <- function(start_from_file, save_over, table_name){
 }
 
 
+specific_cells_format(tab,specific_cells) {
+  #formats specific cells (not rows or columns) based off the users definition and formats them 
+  #as such. 
+  #specific_cells must be of format: (year, quarter, stylename)
+  
+  #year only shows in first col when is quarter 1, hence find that row then "+q-1"
+  row_num <- which(tab$body$body_df[,1] == year) + quarter - 1
+  #code taken from TRA25rap:::add_bottom_row_style
+  my_filter <- row_num
+  tab$body$body_df[my_filter, "meta_row_"] <- paste(tab$body$body_df[my_filter, "meta_row_"], stylename, sep = "|")
+  tab$body$body_df[my_filter, "meta_left_header_row_"] <-
+    paste(tab$body$body_df[my_filter, "meta_left_header_row_"], stylename, sep = "|")
+  
+  return(tab)
+}
+
 TRA2503_header_merge <- function(tab, table_name){
   #simple function that merges the cells in the right places for the scenario of TRA2503 sheets
 
@@ -428,7 +444,8 @@ TRA2503_header_merge <- function(tab, table_name){
 #'        }
 #' @export
 TRA25_format_to_xl <- function(data_for_xl, title_text, footer_text, table_name,
-                   save_to=getwd(), start_from_file = FALSE, save_over = F,num_dp = 1){
+                   save_to=getwd(), start_from_file = FALSE, save_over = F,num_dp = 1,
+                   specific_cells = F,){
   #makes nicely formatted Excel doc from data_for_xl
 
   #Open the workbook
@@ -457,6 +474,7 @@ TRA25_format_to_xl <- function(data_for_xl, title_text, footer_text, table_name,
   tab <- TRA25rap:::add_title_dft(tab, title_text)
   tab <- TRA25rap:::add_body_dft(tab, data_for_xl, num_dp)
   tab <- TRA25rap:::colrow_width_dft(tab, data_for_xl)
+  tab <- TRA25rap:::specific_cells_format(tab, specific_cells)
   tab <- xltabr::add_footer(tab,footer_text, footer_style_names = "body")
   tab <- xltabr::auto_merge_footer_cells(tab)
   tab <- xltabr::write_data_and_styles_to_wb(tab) #the order matters here (LS needs extra check)
@@ -468,7 +486,7 @@ TRA25_format_to_xl <- function(data_for_xl, title_text, footer_text, table_name,
                        firstActiveRow = tare,
                        firstActiveCol = 3)
   #Cheap solution to cell merge problem with TRA2503 - bespoke function for it
-  tab <- TRA2503_header_merge(tab, table_name)
+  tab <- TRA25rap:::TRA2503_header_merge(tab, table_name)
 
   #write the worksheet
   setwd(save_to) #where the output will be saved. Default is current folder
