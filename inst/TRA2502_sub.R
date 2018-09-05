@@ -17,8 +17,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
 
 
   #Footer texts (two possibilities for sasonal / not)
-  footer_text <- c(foot1, foot3_road, foot2_main, foot4_end)
-  footer_text_seasonal <- c(foot1_SA, foot3_road, foot2_main, foot4_end)
+  footer_text <- c(foot1, foot2_main, foot3_road, foot4_end)
 
   ###TRA2502a####
   data_for_xl <- TRA25_arrange_data(raw, roll=T, type="road", units="traffic", km_or_miles = "miles")

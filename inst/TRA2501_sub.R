@@ -16,9 +16,8 @@ make_TRA2501_sub <- function(save_loc=getwd()){
                  next_update = next_update)
 
   #Footer texts (two possibilities for sasonal / not)
-  footer_text <- c(foot1, foot3_vehicle, foot2_main, foot4_end)
-  footer_text_seasonal <- c(foot1_SA, foot3_vehicle, foot2_main, foot4_end)
-  
+  footer_text <- c(foot1, foot2_main, foot3_vehicle, foot4_end)
+
   ###TRA2501a####
   data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
   title_text <- c("Department for Transport statistics",
