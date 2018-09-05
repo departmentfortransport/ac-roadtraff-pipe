@@ -372,7 +372,7 @@ specific_cells_format <- function(tab,specific_cells) {
   #formats specific cells (not rows or columns) based off the users definition and formats them 
   #as such. 
   #specific_cells must be a list with year, quarter, and stylename entries
-  if(specific_cells = F){
+  if(specific_cells == F){
     return(tab)
   } else { 
     
