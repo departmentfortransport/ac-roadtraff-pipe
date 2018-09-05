@@ -456,7 +456,7 @@ TRA2503_header_merge <- function(tab, table_name){
 #' @export
 TRA25_format_to_xl <- function(data_for_xl, title_text, footer_text, table_name,
                                save_to=getwd(), start_from_file = FALSE, save_over = F,num_dp = 1,
-                               specific_cells = F,){
+                               specific_cells = F){
   #makes nicely formatted Excel doc from data_for_xl
   
   #Open the workbook
