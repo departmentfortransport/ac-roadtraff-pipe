@@ -368,7 +368,7 @@ get_filename <- function(start_from_file, save_over, table_name){
 }
 
 
-specific_cells_format(tab,specific_cells) {
+specific_cells_format <- function(tab,specific_cells) {
   #formats specific cells (not rows or columns) based off the users definition and formats them 
   #as such. 
   #specific_cells must be a list with year, quarter, and stylename entries
