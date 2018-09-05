@@ -17,7 +17,9 @@ make_TRA2503_sub <- function(save_loc=getwd()){
 
   #Footer texts (two possibilities for sasonal / not)
   footer_text <- c(foot1, foot2_main, foot3_vehicle_road, foot4_end)
-
+  
+  #specific_cells for dashed line
+  specific_cells <- list(year = 2017, quarter = 4, style_name = "body_topline_dashed")
 
   ###TRA2503a####
   data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle_and_road", units="traffic", km_or_miles = "miles")
@@ -33,8 +35,10 @@ make_TRA2503_sub <- function(save_loc=getwd()){
          table_name = "TRA2503a",
          save_to = save_loc,
          start_from_file = filename,
-         num_dp = num_dp, save_over=TRUE)
-
+         num_dp = num_dp,
+         specific_cells = specific_cells,
+         save_over=TRUE)
+  
   ###TRA2503b####
   data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle_and_road", units="index", km_or_miles = "miles")
   title_text <- c("Department for Transport statistics",
@@ -49,8 +53,10 @@ make_TRA2503_sub <- function(save_loc=getwd()){
                      table_name = "TRA2503b",
                      save_to = save_loc,
                      start_from_file = filename,
-                     num_dp = num_dp, save_over=TRUE)
-
+                     num_dp = num_dp,
+                     specific_cells = specific_cells,
+                     save_over=TRUE)
+  
   ###TRA2503c####
   data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle_and_road", units="percentage", km_or_miles = "miles")
   title_text <- c("Department for Transport statistics",
@@ -65,8 +71,10 @@ make_TRA2503_sub <- function(save_loc=getwd()){
                      table_name = "TRA2503c",
                      save_to = save_loc,
                      start_from_file = filename,
-                     num_dp = num_dp, save_over=TRUE)
-
+                     num_dp = num_dp,
+                     specific_cells = specific_cells,
+                     save_over=TRUE)
+  
   ####TRA2503d####
   #redacted when seasonal data removed Q2 2018
 
@@ -87,8 +95,10 @@ make_TRA2503_sub <- function(save_loc=getwd()){
                      table_name = "TRA2503e",
                      save_to = save_loc,
                      start_from_file = filename,
-                     num_dp = num_dp, save_over=TRUE)
-
+                     num_dp = num_dp,
+                     specific_cells = specific_cells,
+                     save_over=TRUE)
+  
   ####TRA2503f####
   #redacted when seasonal data removed Q2 2018
 

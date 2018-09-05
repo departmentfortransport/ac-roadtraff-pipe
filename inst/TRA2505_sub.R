@@ -33,8 +33,10 @@ make_TRA2505_sub <- function(save_loc=getwd()){
          table_name = "TRA2505a",
          save_to = save_loc,
          start_from_file = filename,
-         num_dp = num_dp, save_over=TRUE)
-
+         num_dp = num_dp,
+         specific_cells = specific_cells,
+         save_over=TRUE)
+  
   ###TRA2505b####
   data_for_xl <- TRA25_arrange_data(raw, roll=T, type="road", units="index")
   title_text <- c("Department for Transport statistics",
@@ -49,8 +51,10 @@ make_TRA2505_sub <- function(save_loc=getwd()){
          table_name = "TRA2505b",
          save_to = save_loc,
          start_from_file = filename,
-         num_dp = num_dp, save_over=TRUE)
-
+         num_dp = num_dp,
+         specific_cells = specific_cells,
+         save_over=TRUE)
+  
 
   ####TRA2505c####
   data_for_xl <- TRA25_arrange_data(raw, roll=T, type="road", units="percentage")
@@ -67,8 +71,10 @@ make_TRA2505_sub <- function(save_loc=getwd()){
          table_name = "TRA2505c",
          save_to = save_loc,
          start_from_file = filename,
-         num_dp = num_dp, save_over=TRUE)
-
+         num_dp = num_dp,
+         specific_cells = specific_cells,
+         save_over=TRUE)
+  
   ####TRA2505d####
   #redacted when seasonal data removed Q2 2018
 
@@ -89,8 +95,10 @@ make_TRA2505_sub <- function(save_loc=getwd()){
          table_name = "TRA2505e",
          save_to = save_loc,
          start_from_file = filename,
-         num_dp = num_dp, save_over=TRUE)
-
+         num_dp = num_dp,
+         specific_cells = specific_cells,
+         save_over=TRUE)
+  
 
   ####TRA2505f####
   #redacted when seasonal data removed Q2 2018
