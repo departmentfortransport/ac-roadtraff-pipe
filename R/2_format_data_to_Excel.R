@@ -392,6 +392,8 @@ specific_cells_format <- function(tab,specific_cells) {
     
     ###SECOND return unwanted cols back to previous style
     
+    
+    
     return(tab)}
 }
 
