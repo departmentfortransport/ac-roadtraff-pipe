@@ -17,14 +17,16 @@ foot1 <- c("Note: Totals may not match sum due to rounding")
 foot2_main <- c("[1] Figures affected by September 2000 fuel protest",
                 "[2] 2001 figures affected by the impact of Foot and Mouth disease",
                 "[3] Affected by heavy snowfall. It is estimates that snowfall during Q4 2010 and Q1 2018 had greater impact on traffic",
-                "levels than snowfall during Q1 2009, Q1 2010, and Q1 2013",
-                "P Provisional")
+                "levels than snowfall during Q1 2009, Q1 2010, and Q1 2013")
 
-foot3_vehicle <- c("Other = Two wheeled motor vehicles, buses, and coaches")
+foot3_vehicle <- c("P Provisional", 
+                   "Other = Two wheeled motor vehicles, buses, and coaches")
 
-foot3_road <- c("[4] The urban/rural classificiation has been updated in 2017. For more information see the accompanying release")
+foot3_road <-  c("[4] The urban/rural classificiation has been updated in 2017. For more information see the accompanying release",
+                 "P Provisional")
 
 foot3_vehicle_road <- c("[4] The urban/rural classificiation has been updated in 2017. For more information see the accompanying release",
+                        "P Provisional",
                         "Note: all roads for Heavy Goods Vehicles includes minor roads")
 
 

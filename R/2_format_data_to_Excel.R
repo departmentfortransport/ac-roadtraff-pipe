@@ -382,6 +382,7 @@ TRA2503_header_merge <- function(tab, table_name){
   return(tab)
 }
 
+
 ####Go from the data frame "data_for_xl" to Excel doc####
 #' @title TRA25_format_to_xl
 #' @description takes a data frame with title and footer text and outputs a beautiful Excel table.
