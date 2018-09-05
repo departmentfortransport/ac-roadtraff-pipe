@@ -380,6 +380,8 @@ specific_cells_format(tab,specific_cells) {
     q <- specific_cells$quarter
     style <- specific_cells$style_name
     
+    
+    ###FIRST make the whole row values with that defined style
     #year only shows in first col when is quarter 1, hence find that row then "+q-1"
     row_num <- which(tab$body$body_df[,1] == y) + q - 1
     #code taken from TRA25rap:::add_bottom_row_style
@@ -387,6 +389,8 @@ specific_cells_format(tab,specific_cells) {
     tab$body$body_df[my_filter, "meta_row_"] <- paste(tab$body$body_df[my_filter, "meta_row_"], style, sep = "|")
     tab$body$body_df[my_filter, "meta_left_header_row_"] <-
       paste(tab$body$body_df[my_filter, "meta_left_header_row_"], style, sep = "|")
+    
+    ###SECOND return unwanted cols back to previous style
     
     return(tab)}
 }
