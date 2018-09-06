@@ -79,13 +79,6 @@ raw <- sqlQuery(channel = TS01,
 raw <- tibble::as.tibble(raw)
 
 
-raw_seasonal <- raw
-raw_seasonal$estimate <- 1
-warning("raw_seasonal URL is currently wrong (just normal values)")
-
-
-
-
 #******************************************************************************#
 #5) Outputting tables!
 #******************************************************************************#

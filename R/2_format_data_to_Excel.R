@@ -372,7 +372,7 @@ specific_cells_format <- function(tab,specific_cells) {
   #formats specific cells (not rows or columns) based off the users definition and formats them 
   #as such. 
   #specific_cells must be a list with year, quarter, and stylename entries
-  if(specific_cells == F){
+  if(specific_cells[[1]] == F){
     return(tab)
   } else { 
     
@@ -426,6 +426,10 @@ TRA2503_header_merge <- function(tab, table_name){
 #' @param save_over TRUE or FALSE. Should the output file replace the file of "start_from_file" or
 #' be saved as a new file? TRUE = replace the file. FALSE = will save with time stamp as part of name 
 #' @param num_dp number of decimal places for output. 1 is the default (and what is published)
+#' @param specific_cells Defaults to F. This must be a list of the year, quarter, and stylename that the user
+#' wants a specific row to be changed to. For example, specific_cells <- list(year = 2017, quarter = 4, 
+#' style_name = "body_topline_dashed") gives that row a dashed top line. The style_name is from the styles sheet,
+#' which in this function is system.file("DfT_styles.xlsx", package = "TRA25rap") 
 #' @examples
 #' \dontrun{
 #' #set up scenario
