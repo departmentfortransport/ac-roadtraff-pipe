@@ -65,7 +65,7 @@ Also, be a member of the [Gov Data Science rap\_collaboration Slack chanel](http
 
 Also, use the [RAP R MOOC](https://www.udemy.com/reproducible-analytical-pipelines/) which *I should have been using the whole time*, but wasn't aware of when I started as well as not knowing how much it could have helped me. Hindsight is 20/20!
 
-Government is already RAPping all over the place, *do not* go off on a solo mission to prove your coding prowess: use all the help and tools already out there.
+Government is already RAPping all over the place, **do not** go off on a solo mission to prove your coding prowess: use all the help and tools already out there.
 
 If the tables you are trying to produce are wildly different to the ones I have created with this package, you may not find any of my sub-functions useful. If you are comfortable with R, having a look at my functions may prove inspirational for building your own.
 
