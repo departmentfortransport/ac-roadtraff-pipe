@@ -25,9 +25,9 @@ If you are having problems with this package, there are different places you can
 
 * Read all of this document
 * Look at other documentation: `xltabr` is better documented(!)
+* Google (it can't hurt) - especially if your problem is likely a problem with R coding
 * [Raise an issue](https://github.com/departmentfortransport/ac-roadtraff-pipe/issues) on GitHub if you have found a bug within this package
 * Email me: lukefshaw@gmail.com
-* Google (it can't hurt) - especially if your problem is likely a problem with R coding
 
 ## TRA25rap - what is it?
 
@@ -43,19 +43,22 @@ The "patient zero" tables which this package was initially created for at the Qu
 
 ## <c name="SRF2"></c> "I'm in the Road Stats team and I want to make new TRA25 tables"
 
-Great! You'll need to install the package onto your desktop and have R set up on the system. Then, you need to read through and run the script "TRA25_run_script.R" that is in the "exec" folder of this package. You can open it in RStudio by the usual file finder way or by running:
+Great! You'll need to install the package onto your desktop and have R set up on the system. 
+
+(Note that there should be a set of Desk Notes to guide you through in more detail)
+
+Then, you need to read through and run the script "TRA25_run_script.R" that is in the "exec" folder of this package. You can open it in RStudio by the usual file finder way or by running:
 ```{r, eval=FALSE}
 file.edit(system.file("exec", "TRA25_run_script.R", package="TRA25rap"))
 ```
-in your console which will open the file. Make sure you read all the comments, and without any hiccups you should have the tables ready in under 5 minutes! Whilst in the development stages, do not be afraid of hiccups...
-
-Note that if you're running ON the ETHOS network you should instead use:
+Or, if you're running ON the ETHOS network you should instead use:
 ```{r, eval=FALSE}
 file.edit(system.file("exec", "TRA25_run_script_on_network.R", package="TRA25rap"))
 ```
 
+in your console which will open the file. Make sure you read all the comments, and without any hiccups you should have the tables ready in under 5 minutes! As this package is not fully developed and released, do not be afraid of hiccups...
 
-## <b name="notSRF"></b> "I'm in DfT, but not the Road Stats team"
+## <b name="notSRF"></b> "I'm in DfT, but not trying to produce table set TRA25"
 
 Great! Depending on how "heavy" an R-user you are may affect how much you want to use my package.
 
@@ -84,9 +87,9 @@ A general workflow for creating new DfT Tables should be:
 
 Also, be a member of the [Gov Data Science rap_collaboration Slack chanel](https://govdatascience.slack.com) which will be invaluable. 
 
-Finally, use the [RAP R MOOC](https://www.udemy.com/reproducible-analytical-pipelines/) which I should have been using the whole time, but wasn't aware of when I started and wasn't aware how much it could have helped me. 
+Finally, use the [RAP R MOOC](https://www.udemy.com/reproducible-analytical-pipelines/) which I should have been using the whole time, but wasn't aware of when I started as well as not knowing how much it could have helped me. Hindsight is 20/20!
 
-Government is already RAPping all over the place, don't go off on a solo mission to prove your coding prowess: use all the help and tools already out there.
+Government is already RAPping all over the place, *do not* go off on a solo mission to prove your coding prowess: use all the help and tools already out there.
 
 ## <a name="inst"></a> Installation
 This document assumes you have an understanding of coding in RStudio.
@@ -172,6 +175,3 @@ The above process can be repeated for each sheet in the Excel file, and by the e
 ```{r, eval=FALSE}
 file.edit(system.file("exec", "TRA25_run_script.R", package="TRA25rap"))
 ```
-
-
-Note if you are not in the Road Traffics team the function `TRA25_format_to_xl` is not necessarily helpful, please see [above](#notSRF)

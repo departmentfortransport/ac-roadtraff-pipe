@@ -1,9 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-**Warning: `TRA25rap` is in its early stages of development.** It is based heavily on the `xltabr` package developed by members of the Ministry of Justice (MoJ).
----------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Warning: `TRA25rap` is the first package written by Luke Shaw, and as such may be more buggy and a pain than more professional packages** It is based heavily on the `xltabr` package developed by members of the Ministry of Justice (MoJ).
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-If you are not a member of the Department for Transport (DfT) **I highly recommend you instead [use the `xltabr` package](https://github.com/moj-analytical-services/xltabr)**, as it is a far more developed and organised package. Even if you do work for DfT, that package is definitely worth a look!
+If you are not a member of the Department for Transport (DfT) **I highly recommend you instead [use the `xltabr` package](https://github.com/moj-analytical-services/xltabr)**, as it is a far more developed and organised package.
+
+Even if you do work for DfT, this package *only* can be used to make the TRA25 road traffic quarterly tables. It is true that this will prove a useful package to those in DfT looking to RAP tables themselves (see [below](#notSRF)).
 
 "I'm stuck... help!"
 --------------------
@@ -12,12 +14,12 @@ If you are having problems with this package, there are different places you can
 
 -   Read all of this document
 -   Look at other documentation: `xltabr` is better documented(!)
--   [Raise an issue](https://github.com/departmentfortransport/ac-roadtraff-pipe/issues) on GitHub if you have found a bug within this package
--   Email me: <Luke.Shaw@dft.gov.uk>
 -   Google (it can't hurt) - especially if your problem is likely a problem with R coding
+-   [Raise an issue](https://github.com/departmentfortransport/ac-roadtraff-pipe/issues) on GitHub if you have found a bug within this package
+-   Email me: <lukefshaw@gmail.com>
 
 TRA25rap - what is it?
---------------------
+----------------------
 
 This purpose of this package is to help users present beautifully formatted Excel tables in the DfT standard format. This package can automate the entire table making process, as shown in the image below. Part of why this is so powerful is that it is exactly repeatable, once the code is written all that is needed is an update to the data and then just re-run!
 
@@ -28,6 +30,64 @@ This will act as a segment of the [pipeline dream](https://ukgovdatascience.gith
 This package is a DfT-tailored version of xltabr, including all the functions and code that I (Luke Shaw) wrote and developed - all focused primarily around `xltabr`.
 
 The "patient zero" tables which this package was initially created for at the Quarterly provisional road traffic estimate tables, [TRA25](https://www.gov.uk/government/statistical-data-sets/tra25-quarterly-estimates). Practically all of the in-built checks and code are bespoke to issues with those tables, however the intention is that these can be used as a springboard to producing reproducible code for other teams' tables.
+
+<c name="SRF2"></c> "I'm in the Road Stats team and I want to make new TRA25 tables"
+------------------------------------------------------------------------------------
+
+Great! You'll need to install the package onto your desktop and have R set up on the system.
+
+(Note that there should be a set of Desk Notes to guide you through in more detail)
+
+Then, you need to read through and run the script "TRA25\_run\_script.R" that is in the "exec" folder of this package. You can open it in RStudio by the usual file finder way or by running:
+
+``` r
+file.edit(system.file("exec", "TRA25_run_script.R", package="TRA25rap"))
+```
+
+Or, if you're running ON the ETHOS network you should instead use:
+
+``` r
+file.edit(system.file("exec", "TRA25_run_script_on_network.R", package="TRA25rap"))
+```
+
+in your console which will open the file. Make sure you read all the comments, and without any hiccups you should have the tables ready in under 5 minutes! As this package is not fully developed and released, do not be afraid of hiccups...
+
+<b name="notSRF"></b> "I'm in DfT, but not trying to produce table set TRA25"
+-----------------------------------------------------------------------------
+
+Great! Depending on how "heavy" an R-user you are may affect how much you want to use my package.
+
+If the tables you are trying to produce are wildly different to the ones I have created with this package, you may not find any of my sub-functions useful. If you are comfortable with R, having a look at my functions may prove inspirational for building your own.
+
+Mainly, I would suggest reading all of the [`xltabr` readme](https://github.com/moj-analytical-services/xltabr/) to understand what this is about. Then, when writing your scripts use the DfT Style Path document in this package, which you can get in 2 ways:
+
+1.  Download my package and then in your script where the table is made run:
+
+``` r
+xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "TRA25rap"))
+```
+
+1.  Go to the 'inst' folder of this package's GitHub and download "DfT\_styles.xlsx" and then:
+
+``` r
+xltabr::set_style_path("/whereyousavedit/.../DfT_styles.xlsx")
+```
+
+This ensures that DfT\_styles can act as a master document for DfT-formatted tables, and as such we have no inconsistencies with font style, size, and colourings.
+
+A general workflow for creating new DfT Tables should be:
+
+1.  have a default Contents page that is made in Excel
+2.  have an R script that gets the data
+3.  have separate R scripts for each sheet you want to add, which takes raw data, rearranges, and formats into an excel doc
+
+**USE THE RAP COMPANION** which is available [online](https://ukgovdatascience.github.io/rap_companion/). A lot of the pitfalls and ultimately missed scope of this project were due to not closely following the RAP companion, and instead focussing on every individual problem that I wanted to solve, as opposed on whether it should be solved and thinking about time constraints and outputs. I should have learnt to be [agile](https://en.wikipedia.org/wiki/Agile_software_development) but I was too blinkered. Similarly, for those starting out for the first time I recommend looking into [DevOps](https://en.wikipedia.org/wiki/DevOps#Definitions_and_history) as a way of working/thinking.
+
+Also, be a member of the [Gov Data Science rap\_collaboration Slack chanel](https://govdatascience.slack.com) which will be invaluable.
+
+Finally, use the [RAP R MOOC](https://www.udemy.com/reproducible-analytical-pipelines/) which I should have been using the whole time, but wasn't aware of when I started as well as not knowing how much it could have helped me. Hindsight is 20/20!
+
+Government is already RAPping all over the place, *do not* go off on a solo mission to prove your coding prowess: use all the help and tools already out there.
 
 <a name="inst"></a> Installation
 --------------------------------
@@ -52,48 +112,6 @@ If you are working on the network, a workaround for this is the following:
 
 Click the "Clone or download" button in the top right hand corner of this page and select "Download ZIP". Then, you will have to open your file explorer and manually put the folder into the location of your installed R packages. To find out where your R packages are installed, type `.libPaths()` in your console. Hopefully you can then type `library(TRA25rap)` and everything works out fine.
 
-<c name="SRF2"></c> "I'm in the Road Stats team and I want to make new TRA25 tables"
-------------------------------------------------------------------------------------
-
-Great! You'll need to install the package onto your desktop and have R set up on the system. Then, you need to read through and run the script "TRA25\_run\_script.R" that is in the "exec" folder of this package. You can open it in RStudio by the usual file finder way or by running:
-
-``` r
-file.edit(system.file("exec", "TRA25_run_script.R", package="TRA25rap"))
-```
-
-in your console which will open the file. Make sure you read all the comments, and without any hiccups you should have the tables ready in under 5 minutes! Whilst in the development stages, do not be afraid of hiccups...
-
-<b name="notSRF"></b> "I'm in DfT, but not the Road Stats team"
----------------------------------------------------------------
-
-Great! Depending on how "heavy" an R-user you are may affect how much you want to use my package.
-
-If the tables you are trying to produce are wildly different to the ones I have created with this package, you may not find any of my sub-functions useful. If you are comfortable with R, having a look at my functions may prove inspirational. If you wouldn't know how to look at the functions in a package, I wouldn't worry about it.
-
-Mainly, I would suggest reading all of the [`xltabr` readme](https://github.com/moj-analytical-services/xltabr/) to understand what this is about. Then, when writing your scripts use the DfT Style Path document in this package, which you can get in 2 ways:
-
-1.  Download my package and then in your script where the table is made run:
-
-``` r
-xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "TRA25rap"))
-```
-
-1.  Go to the 'inst' folder of this package's GitHub and download "DfT\_styles.xlsx" and then:
-
-``` r
-xltabr::set_style_path("/whereyousavedit/.../DfT_styles.xlsx")
-```
-
-This ensures that DfT\_styles can act as a master document for DfT-formatted tables, and as such we have no inconsistencies with font style, size, and colourings.
-
-A general workflow for creating new DfT Tables should be:
-
-1.  have a default Contents page that is made in Excel
-2.  have an R script that gets the data
-3.  have separate R scripts for each sheet you want to add, which takes raw data, rearranges, and formats into an excel doc
-
-^<sup>^</sup> The above workflow and process will be updated as I try this out more within DfT. Watch this space!
-
 Example
 -------
 
@@ -113,16 +131,16 @@ raw
 #> # A tibble: 1,900 x 5
 #>     year quarter road_type vehicle_type estimate
 #>    <dbl>   <dbl> <chr>     <chr>           <dbl>
-#>  1 1994.      1. AR        cars           21.8  
-#>  2 1994.      1. AR        hgv             2.22 
-#>  3 1994.      1. AR        lgv             2.77 
-#>  4 1994.      1. AR        other           0.324
-#>  5 1994.      1. AU        cars           15.9  
-#>  6 1994.      1. AU        hgv             0.762
-#>  7 1994.      1. AU        lgv             1.80 
-#>  8 1994.      1. AU        other           0.428
-#>  9 1994.      1. MR        cars           11.1  
-#> 10 1994.      1. MR        hgv             0.433
+#>  1  1994       1 AR        cars           21.8  
+#>  2  1994       1 AR        hgv             2.22 
+#>  3  1994       1 AR        lgv             2.77 
+#>  4  1994       1 AR        other           0.324
+#>  5  1994       1 AU        cars           15.9  
+#>  6  1994       1 AU        hgv             0.762
+#>  7  1994       1 AU        lgv             1.80 
+#>  8  1994       1 AU        other           0.428
+#>  9  1994       1 MR        cars           11.1  
+#> 10  1994       1 MR        hgv             0.433
 #> # ... with 1,890 more rows
 ```
 
@@ -185,5 +203,3 @@ The above process can be repeated for each sheet in the Excel file, and by the e
 ``` r
 file.edit(system.file("exec", "TRA25_run_script.R", package="TRA25rap"))
 ```
-
-Note if you are not in the Road Traffics team the function `TRA25_format_to_xl` is not necessarily helpful, please see [above](#notSRF)
