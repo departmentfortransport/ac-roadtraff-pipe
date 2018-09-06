@@ -2,8 +2,8 @@ Package: TRA25rap
 Type: Package
 Title: Makes DfT Excel tables (based off "xltabr" MoJ package)
 Version: 0.1.0
-Authors@R: person("Luke", "Shaw", email = "Luke.Shaw@dft.gov.uk", role = c("aut", "cre"))
-Maintainer: Luke Shaw <Luke.Shaw@dft.gov.uk>
+Authors@R: person("Luke", "Shaw", email = "lukefshaw@gmail.com", role = c("aut", "cre"))
+Maintainer: Luke Shaw <lukefshaw@gmail.com>
 Description: This package makes it possible to import data from an API and
     manipulate it into the format of the desired Excel table, then using
     DfT styles can output the table in a consistent, user-friendly format
