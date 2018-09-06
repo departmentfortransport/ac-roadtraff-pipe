@@ -219,9 +219,13 @@ add_footnote_refs <- function(data_for_xl){
   d[d$year == 2013 & d$quarter == 1, 3] <- "[3]"
   d[d$year == 2018 & d$quarter == 1, 3] <- "[3]"
   
-  #urban/rural break in the series
-  d[d$year == 2017 & d$quarter == 4, 3] <- "[4]"
+  #urban/rural break in the series. The if statement is "bad" coding, but a quick fix for not having
+  #tables TRA2501 and TRA2504 chosen
+  if (!(identical(names(d), c("year","quarter","NA","cars","lgv","hgv","other","total")))){
+  d[d$year == 2017 & d$quarter == 4, 3] <- "[4]"}
+  warning("add_footnotes_ref as a function could be neater - look into developing")
   
+  d[is.na(d[,3]),3] <- "" #make the NA values nice character strings for next part.
   #provisional estimates. The complicated line is just ensuring the "P" doesn't overwrite a previous
   #footnote in that cell
   d[d$year == tail(d$year,1), 3] <- sapply(d[d$year == tail(d$year,1), 3], function(x) paste(x, "P"))
