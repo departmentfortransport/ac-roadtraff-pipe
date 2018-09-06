@@ -98,7 +98,7 @@ seasonal_pipe <- seasonal_pipe %>%
 write.csv(seasonal_pipe, paste0(save_loc,"\\seasonal_pipeline.csv"))
 
 ############################################################
-##4. table outputs for old formatted
+##4. table outputs 
 ############################################################
 
 #depending on which table is being asked for, you need to 
