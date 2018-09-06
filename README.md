@@ -52,14 +52,24 @@ file.edit(system.file("exec", "TRA25_run_script_on_network.R", package="TRA25rap
 
 in your console which will open the file. Make sure you read all the comments, and without any hiccups you should have the tables ready in under 5 minutes! As this package is not fully developed and released, do not be afraid of hiccups...
 
-<b name="notSRF"></b> "I'm in DfT, but not trying to produce table set TRA25"
------------------------------------------------------------------------------
+<b name="notSRF"></b> "I'm in DfT, but not trying to produce table set TRA25... and I am thinking of getting into RAPping"
+--------------------------------------------------------------------------------------------------------------------------
 
 Great! Depending on how "heavy" an R-user you are may affect how much you want to use my package.
 
+I have chosen here as the place to discuss useful resources when taking on a project like this:
+
+**USE THE RAP COMPANION** which is available [online](https://ukgovdatascience.github.io/rap_companion/). A lot of the pitfalls and ultimately missed scope of this project were due to not closely following the RAP companion, and instead focussing on every individual problem that I wanted to solve, as opposed on whether it should be solved and thinking about time constraints and outputs. I should have learnt to be [agile](https://en.wikipedia.org/wiki/Agile_software_development) but I was too blinkered. Similarly, for those starting out for the first time I recommend looking into [DevOps](https://en.wikipedia.org/wiki/DevOps#Definitions_and_history) as a way of working/thinking.
+
+Also, be a member of the [Gov Data Science rap\_collaboration Slack chanel](https://govdatascience.slack.com) which will be invaluable.
+
+Also, use the [RAP R MOOC](https://www.udemy.com/reproducible-analytical-pipelines/) which *I should have been using the whole time*, but wasn't aware of when I started as well as not knowing how much it could have helped me. Hindsight is 20/20!
+
+Government is already RAPping all over the place, *do not* go off on a solo mission to prove your coding prowess: use all the help and tools already out there.
+
 If the tables you are trying to produce are wildly different to the ones I have created with this package, you may not find any of my sub-functions useful. If you are comfortable with R, having a look at my functions may prove inspirational for building your own.
 
-Mainly, I would suggest reading all of the [`xltabr` readme](https://github.com/moj-analytical-services/xltabr/) to understand what this is about. Then, when writing your scripts use the DfT Style Path document in this package, which you can get in 2 ways:
+Also, I would suggest reading all of the [`xltabr` readme](https://github.com/moj-analytical-services/xltabr/) to understand what this is about. Then, when writing your scripts use the DfT Style Path document in this package, which you can get in 2 ways:
 
 1.  Download my package and then in your script where the table is made run:
 
@@ -74,20 +84,6 @@ xltabr::set_style_path("/whereyousavedit/.../DfT_styles.xlsx")
 ```
 
 This ensures that DfT\_styles can act as a master document for DfT-formatted tables, and as such we have no inconsistencies with font style, size, and colourings.
-
-A general workflow for creating new DfT Tables should be:
-
-1.  have a default Contents page that is made in Excel
-2.  have an R script that gets the data
-3.  have separate R scripts for each sheet you want to add, which takes raw data, rearranges, and formats into an excel doc
-
-**USE THE RAP COMPANION** which is available [online](https://ukgovdatascience.github.io/rap_companion/). A lot of the pitfalls and ultimately missed scope of this project were due to not closely following the RAP companion, and instead focussing on every individual problem that I wanted to solve, as opposed on whether it should be solved and thinking about time constraints and outputs. I should have learnt to be [agile](https://en.wikipedia.org/wiki/Agile_software_development) but I was too blinkered. Similarly, for those starting out for the first time I recommend looking into [DevOps](https://en.wikipedia.org/wiki/DevOps#Definitions_and_history) as a way of working/thinking.
-
-Also, be a member of the [Gov Data Science rap\_collaboration Slack chanel](https://govdatascience.slack.com) which will be invaluable.
-
-Finally, use the [RAP R MOOC](https://www.udemy.com/reproducible-analytical-pipelines/) which I should have been using the whole time, but wasn't aware of when I started as well as not knowing how much it could have helped me. Hindsight is 20/20!
-
-Government is already RAPping all over the place, *do not* go off on a solo mission to prove your coding prowess: use all the help and tools already out there.
 
 <a name="inst"></a> Installation
 --------------------------------

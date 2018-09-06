@@ -94,8 +94,8 @@ seasonal_pipe <- seasonal_pipe %>%
   select(year, quarter, road_type, vehicle_type, estimate = value) %>% #renaming "value" as "estimate"
   arrange(year, quarter, road_type, vehicle_type) #identical to ORDER BY in SQL
 
-#write for new tables (as "seasonal_pipeline.csv")
-write.csv(seasonal_pipe, paste0(save_loc,"\\seasonal_pipeline.csv"))
+#write for new tables (as "seasonal_raw.csv")
+write.csv(seasonal_pipe, paste0(save_loc,"\\seasonal_raw.csv"), row.names = FALSE)
 
 ############################################################
 ##4. table outputs 
@@ -118,21 +118,21 @@ TRA2501d <- TRA25rap::TRA25_arrange_data(seasonal_pipe,
                                type="vehicle", 
                                units="traffic", 
                                km_or_miles = "miles")
-write.csv(TRA2501d, paste0(save_loc,"\\TRA2501d_unformatted.csv"))
+write.csv(TRA2501d, paste0(save_loc,"\\TRA2501d_unformatted.csv"), row.names = FALSE)
 
 TRA2502d <- TRA25rap::TRA25_arrange_data(seasonal_pipe, 
                                      roll=F, 
                                      type="road", 
                                      units="traffic", 
                                      km_or_miles = "miles")
-write.csv(TRA2502d, paste0(save_loc,"\\TRA2502d_unformatted.csv"))
+write.csv(TRA2502d, paste0(save_loc,"\\TRA2502d_unformatted.csv"), row.names = FALSE)
 
 TRA2503d <- TRA25rap::TRA25_arrange_data(seasonal_pipe, 
                                          roll=F, 
                                          type="vehicle_and_road", 
                                          units="traffic", 
                                          km_or_miles = "miles")
-write.csv(TRA2503d, paste0(save_loc,"\\TRA2503d_unformatted.csv"))
+write.csv(TRA2503d, paste0(save_loc,"\\TRA2503d_unformatted.csv"), row.names = FALSE)
 
 ##below are some examples of how to get sheets f and g for 
 #TRA2501. Commented out as not essential
@@ -143,14 +143,14 @@ write.csv(TRA2503d, paste0(save_loc,"\\TRA2503d_unformatted.csv"))
 #                                         units="index",
 #                                         index_from=c(1,2,3,4),
 #                                         km_or_miles = "miles")
-#write.csv(TRA2501f, paste0(save_loc,"\\TRA2501f_unformatted.csv"))
+#write.csv(TRA2501f, paste0(save_loc,"\\TRA2501f_unformatted.csv"), row.names = FALSE)
 #
 #TRA2501g <- TRA25rap::TRA25_arrange_data(seasonal_pipe, 
 #                                         roll=F, 
 #                                         type="vehicle", 
 #                                         units="percentage",
 #                                         km_or_miles = "miles")
-#write.csv(TRA2501g, paste0(save_loc,"\\TRA2501g_unformatted.csv"))
+#write.csv(TRA2501g, paste0(save_loc,"\\TRA2501g_unformatted.csv"), row.names = FALSE)
 
 
 
