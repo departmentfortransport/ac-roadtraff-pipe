@@ -21,7 +21,7 @@ library(TRA25rap) #for formatting tables
 ##UPDATE EACH QUARTER - to the values in the database
 year <- 2018
 quarter <- 1
-save_loc <- file.choose() #pop up will appear, pick 
+save_loc <- choose.dir() #pop up will appear, pick 
 #save location of outputs!
 ##UPDATE EACH QUARTER - to the values in the database
 
