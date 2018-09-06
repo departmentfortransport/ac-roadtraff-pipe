@@ -17,7 +17,9 @@ make_TRA2506_sub <- function(save_loc=getwd()){
 
   #Footer texts (two possibilities for sasonal / not)
   footer_text <- c(foot1, foot2_main, foot3_vehicle_road, foot4_end)
-
+  
+  #specific_cells for dashed line
+  specific_cells <- list(year = 2017, quarter = 4, style_name = "body_topline_dashed")
 
   ###TRA2506a####
   data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle_and_road", units="traffic", km_or_miles = "km")
