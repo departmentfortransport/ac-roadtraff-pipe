@@ -116,9 +116,26 @@ source(system.file("TRA2506_sub.r",package="TRA25rap"))
 #could be bugs. Report any bugs to the appropriate person!
 
 
+#******************************************************************************#
+#7) Unrounded tables
+#******************************************************************************#
+num_dp <- 100                         #Number of decimal places for table output
+#this line repeats step 3) above, basically directing the outputs to the 
+#unrounded_tables sub folder. If it doesn't exist, this will cause errors 
+save_loc <- paste0("G:\\TSTATS\\TS_GROUPS\\COMM\\03 Quarterly Publication",
+                   "\\4_Table compilation\\2018 Q", quarter,
+                   "\\unrounded_tables")
+#Output the unrounded tables
+source(system.file("TRA2501_sub.r",package="TRA25rap"))
+source(system.file("TRA2502_sub.r",package="TRA25rap"))
+source(system.file("TRA2503_sub.r",package="TRA25rap"))
+source(system.file("TRA2504_sub.r",package="TRA25rap"))
+source(system.file("TRA2505_sub.r",package="TRA25rap"))
+source(system.file("TRA2506_sub.r",package="TRA25rap"))
+
 
 
 
 #******************************************************************************#
-#7) QA the tables
+#8) QA the tables
 #******************************************************************************#

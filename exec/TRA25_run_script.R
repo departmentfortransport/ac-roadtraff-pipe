@@ -13,8 +13,8 @@ save_loc <- "~/table_dump"
 #   getwd()
 
 #3) Update the 4 things below.
-year <- 2017
-quarter <- 3
+year <- 2018
+quarter <- 1
 last_updated <- "July 2018"
 next_update <- "September 2018"
 num_dp <- 1 #number of decimal places to round to for output
@@ -49,3 +49,6 @@ source(system.file("TRA2506_sub.r",package="TRA25rap"))
 #   Report any bugs to the appropriate person!
 
 #6) Look at the tables in your location. It's important to QA them (same reason as above!)
+
+
+#NOTE if you want unrounded tables, change num_dp to 100 and run it!
