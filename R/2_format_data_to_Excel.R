@@ -195,7 +195,6 @@ add_headers_twovars <- function(headers){
   }
   
   top_headers <- list(row_1, row_2)
-  warning("this function is incomplete")
   return(top_headers)
 }
 
@@ -207,7 +206,7 @@ add_footnote_refs <- function(data_for_xl){
   d <- data_for_xl #just for simplicity (easier to read)
   
   #2000 fuel protest
-  d[d$year == 1999 & d$quarter == 3, 3] <- "[1]"
+  d[d$year == 2000 & d$quarter == 3, 3] <- "[1]"
   
   #2001 foot and mouth
   d[d$year == 2001, 3] <- "[2]"

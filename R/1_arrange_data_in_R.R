@@ -174,7 +174,7 @@ chosen_units <- function(data_for_xl, units, index_from = NA){
   if (units == "percentage"){
 
     #percentage change - always 4 quarters apart regardless of whether the data is rolling annual or quarterly :)
-    warning("LS fix - bad practice probably in this bit of code below")
+    warning("LS fix - bad practice probably (for loop, use of \"ave\" in this bit of code below")
     n <- dim(data_for_xl)[2] #width of the data frame
     for (i in 3:n){
       data_for_xl[,i] <- ave(data_for_xl[,i], #the colum we're 'ave'raging

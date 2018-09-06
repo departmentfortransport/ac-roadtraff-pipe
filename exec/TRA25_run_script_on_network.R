@@ -87,8 +87,9 @@ source(system.file("footnotes.R",package="TRA25rap"))
     #if you want to update the footnotes run the commented out line below and 
     #follow instructions in there:
     #file.edit(system.file("footnotes.R", package="TRA25rap"))
-    #You will then need to save the file, and re-install the package TRA25rap
-    #using the steps in the desknotes
+    #You will then need to run the file then the next line.
+    #NOTE that if serious footnote changes happening (instead of just rewording), 
+    #you may need to edit the function "add_footnotes_ref" INSIDE the package. 
 
 
 #RUN LINE BY LINE 
