@@ -16,5 +16,6 @@ then function does nothing (returns raw)}
 Creates the rolling annual totals from quarterly values
 }
 \examples{
+raw <- TRA25_data_api()
 rolling_raw <- TRA25_rolling_annual(raw, TRUE)
 }

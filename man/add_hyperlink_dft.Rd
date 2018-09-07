@@ -17,7 +17,7 @@ Adds a hyperlink to the second row of the sheet. Checks that is of TRA25 format
 but can easily be altered not to. Based off openxlsx::writeFormula
 }
 \examples{
-tab <- xltabr::initialise()
+tab <- xltabr::initialise(ws_name = "TRA2501a")
 title_text <- c("Department for Transport statistics",
                "Traffic",
                "Table TRA2501a",
@@ -27,7 +27,7 @@ title_text <- c("Department for Transport statistics",
 #setting the DfT style path - defines font size, colour, etc.
 xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "TRA25rap"))
 tab <- add_title_dft(tab, title_text)
-important that following line is run BEFORE add_hyperlink_dft
+#important that following line is run BEFORE add_hyperlink_dft
 tab <- xltabr::write_data_and_styles_to_wb(tab)
 
 tab <- add_hyperlink_dft(tab, title_text)

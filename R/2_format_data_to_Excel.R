@@ -49,7 +49,7 @@ add_title_dft <- function(tab,title_text){
 #' @param tab the core tab object
 #' @param title_text vector string with 6 elements 
 #' @examples
-#'tab <- xltabr::initialise()
+#'tab <- xltabr::initialise(ws_name = "TRA2501a")
 #'title_text <- c("Department for Transport statistics",
 #'                "Traffic",
 #'                "Table TRA2501a",
@@ -60,7 +60,7 @@ add_title_dft <- function(tab,title_text){
 #'xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "TRA25rap"))
 
 #'tab <- add_title_dft(tab, title_text)
-#'important that following line is run BEFORE add_hyperlink_dft
+#'#important that following line is run BEFORE add_hyperlink_dft
 #'tab <- xltabr::write_data_and_styles_to_wb(tab)
 #'
 #'tab <- add_hyperlink_dft(tab, title_text)

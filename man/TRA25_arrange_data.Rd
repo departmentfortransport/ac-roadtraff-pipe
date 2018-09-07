@@ -6,7 +6,7 @@
 pivotted to the right structure for making into the Excel document.}
 \usage{
 TRA25_arrange_data(raw, roll = NA, type = NA, units = NA,
-  km_or_miles = NA)
+  km_or_miles = NA, index_from = NA)
 }
 \arguments{
 \item{raw}{data frame outputted from \code{\link{TRA25_data_api}()}}
@@ -25,6 +25,8 @@ dependant on which wanted for column headers}
 
 \item{km_or_miles}{"km" or "miles" dependant on desired units. Only used if units = "traffic",
 as otherwise doesn't make a difference.}
+
+\item{index_from}{integer or vector. Rows from which to index from if chosen_units = "index"}
 }
 \value{
 pivotted data frame that is ready to be formatted nicely as an Excel (.xlsx) doc 
@@ -38,6 +40,9 @@ pivotted to the right structure for making into the Excel document.
 #first get the raw data
 raw <- TRA25_data_api()
 #Google TRA25 if the naming convention on the left ("TRA25...") doesn't make sense
-TRA2501a_data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
-View(TRA2501a_data_for_xl) #look at the data frame created - is the same as sheet TRA2501a (search online)
+TRA2501a_data_for_xl <- TRA25_arrange_data(raw, roll=TRUE, 
+type="vehicle", units="traffic", km_or_miles = "miles")
+#The commented line at the bottom looks at the data frame created - 
+#note it is the same as sheet TRA2501a (which you can search for online)
+#View(TRA2501a_data_for_xl) 
 }

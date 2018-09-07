@@ -12,7 +12,7 @@ License: MIT
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 2.10)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Imports: 
   dplyr,
   purrr,

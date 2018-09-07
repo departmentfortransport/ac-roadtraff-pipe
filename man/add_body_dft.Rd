@@ -6,12 +6,16 @@
 Not advisable to use outside of TRA25 table compilation - but useful as 
 a spring board for creating bespoke functions}
 \usage{
-add_body_dft(tab, data_for_xl)
+add_body_dft(tab, data_for_xl, num_dp = 1, ...)
 }
 \arguments{
 \item{tab}{the core tab object}
 
 \item{data_for_xl}{output from TRA25_arrange_data}
+
+\item{num_dp}{number of decimal places for the output. Default is 1, 
+which is what published tables are
+#' @export}
 }
 \description{
 Adds the body (main data) to the tab. Relies on many TRA25rap subfunctions. 

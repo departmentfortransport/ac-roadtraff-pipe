@@ -44,6 +44,7 @@ TRA25_data_api <- function(
 #' @param x logical, if TRUE then makes values rolling annual totals. If FALSE
 #' then function does nothing (returns raw)
 #' @examples
+#' raw <- TRA25_data_api()
 #' rolling_raw <- TRA25_rolling_annual(raw, TRUE)
 #' @export
 TRA25_rolling_annual <- function(raw, x){
@@ -104,6 +105,22 @@ pivot_raw <- function(raw, type){
   return(data_for_xl)
 }
 
+
+#' This is a subfunction of TRA25_arrange_data
+#' 
+#' Takes the raw data, and pivots it up so that a factor variable column (with n factors)
+#' is changed to add in the n columns, with the "estimate" col now populating the values
+#' 
+#'
+#' @param raw the raw data in the same format as the output of \code{\link{TRA25_data_api}}
+#' @param type either "road", "vehicle", or "vehicle_and_road"
+#' @examples
+#' raw <- TRA25_data_api()
+#' data_for_xl <- TRA25_vehicle_road(raw, "road")
+#' #look at where we've gone from/to
+#' tibble::glimpse(raw)
+#' tibble::glimpse(data_for_xl)
+#' @export
 TRA25_vehicle_road <- function(raw, type){
   #Takes the initial data "raw" from function TRA25_rolling_annual
   #Do you want the columns to be vehicle type or road type? Pivots the data to be that way
@@ -196,7 +213,7 @@ chosen_units <- function(data_for_xl, units, index_from = NA){
   #NOTE - when units="traffic" we don't change anything. Important to make user define that that is the value they want
   return(data_for_xl)
 }
-
+####################################################################################################
 ####Wrapper function####
 #' given the API output from \code{\link{TRA25_data_api}}, rearranges into a data frame
 #' pivotted to the right structure for making into the Excel document.
@@ -220,8 +237,11 @@ chosen_units <- function(data_for_xl, units, index_from = NA){
 #' #first get the raw data
 #' raw <- TRA25_data_api()
 #' #Google TRA25 if the naming convention on the left ("TRA25...") doesn't make sense
-#' TRA2501a_data_for_xl <- TRA25_arrange_data(raw, roll=T, type="vehicle", units="traffic", km_or_miles = "miles")
-#' View(TRA2501a_data_for_xl) #look at the data frame created - is the same as sheet TRA2501a (search online)
+#' TRA2501a_data_for_xl <- TRA25_arrange_data(raw, roll=TRUE, 
+#' type="vehicle", units="traffic", km_or_miles = "miles")
+#' #The commented line at the bottom looks at the data frame created - 
+#' #note it is the same as sheet TRA2501a (which you can search for online)
+#' #View(TRA2501a_data_for_xl) 
 #' @export
 
 TRA25_arrange_data <- function(raw, roll=NA, type=NA, units=NA, km_or_miles=NA, index_from = NA){
