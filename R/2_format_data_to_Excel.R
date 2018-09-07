@@ -252,10 +252,18 @@ add_body_dft <- function(tab, data_for_xl, num_dp = 1,...){
   data_for_xl <- cbind(data_for_xl[,1:2], NA, data_for_xl[,3:n])
   n <- n+1 #because we've added a new col
   
-  #add in footnote references to third column (eg "P" for provisional)
-  data_for_xl <- add_footnote_refs(data_for_xl)[[1]]
-  
-  #write the column styles - which ones to make bold
+  #add in footnote references to third column (eg "P" for provisional).
+  #NOTE - if the user has adapted the function and run their own called
+  #add_footnote_refs_user_defined() then we use that instead. This is 
+  #to avoid having to change the whole package when running it. Else,
+  #uses the default function in the package
+  if (exists("add_footnote_refs_user_defined")){
+    data_for_xl <- add_footnote_refs_user_defined(data_for_xl)[[1]]
+  } else {
+    data_for_xl <- TRA25rap:::add_footnote_refs(data_for_xl)[[1]]
+  }
+
+    #write the column styles - which ones to make bold
   headers <- names(data_for_xl)
   col_style_names <- rep("body", length(headers))
   col_style_names[headers=="year"] <- "body_bold_year" #so year nums formatted as 2013 not 2,013
