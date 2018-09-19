@@ -28,8 +28,8 @@ make_TRA2505_sub <- function(save_loc=getwd()){
                   "Traffic",
                   "Table TRA2505a",
                   "Road traffic (vehicle kilometres) by road class in Great Britain, rolling annual totals from 1994",
-                  "",
-                  "Billion vehicle kilometres")
+                  "Billion vehicle kilometres",
+                  "Rolling annual totals")
   TRA25_format_to_xl(data_for_xl,
          title_text,
          footer_text,

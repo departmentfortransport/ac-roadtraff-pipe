@@ -22,7 +22,7 @@ title_text <- c("Department for Transport statistics",
                "Traffic",
                "Table TRA2501a",
                "Road traffic (vehicle miles) by vehicle type in Great Britain, rolling annual totals from 1994",
-               "Billion vehicle miles (not seasonally adjusted)",
+               "Billion vehicle miles",
                "Rolling annual totals")
 #setting the DfT style path - defines font size, colour, etc.
 xltabr::set_style_path(system.file("DfT_styles.xlsx", package = "TRA25rap"))
