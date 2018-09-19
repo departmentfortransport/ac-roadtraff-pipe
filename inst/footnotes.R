@@ -27,13 +27,9 @@ foot2_main <- c("[1] Figures affected by September 2000 fuel protest",
 foot3_vehicle <- c("P Provisional", 
                    "Other = Two wheeled motor vehicles, buses, and coaches")
 
-foot3_road <-  c("[4] The urban/rural classificiation has been updated in 2017. For more information see the accompanying release",
-                 "    Please note that only columns with \"Urban\" and \"Rural\" have a break in the time series.",
-                 "P Provisional")
+foot3_road <-  c("P Provisional")
 
-foot3_vehicle_road <- c("[4] The urban/rural classificiation has been updated in 2017. For more information see the accompanying release",
-                        "    Please note that only columns with \"Urban\" and \"Rural\" have a break in the time series.",
-                        "P Provisional",
+foot3_vehicle_road <- c("P Provisional",
                         "Note: all roads for Heavy Goods Vehicles includes minor roads")
 
 
@@ -72,12 +68,13 @@ add_footnote_refs_user_defined <- function(data_for_xl){
   d[d$year == 2018 & d$quarter == 1, 3] <- "[3]"
   d[d$year == 2008,3] <- "test"
   
+  ############DELIBERATELTY COMMENTED OUT AS WILL CHANGE EACH QUARTER############
   ############URBAN/RURAL SERIES BREAK############
   #urban/rural break in the series. The if statement is "bad" coding, but a quick fix for not having
   #tables TRA2501 and TRA2504 chosen
-  if (!(identical(names(d), c("year","quarter","NA","cars","lgv","hgv","other","total")))){
-    d[d$year == 2017 & d$quarter == 4, 3] <- "[4]"}
-  warning("add_footnotes_ref_user_defined as a function could be neater - look into developing")
+  #if (!(identical(names(d), c("year","quarter","NA","cars","lgv","hgv","other","total")))){
+  #  d[d$year == 2017 & d$quarter == 4, 3] <- "[4]"}
+  #warning("add_footnotes_ref_user_defined as a function could be neater - look into developing")
   
   ############PROVISIONAL ESTIMATE "P" ADDED############
   d[is.na(d[,3]),3] <- "" #make the NA values nice character strings for next part.
