@@ -452,7 +452,7 @@ TRA2503_header_merge <- function(tab, table_name){
 #'                "Table TRA2504e",
 #'               "Road traffic (vehicle kilometres) by vehicle type in Great Britain, quarterly from 1993",
 #'               "",
-#'               "Billion vehicle kilometres (not seasonally adjusted)")
+#'               "Billion vehicle kilometres")
 #' footer_text <- footer_text <- c("",
 #'               "[1] Two wheeled motor vehicles, buses, and coaches",
 #'               "[2] Total may not match sum due to rounding",

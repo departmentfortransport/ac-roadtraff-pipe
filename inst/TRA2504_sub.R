@@ -79,7 +79,7 @@ make_TRA2504_sub <- function(save_loc=getwd()){
                   "Table TRA2504e",
                   "Road traffic (vehicle kilometres) by vehicle type in Great Britain, quarterly from 1994",
                   "",
-                  "Billion vehicle kilometres (not seasonally adjusted)")
+                  "Billion vehicle kilometres")
 
   TRA25_format_to_xl(data_for_xl,
          title_text,

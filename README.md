@@ -173,7 +173,7 @@ title_text <- c("Department for Transport statistics",
                 "Table TRA2501a",
                 "Road traffic (vehicle miles) by vehicle type in Great Britain, rolling annual totals from 1993",
                 "",
-                "Billion vehicle miles (not seasonally adjusted)")
+                "Billion vehicle miles")
 footer_text <- c("Other = Two wheeled motor vehicles, buses, and coaches",
                  "Note Total column may not match sum due to rounding",
                  "(3) Figures affected by September 2000 fuel protest",

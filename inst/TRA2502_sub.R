@@ -28,7 +28,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
                   "Table TRA2502a",
                   "Road traffic (vehicle miles) by road class in Great Britain, rolling annual totals from 1994",
                   "",
-                  "Billion vehicle miles (not seasonally adjusted)")
+                  "Billion vehicle miles")
   TRA25_format_to_xl(data_for_xl,
          title_text,
          footer_text,
@@ -88,7 +88,7 @@ make_TRA2502_sub <- function(save_loc=getwd()){
                   "Table TRA2502e",
                   "Road traffic (vehicle miles) by road class in Great Britain, quarterly from 1994",
                   "",
-                  "Billion vehicle miles (not seasonally adjusted)")
+                  "Billion vehicle miles")
 
   #apply the function (look in folder to see output)
   TRA25_format_to_xl(data_for_xl,
