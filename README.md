@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-**Warning: `TRA25rap` is the first package written by Luke Shaw, and as such may be more buggy and a pain than more professional packages** It is based heavily on the `xltabr` package developed by members of the Ministry of Justice (MoJ).
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Warning: `TRA25rap` is the first package written by Luke Shaw, and as such may be more buggy and a pain than more professional packages**. It is based heavily on the `xltabr` package developed by members of the Ministry of Justice (MoJ).
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 If you are not a member of the Department for Transport (DfT) **I highly recommend you instead [use the `xltabr` package](https://github.com/moj-analytical-services/xltabr)**, as it is a far more developed and organised package.
 
@@ -23,13 +23,11 @@ TRA25rap - what is it?
 
 This purpose of this package is to help users present beautifully formatted Excel tables in the DfT standard format. This package can automate the entire table making process, as shown in the image below. Part of why this is so powerful is that it is exactly repeatable, once the code is written all that is needed is an update to the data and then just re-run!
 
-<img src="https://image.ibb.co/iWMyHx/flow_pipe.png?raw=TRUE" />
+<img src="https://image.ibb.co/kD5X1e/RAPtra25.png?raw=TRUE" />
 
 This will act as a segment of the [pipeline dream](https://ukgovdatascience.github.io/rap_companion/) for transforming the way that official statistics are produced.
 
-This package is a DfT-tailored version of xltabr, including all the functions and code that I (Luke Shaw) wrote and developed - all focused primarily around `xltabr`.
-
-The "patient zero" tables which this package was initially created for at the Quarterly provisional road traffic estimate tables, [TRA25](https://www.gov.uk/government/statistical-data-sets/tra25-quarterly-estimates). Practically all of the in-built checks and code are bespoke to issues with those tables, however the intention is that these can be used as a springboard to producing reproducible code for other teams' tables.
+This package is a [TRA25](https://www.gov.uk/government/statistical-data-sets/tra25-quarterly-estimates)-tailored version of xltabr, including all the functions and code that I (Luke Shaw) wrote and developed - all focused primarily around `xltabr`.
 
 <c name="SRF2"></c> "I'm in the Road Stats team and I want to make new TRA25 tables"
 ------------------------------------------------------------------------------------
@@ -52,6 +50,8 @@ file.edit(system.file("exec", "TRA25_run_script_on_network.R", package="TRA25rap
 
 in your console which will open the file. Make sure you read all the comments, and without any hiccups you should have the tables ready in under 5 minutes! As this package is not fully developed and released, do not be afraid of hiccups...
 
+The Desk Notes, which should have the bespoke ETHOS issues that may occur, are currently the definitive document for making the tables each quarter.
+
 <b name="notSRF"></b> "I'm in DfT, but not trying to produce table set TRA25... and I am thinking of getting into RAPping"
 --------------------------------------------------------------------------------------------------------------------------
 
@@ -59,17 +59,19 @@ Great! Depending on how "heavy" an R-user you are may affect how much you want t
 
 I have chosen here as the place to discuss useful resources when taking on a project like this:
 
-**USE THE RAP COMPANION** which is available [online](https://ukgovdatascience.github.io/rap_companion/). A lot of the pitfalls and ultimately missed scope of this project were due to not closely following the RAP companion, and instead focussing on every individual problem that I wanted to solve, as opposed on whether it should be solved and thinking about time constraints and outputs. I should have learnt to be [agile](https://en.wikipedia.org/wiki/Agile_software_development) but I was too blinkered. Similarly, for those starting out for the first time I recommend looking into [DevOps](https://en.wikipedia.org/wiki/DevOps#Definitions_and_history) as a way of working/thinking.
+-   **USE THE RAP COMPANION** which is available [online](https://ukgovdatascience.github.io/rap_companion/). A lot of the pitfalls and ultimately missed scope of this project were due to not closely following the RAP companion, and instead focussing on every individual problem that I wanted to solve - as opposed on whether it should be solved and thinking about time constraints and outputs.
 
-Also, be a member of the [Gov Data Science rap\_collaboration Slack chanel](https://govdatascience.slack.com) which will be invaluable.
+-   I should have learnt to be [agile](https://en.wikipedia.org/wiki/Agile_software_development) but I was too blinkered. Similarly, for those starting out for the first time I recommend looking into [DevOps](https://en.wikipedia.org/wiki/DevOps#Definitions_and_history) as a way of working/thinking.
 
-Also, use the [RAP R MOOC](https://www.udemy.com/reproducible-analytical-pipelines/) which *I should have been using the whole time*, but wasn't aware of when I started as well as not knowing how much it could have helped me. Hindsight is 20/20!
+-   Be a member of the [Gov Data Science Slack](https://govdatascience.slack.com), specifically the channel \#rap\_collaboration which will be invaluable.
 
-Government is already RAPping all over the place, **do not** go off on a solo mission to prove your coding prowess: use all the help and tools already out there.
+-   Use the [RAP R MOOC](https://www.udemy.com/reproducible-analytical-pipelines/) which *I should have been using the whole time*, but wasn't aware of when I started as well as not knowing how much it could have helped me. Hindsight is 20/20!
+
+-   Government is already RAP-ping all over the place, **do not** go off on a solo mission to prove your coding prowess: use all the help and tools already out there.
 
 If the tables you are trying to produce are wildly different to the ones I have created with this package, you may not find any of my sub-functions useful. If you are comfortable with R, having a look at my functions may prove inspirational for building your own.
 
-Also, I would suggest reading all of the [`xltabr` readme](https://github.com/moj-analytical-services/xltabr/) to understand what this is about. Then, when writing your scripts use the DfT Style Path document in this package, which you can get in 2 ways:
+I would suggest reading all of the [`xltabr` readme](https://github.com/moj-analytical-services/xltabr/) to understand what this is about. Then, when writing your scripts use the DfT Style Path document in this package, which you can get in 2 ways:
 
 1.  Download my package and then in your script where the table is made run:
 
@@ -104,9 +106,7 @@ devtools::install_github(repo = "departmentfortransport/ac-roadtraff-pipe"
 library(TRA25rap)
 ```
 
-If you are working on the network, a workaround for this is the following:
-
-Click the "Clone or download" button in the top right hand corner of this page and select "Download ZIP". Then, you will have to open your file explorer and manually put the folder into the location of your installed R packages. To find out where your R packages are installed, type `.libPaths()` in your console. Hopefully you can then type `library(TRA25rap)` and everything works out fine.
+If you are working on the network, the Desk Instructions document detail a way to make the package work.
 
 Example
 -------
@@ -122,22 +122,19 @@ library(TRA25rap)
 Second, download the raw data from online.
 
 ``` r
+#Note: currently (Sep 2018) the API is not in use 
 raw <- TRA25_data_api("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly") 
-raw
-#> # A tibble: 1,900 x 5
-#>     year quarter road_type vehicle_type estimate
-#>    <dbl>   <dbl> <chr>     <chr>           <dbl>
-#>  1  1994       1 AR        cars           21.8  
-#>  2  1994       1 AR        hgv             2.22 
-#>  3  1994       1 AR        lgv             2.77 
-#>  4  1994       1 AR        other           0.324
-#>  5  1994       1 AU        cars           15.9  
-#>  6  1994       1 AU        hgv             0.762
-#>  7  1994       1 AU        lgv             1.80 
-#>  8  1994       1 AU        other           0.428
-#>  9  1994       1 MR        cars           11.1  
-#> 10  1994       1 MR        hgv             0.433
-#> # ... with 1,890 more rows
+```
+
+``` r
+head(raw)
+#>   year quarter road_type vehicle_type   estimate
+#> 1 1994       1        AR         cars 21.7510814
+#> 2 1994       1        AR          hgv  2.2225127
+#> 3 1994       1        AR          lgv  2.7656003
+#> 4 1994       1        AR        other  0.3240302
+#> 5 1994       1        AU         cars 15.8527278
+#> 6 1994       1        AU          hgv  0.7622793
 ```
 
 If your data is in a csv on your desktop you can get it into R easily, an example of how to do that is given at <http://rprogramming.net/read-csv-in-r/>
@@ -171,7 +168,7 @@ Now the data is in the right shape for making the table. After naming the title 
 title_text <- c("Department for Transport statistics",
                 "Traffic",
                 "Table TRA2501a",
-                "Road traffic (vehicle miles) by vehicle type in Great Britain, rolling annual totals from 1993",
+                "Road traffic (vehicle miles) by vehicle type in Great Britain, rolling annual totals from 1994",
                 "",
                 "Billion vehicle miles")
 footer_text <- c("Other = Two wheeled motor vehicles, buses, and coaches",
