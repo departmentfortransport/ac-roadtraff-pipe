@@ -38,8 +38,11 @@ Made with xltabr as main base.
 }
 \examples{
 \dontrun{
-#set up scenario
-raw <- TRA25_data_api()
+#set up scenario. If statement 
+if(RCurl::url.exists("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly"))
+  {raw <- TRA25_data_api()
+  } else {load("~/ac-roadtraff-pipe/R/sysdata.rda")} 
+ 
 data_for_xl <- TRA25_arrange_data(raw, roll=F, type="vehicle", units="traffic", km_or_miles = "km")
 #title and footer
 title_text <- c("Department for Transport statistics",

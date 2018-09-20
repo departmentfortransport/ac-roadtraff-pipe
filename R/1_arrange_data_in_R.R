@@ -14,7 +14,12 @@
 #'
 #' @param url the API url. Is preset to the original, but can be overwritten (for example, seasonal data)
 #' @examples
-#' raw <- TRA25_data_api()
+#' #set up scenario. If statement is to do with the situation when the API URL is not in place,
+#' #with the back up (to ensure the example works) using pre-installed data
+#' if(RCurl::url.exists("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly"))
+#'   {raw <- TRA25_data_api()
+#'   } else {load("~/ac-roadtraff-pipe/R/sysdata.rda")} 
+
 #' @export
 TRA25_data_api <- function(
   url="https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly"){
@@ -44,7 +49,12 @@ TRA25_data_api <- function(
 #' @param x logical, if TRUE then makes values rolling annual totals. If FALSE
 #' then function does nothing (returns raw)
 #' @examples
-#' raw <- TRA25_data_api()
+#' #set up scenario. If statement is to do with the situation when the API URL is not in place,
+#' #with the back up (to ensure the example works) using pre-installed data
+#' if(RCurl::url.exists("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly"))
+#'   {raw <- TRA25_data_api()
+#'   } else {load("~/ac-roadtraff-pipe/R/sysdata.rda")} 
+
 #' rolling_raw <- TRA25_rolling_annual(raw, TRUE)
 #' @export
 TRA25_rolling_annual <- function(raw, x){
@@ -115,7 +125,12 @@ pivot_raw <- function(raw, type){
 #' @param raw the raw data in the same format as the output of \code{\link{TRA25_data_api}}
 #' @param type either "road", "vehicle", or "vehicle_and_road"
 #' @examples
-#' raw <- TRA25_data_api()
+#' #set up scenario. If statement is to do with the situation when the API URL is not in place,
+#' #with the back up (to ensure the example works) using pre-installed data
+#' if(RCurl::url.exists("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly"))
+#'   {raw <- TRA25_data_api()
+#'   } else {load("~/ac-roadtraff-pipe/R/sysdata.rda")} 
+
 #' data_for_xl <- TRA25_vehicle_road(raw, "road")
 #' #look at where we've gone from/to
 #' tibble::glimpse(raw)
@@ -235,7 +250,12 @@ chosen_units <- function(data_for_xl, units, index_from = NA){
 #' @param index_from integer or vector. Rows from which to index from if chosen_units = "index"
 #' @examples
 #' #first get the raw data
-#' raw <- TRA25_data_api()
+#' #set up scenario. If statement is to do with the situation when the API URL is not in place,
+#' #with the back up (to ensure the example works) using pre-installed data
+#' if(RCurl::url.exists("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly"))
+#'   {raw <- TRA25_data_api()
+#'   } else {load("~/ac-roadtraff-pipe/R/sysdata.rda")} 
+
 #' #Google TRA25 if the naming convention on the left ("TRA25...") doesn't make sense
 #' TRA2501a_data_for_xl <- TRA25_arrange_data(raw, roll=TRUE, 
 #' type="vehicle", units="traffic", km_or_miles = "miles")
