@@ -38,7 +38,11 @@ pivotted to the right structure for making into the Excel document.
 }
 \examples{
 #first get the raw data
-raw <- TRA25_data_api()
+#set up scenario. If statement is to do with the situation when the API URL is not in place,
+#with the back up (to ensure the example works) using pre-installed data
+if(RCurl::url.exists("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly"))
+  {raw <- TRA25_data_api()
+  } else {load("~/ac-roadtraff-pipe/R/sysdata.rda")} 
 #Google TRA25 if the naming convention on the left ("TRA25...") doesn't make sense
 TRA2501a_data_for_xl <- TRA25_arrange_data(raw, roll=TRUE, 
 type="vehicle", units="traffic", km_or_miles = "miles")

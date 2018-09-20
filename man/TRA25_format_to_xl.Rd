@@ -38,7 +38,8 @@ Made with xltabr as main base.
 }
 \examples{
 \dontrun{
-#set up scenario. If statement 
+#set up scenario. If statement is to do with the situation when the API URL is not in place,
+#with the back up (to ensure the example works) using pre-installed data
 if(RCurl::url.exists("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly"))
   {raw <- TRA25_data_api()
   } else {load("~/ac-roadtraff-pipe/R/sysdata.rda")} 

@@ -16,7 +16,11 @@ Takes the raw data, and pivots it up so that a factor variable column (with n fa
 is changed to add in the n columns, with the "estimate" col now populating the values
 }
 \examples{
-raw <- TRA25_data_api()
+#set up scenario. If statement is to do with the situation when the API URL is not in place,
+#with the back up (to ensure the example works) using pre-installed data
+if(RCurl::url.exists("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly"))
+  {raw <- TRA25_data_api()
+  } else {load("~/ac-roadtraff-pipe/R/sysdata.rda")} 
 data_for_xl <- TRA25_vehicle_road(raw, "road")
 #look at where we've gone from/to
 tibble::glimpse(raw)

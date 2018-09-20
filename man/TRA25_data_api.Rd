@@ -14,5 +14,9 @@
 Downloads data from road traffic API and makes into data frame
 }
 \examples{
-raw <- TRA25_data_api()
+#set up scenario. If statement is to do with the situation when the API URL is not in place,
+#with the back up (to ensure the example works) using pre-installed data
+if(RCurl::url.exists("https://statistics-api.dft.gov.uk/api/roadtraffic/quarterly"))
+  {raw <- TRA25_data_api()
+  } else {load("~/ac-roadtraff-pipe/R/sysdata.rda")} 
 }

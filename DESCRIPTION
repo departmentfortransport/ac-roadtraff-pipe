@@ -22,7 +22,9 @@ Imports:
   stats,
   xltabr,
   magrittr,
-  openxlsx
+  openxlsx,
+  RCurl,
+  tibble
 Suggests: 
     testthat
 BugReports: https://github.com/departmentfortransport/ac-roadtraff-pipe/issues
