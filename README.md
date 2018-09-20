@@ -23,7 +23,7 @@ TRA25rap - what is it?
 
 This purpose of this package is to help users present beautifully formatted Excel tables in the DfT standard format. This package can automate the entire table making process, as shown in the image below. Part of why this is so powerful is that it is exactly repeatable, once the code is written all that is needed is an update to the data and then just re-run!
 
-<img src="https://image.ibb.co/kD5X1e/RAPtra25.png?raw=TRUE" />
+<img src="https://image.ibb.co/eQrcZz/RAPimage.png?raw=TRUE" />
 
 This will act as a segment of the [pipeline dream](https://ukgovdatascience.github.io/rap_companion/) for transforming the way that official statistics are produced.
 
