@@ -16,7 +16,7 @@ If you are having problems with this package, there are different places you can
 -   Look at other documentation: `xltabr` is better documented(!)
 -   Google (it can't hurt) - especially if your problem is likely a problem with R coding
 -   [Raise an issue](https://github.com/departmentfortransport/ac-roadtraff-pipe/issues) on GitHub if you have found a bug within this package
--   Email me: <lukefshaw@gmail.com>
+-   Email me: <luke.francis.shaw@gmail.com>
 
 TRA25rap - what is it?
 ----------------------
